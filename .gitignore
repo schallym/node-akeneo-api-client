@@ -1,0 +1,12 @@
+###> Node.js ###
+/node_modules/
+/dist/
+###< Node.js ###
+
+###> JetBrains IDE ###
+/.idea/
+###< JetBrains IDE ###
+
+###> Unit test reports ###
+/coverage/
+###< Unit test reports ###
