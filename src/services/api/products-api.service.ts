@@ -2,7 +2,7 @@ import AkeneoApiClient from '../akeneo-api-client';
 import { Product } from '../../types';
 import { BaseApi } from './base-api.service';
 
-export type ProductSearchParams = {
+export type ProductsSearchParams = {
   search?: string;
   scope?: string;
   locales?: string;
@@ -18,7 +18,7 @@ export type ProductSearchParams = {
   with_completenesses?: boolean;
 };
 
-export type ProductGetParams = {
+export type ProductSGetParams = {
   with_attribute_options?: boolean;
   with_asset_share_links?: boolean;
   with_quality_scores?: boolean;
@@ -32,17 +32,14 @@ export type SeveralProductUpdateOrCreationResponseLine = {
   message: string;
 };
 
-export class ProductIdentifierApi extends BaseApi<Product, ProductGetParams, ProductSearchParams> {
+export class ProductsApi extends BaseApi<Product, ProductSGetParams, ProductsSearchParams> {
   constructor(client: AkeneoApiClient) {
     super(client, '/api/rest/v1/products');
   }
 
-  public async updateOrCreateSeveral(
-    identifier: string,
-    data: Partial<Product>[],
-  ): Promise<SeveralProductUpdateOrCreationResponseLine[]> {
+  public async updateOrCreateSeveral(data: Partial<Product>[]): Promise<SeveralProductUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
-      .patch(`${this.endpoint}/${identifier}`, data.map((item) => JSON.stringify(item)).join('\n'), {
+      .patch(`${this.endpoint}`, data.map((item) => JSON.stringify(item)).join('\n'), {
         headers: {
           'Content-Type': 'application/vnd.akeneo.collection+json',
         },

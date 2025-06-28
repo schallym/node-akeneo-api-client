@@ -1,6 +1,6 @@
 export type Product = {
   uuid: string;
-  identifier: string;
+  identifier?: string;
   enabled: boolean;
   family: string;
   categories: string[];
@@ -17,6 +17,8 @@ export type Product = {
   quality_scores?: ProductQualityScore[];
   completenesses?: ProductCompleteness[];
 };
+
+export type ProductUuid = Omit<Product, 'identifier'>;
 
 export type ProductValue = {
   data: any;

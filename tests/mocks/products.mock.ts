@@ -1,6 +1,6 @@
 import { Product } from '../../src/types';
 
-const productMock: Product = {
+const productsMock: Product = {
   uuid: '1234-5678-9012',
   identifier: 'test_product_123',
   enabled: true,
@@ -16,7 +16,7 @@ const productMock: Product = {
 };
 
 export default {
-  get: productMock,
+  get: productsMock,
   updateCreateSeveral: [
     {
       line: 1,
@@ -40,8 +40,8 @@ export default {
     },
     current_page: 1,
     _embedded: {
-      items: [productMock],
+      items: [productsMock],
     },
   },
-  getDraft: productMock,
+  getDraft: productsMock,
 };

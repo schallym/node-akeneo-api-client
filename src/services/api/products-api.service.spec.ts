@@ -1,10 +1,10 @@
-import { ProductIdentifierApi } from './product-identifier-api.service';
+import { ProductsApi } from './products-api.service';
 import AkeneoApiClient from '../akeneo-api-client';
 import { Product } from '../../types';
 
 jest.mock('../akeneo-api-client');
 
-describe('ProductIdentifierApi', () => {
+describe('ProductsApi', () => {
   const mockHttpClient = {
     get: jest.fn(),
     patch: jest.fn(),
@@ -16,12 +16,12 @@ describe('ProductIdentifierApi', () => {
     httpClient: mockHttpClient,
   };
 
-  let api: ProductIdentifierApi;
+  let api: ProductsApi;
   const testIdentifier = 'test_product_123';
 
   beforeEach(() => {
     jest.clearAllMocks();
-    api = new ProductIdentifierApi(mockClient as unknown as AkeneoApiClient);
+    api = new ProductsApi(mockClient as unknown as AkeneoApiClient);
   });
 
   describe('get', () => {
@@ -186,10 +186,10 @@ describe('ProductIdentifierApi', () => {
 
       mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
 
-      const result = await api.updateOrCreateSeveral(testIdentifier, products);
+      const result = await api.updateOrCreateSeveral(products);
 
       expect(mockHttpClient.patch).toHaveBeenCalledWith(
-        `/api/rest/v1/products/${testIdentifier}`,
+        `/api/rest/v1/products`,
         JSON.stringify(products[0]) + '\n' + JSON.stringify(products[1]),
         {
           headers: {

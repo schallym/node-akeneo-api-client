@@ -1,6 +1,6 @@
 import AkeneoClient from './akeneo-client';
 import AkeneoApiClient from './services/akeneo-api-client';
-import { ProductIdentifierApi } from './services/api';
+import { ProductsApi } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosRequestConfig } from 'axios';
 
@@ -9,7 +9,7 @@ jest.mock('./services/api');
 
 describe('AkeneoClient', () => {
   const MockAkeneoApiClient = AkeneoApiClient as jest.MockedClass<typeof AkeneoApiClient>;
-  const MockProductIdentifierApi = ProductIdentifierApi as jest.MockedClass<typeof ProductIdentifierApi>;
+  const MockProductIdentifierApi = ProductsApi as jest.MockedClass<typeof ProductsApi>;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -80,7 +80,7 @@ describe('AkeneoClient', () => {
 
     const client = new AkeneoClient(connectionConfig);
 
-    expect(client.productWithIdentifier).toBeDefined();
-    expect(client.productWithIdentifier).toBeInstanceOf(ProductIdentifierApi);
+    expect(client.products).toBeDefined();
+    expect(client.products).toBeInstanceOf(ProductsApi);
   });
 });
