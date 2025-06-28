@@ -1,4 +1,4 @@
-import { ProductsUuidApi } from './product-uuid-api.service';
+import { ProductsUuidApi, UpdateProductUuidRequest } from './product-uuid-api.service';
 import AkeneoApiClient from '../akeneo-api-client';
 import { ProductUuid } from '../../types';
 
@@ -26,7 +26,7 @@ describe('ProductsUuidApi', () => {
 
   describe('updateOrCreateSeveral', () => {
     it('should send PATCH request with correctly formatted data', async () => {
-      const products: Partial<ProductUuid>[] = [
+      const products: UpdateProductUuidRequest[] = [
         { uuid: 'uuid1', values: { name: [{ locale: null, scope: null, data: 'Product 1' }] } },
         { uuid: 'uuid2', values: { name: [{ locale: null, scope: null, data: 'Product 2' }] } },
       ];

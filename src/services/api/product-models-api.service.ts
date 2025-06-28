@@ -1,8 +1,8 @@
 import AkeneoApiClient from '../akeneo-api-client';
-import { Product } from '../../types';
+import { ProductModel } from '../../types';
 import { BaseApi } from './base-api.service';
 
-export type ProductsSearchParams = {
+export type ProductModelsSearchParams = {
   search?: string;
   scope?: string;
   locales?: string;
@@ -15,48 +15,45 @@ export type ProductsSearchParams = {
   with_attribute_options?: boolean;
   with_asset_share_links?: boolean;
   with_quality_scores?: boolean;
-  with_completenesses?: boolean;
 };
 
-export type ProductsGetParams = {
-  with_attribute_options?: boolean;
+export type ProductModelsGetParams = {
   with_asset_share_links?: boolean;
   with_quality_scores?: boolean;
-  with_completenesses?: boolean;
 };
 
-export type CreateProductRequest = Partial<
-  Omit<Product, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
+export type CreateProductModelRequest = Partial<
+  Omit<ProductModel, 'created' | 'updated' | 'metadata' | 'quality_scores'>
 >;
 
-export type UpdateProductRequest = Partial<
-  Omit<Product, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
+export type UpdateProductModelRequest = Partial<
+  Omit<ProductModel, 'created' | 'updated' | 'metadata' | 'quality_scores'>
 > & {
   add_categories?: string[];
   remove_categories?: string[];
 };
 
-export type SeveralProductsUpdateOrCreationResponseLine = {
+export type SeveralProductModelsUpdateOrCreationResponseLine = {
   line: number;
-  identifier: string;
+  code: string;
   status_code: number;
   message: string;
 };
 
-export class ProductsApi extends BaseApi<
-  Product,
-  ProductsGetParams,
-  ProductsSearchParams,
-  CreateProductRequest,
-  UpdateProductRequest
+export class ProductModelsApi extends BaseApi<
+  ProductModel,
+  ProductModelsGetParams,
+  ProductModelsSearchParams,
+  CreateProductModelRequest,
+  UpdateProductModelRequest
 > {
   constructor(client: AkeneoApiClient) {
-    super(client, '/api/rest/v1/products');
+    super(client, '/api/rest/v1/product-models');
   }
 
   public async updateOrCreateSeveral(
-    data: UpdateProductRequest[],
-  ): Promise<SeveralProductsUpdateOrCreationResponseLine[]> {
+    data: UpdateProductModelRequest[],
+  ): Promise<SeveralProductModelsUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
       .patch(`${this.endpoint}`, data.map((item) => JSON.stringify(item)).join('\n'), {
         headers: {
@@ -75,7 +72,7 @@ export class ProductsApi extends BaseApi<
     await this.client.httpClient.post(`${this.endpoint}/${identifier}/proposal`, {});
   }
 
-  public async getDraft(identifier: string): Promise<Product> {
+  public async getDraft(identifier: string): Promise<ProductModel> {
     return this.client.httpClient.get(`${this.endpoint}/${identifier}/draft`).then((response) => response.data);
   }
 }

@@ -34,8 +34,8 @@ export default {
     .join('\n'),
   list: {
     _links: {
-      self: { href: 'https://akeneo.test/api/rest/v1/products?page=2' },
-      first: { href: 'https://akeneo.test/api/rest/v1' },
+      self: { href: 'https://akeneo.test/api/rest/v1/products-uuid?page=2' },
+      first: { href: 'https://akeneo.test/api/rest/v1/products-uuid' },
     },
     current_page: 1,
     _embedded: {

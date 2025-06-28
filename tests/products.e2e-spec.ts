@@ -1,8 +1,7 @@
 import nock from 'nock';
 import AkeneoApiClient from '../src/services/akeneo-api-client';
-import { ProductsApi } from '../src/services/api';
+import { ProductsApi, UpdateProductRequest } from '../src/services/api';
 import productMock from './mocks/products.mock';
-import { Product } from '../src/types';
 
 describe('Products API E2E Tests', () => {
   const baseUrl = 'https://akeneo.test';
@@ -51,7 +50,7 @@ describe('Products API E2E Tests', () => {
   });
 
   it('should update or create multiple products', async () => {
-    const products: Partial<Product>[] = [
+    const products: UpdateProductRequest[] = [
       {
         identifier: 'prod1',
         values: { name: [{ locale: null, scope: null, data: 'Product 1' }] },

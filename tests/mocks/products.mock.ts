@@ -36,7 +36,7 @@ export default {
   list: {
     _links: {
       self: { href: 'https://akeneo.test/api/rest/v1/products?page=2' },
-      first: { href: 'https://akeneo.test/api/rest/v1' },
+      first: { href: 'https://akeneo.test/api/rest/v1/products' },
     },
     current_page: 1,
     _embedded: {

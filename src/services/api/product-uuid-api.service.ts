@@ -1,7 +1,18 @@
 import AkeneoApiClient from '../akeneo-api-client';
 import { ProductUuid } from '../../types';
 import { BaseApi } from './base-api.service';
-import { ProductSGetParams, ProductsSearchParams } from './products-api.service';
+import { ProductsGetParams, ProductsSearchParams } from './products-api.service';
+
+export type CreateProductUuidRequest = Partial<
+  Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
+>;
+
+export type UpdateProductUuidRequest = Partial<
+  Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
+> & {
+  add_categories?: string[];
+  remove_categories?: string[];
+};
 
 export type SeveralProductsUuidUpdateOrCreationResponseLine = {
   line: number;
@@ -10,7 +21,13 @@ export type SeveralProductsUuidUpdateOrCreationResponseLine = {
   message: string;
 };
 
-export class ProductsUuidApi extends BaseApi<ProductUuid, ProductSGetParams, ProductsSearchParams> {
+export class ProductsUuidApi extends BaseApi<
+  ProductUuid,
+  ProductsGetParams,
+  ProductsSearchParams,
+  CreateProductUuidRequest,
+  UpdateProductUuidRequest
+> {
   constructor(client: AkeneoApiClient) {
     super(client, '/api/rest/v1/products-uuid');
   }

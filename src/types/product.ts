@@ -5,7 +5,7 @@ export type Product = {
   family: string;
   categories: string[];
   groups: string[];
-  parent?: string;
+  parent?: string | null;
   values: { [attributeCode: string]: ProductValue[] };
   associations?: { [associationTypeCode: string]: ProductAssociation };
   quantified_associations?: { [quantifiedAssociationTypeCode: string]: ProductQuantifiedAssociation };

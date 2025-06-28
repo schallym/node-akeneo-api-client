@@ -1,7 +1,7 @@
 import AkeneoApiClient from '../akeneo-api-client';
 import { PaginatedResponse } from '../../types';
 
-export abstract class BaseApi<ApiEntityType, GetParamsType, SearchParamsType> {
+export abstract class BaseApi<ApiEntityType, GetParamsType, SearchParamsType, CreateRequestType, UpdateRequestType> {
   protected constructor(protected readonly client: AkeneoApiClient, protected readonly endpoint: string) {}
 
   public async get(identifier: string, params?: GetParamsType): Promise<ApiEntityType> {
@@ -12,11 +12,11 @@ export abstract class BaseApi<ApiEntityType, GetParamsType, SearchParamsType> {
     return this.client.httpClient.get(this.endpoint, { params }).then((response) => response.data);
   }
 
-  public async create(data: ApiEntityType): Promise<void> {
+  public async create(data: CreateRequestType): Promise<void> {
     await this.client.httpClient.post(this.endpoint, data);
   }
 
-  public async update(identifier: string, data: Partial<ApiEntityType>): Promise<void> {
+  public async update(identifier: string, data: UpdateRequestType): Promise<void> {
     await this.client.httpClient.patch(`${this.endpoint}/${identifier}`, data);
   }
 

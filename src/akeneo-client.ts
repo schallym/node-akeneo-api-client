@@ -1,4 +1,4 @@
-import { ProductsApi } from './services/api';
+import { ProductModelsApi, ProductsApi, ProductsUuidApi } from './services/api';
 import AkeneoApiClient from './services/akeneo-api-client';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
@@ -9,6 +9,8 @@ export default class AkeneoClient {
 
   // API services
   public readonly products: ProductsApi;
+  public readonly productsUuid: ProductsUuidApi;
+  public readonly productModels: ProductModelsApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -16,5 +18,7 @@ export default class AkeneoClient {
 
     // Initialize all api services
     this.products = new ProductsApi(this.apiClient);
+    this.productsUuid = new ProductsUuidApi(this.apiClient);
+    this.productModels = new ProductModelsApi(this.apiClient);
   }
 }

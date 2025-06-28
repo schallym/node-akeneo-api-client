@@ -1,4 +1,4 @@
-import { ProductsApi } from './products-api.service';
+import { ProductsApi, UpdateProductRequest } from './products-api.service';
 import AkeneoApiClient from '../akeneo-api-client';
 import { Product } from '../../types';
 
@@ -126,7 +126,7 @@ describe('ProductsApi', () => {
 
   describe('update', () => {
     it('should send PATCH request with correct identifier and data', async () => {
-      const mockProduct: Partial<Product> = {
+      const mockProduct: UpdateProductRequest = {
         identifier: testIdentifier,
         values: { name: [{ locale: 'en_US', scope: null, data: 'Updated Product' }] },
       };
