@@ -10,7 +10,7 @@ export type ProductMediaFilesSearchParams = {
 export type CreateProductMediaFileRequest = {
   product?: string;
   product_model?: string;
-  file: File | Blob | string;
+  file: Blob | string;
 };
 
 export class ProductMediaFilesApi {
