@@ -1,6 +1,6 @@
-import { ProductModel } from '../../src/types';
+import { ProductModelType } from '../../src/types';
 
-const productModelsMock: ProductModel = {
+const productModelsMock: ProductModelType = {
   code: 'code123',
   family: 'tables',
   family_variant: 'table_variant',

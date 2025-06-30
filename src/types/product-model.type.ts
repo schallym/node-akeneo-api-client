@@ -1,4 +1,4 @@
-export type ProductModel = {
+export type ProductModelType = {
   code: string;
   family: string;
   family_variant: string;

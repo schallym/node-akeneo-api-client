@@ -1,6 +1,6 @@
 import { ProductModelsApi } from './product-models-api.service';
 import { AkeneoApiClient } from '../';
-import { ProductModel } from '../../types';
+import { ProductModelType } from '../../types';
 
 jest.mock('../akeneo-api-client');
 
@@ -83,7 +83,7 @@ describe('ProductModelsApi', () => {
 
   describe('getDraft', () => {
     it('should send GET request and return draft product model', async () => {
-      const mockProductModel: ProductModel = {
+      const mockProductModel: ProductModelType = {
         code: testCode,
         family: 'test_family',
         family_variant: 'test_variant',
@@ -108,7 +108,7 @@ describe('ProductModelsApi', () => {
 
   describe('inherited BaseApi methods', () => {
     it('should use the correct endpoint for get method', async () => {
-      const mockProductModel: ProductModel = {
+      const mockProductModel: ProductModelType = {
         code: testCode,
         family: 'test_family',
         family_variant: 'test_variant',

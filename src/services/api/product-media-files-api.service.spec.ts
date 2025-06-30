@@ -1,6 +1,6 @@
 import { CreateProductMediaFileRequest, ProductMediaFilesApi } from './product-media-files-api.service';
 import { AkeneoApiClient } from '../';
-import { ProductMediaFile } from '../../types';
+import { ProductMediaFileType } from '../../types';
 
 jest.mock('../akeneo-api-client');
 
@@ -24,7 +24,7 @@ describe('ProductMediaFilesApi', () => {
 
   describe('get', () => {
     it('should fetch a media file by code', async () => {
-      const mockMediaFile: ProductMediaFile = {
+      const mockMediaFile: ProductMediaFileType = {
         code: testCode,
         original_filename: 'image.jpg',
         mime_type: 'image/jpeg',

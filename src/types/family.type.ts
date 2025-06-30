@@ -1,6 +1,6 @@
 export type Family = {
   code: string;
-  labels: { [key: string]: string };
+  labels: { [localCode: string]: string };
   attributes: string[];
   attribute_as_label?: string;
   attribute_as_image?: string;

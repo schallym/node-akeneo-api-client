@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../';
-import { Product } from '../../types';
+import { ProductType } from '../../types';
 import { BaseApi } from './base-api.service';
 
 export type ProductsSearchParams = {
@@ -26,11 +26,11 @@ export type ProductsGetParams = {
 };
 
 export type CreateProductRequest = Partial<
-  Omit<Product, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
+  Omit<ProductType, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
 >;
 
 export type UpdateProductRequest = Partial<
-  Omit<Product, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
+  Omit<ProductType, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
 > & {
   add_categories?: string[];
   remove_categories?: string[];
@@ -44,7 +44,7 @@ export type SeveralProductsUpdateOrCreationResponseLine = {
 };
 
 export class ProductsApi extends BaseApi<
-  Product,
+  ProductType,
   ProductsGetParams,
   ProductsSearchParams,
   CreateProductRequest,
@@ -75,7 +75,7 @@ export class ProductsApi extends BaseApi<
     await this.client.httpClient.post(`${this.endpoint}/${identifier}/proposal`, {});
   }
 
-  public async getDraft(identifier: string): Promise<Product> {
+  public async getDraft(identifier: string): Promise<ProductType> {
     return this.client.httpClient.get(`${this.endpoint}/${identifier}/draft`).then((response) => response.data);
   }
 }

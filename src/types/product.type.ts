@@ -1,4 +1,4 @@
-export type Product = {
+export type ProductType = {
   uuid: string;
   identifier?: string;
   enabled: boolean;
@@ -18,7 +18,7 @@ export type Product = {
   completenesses?: ProductCompleteness[];
 };
 
-export type ProductUuid = Omit<Product, 'identifier'>;
+export type ProductUuid = Omit<ProductType, 'identifier'>;
 
 export type ProductValue = {
   data: any;

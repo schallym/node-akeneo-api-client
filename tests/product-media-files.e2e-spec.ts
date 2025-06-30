@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { AkeneoApiClient } from '../src/services';
 import { CreateProductMediaFileRequest, ProductMediaFilesApi } from '../src/services/api';
-import { ProductMediaFile } from '../src/types';
+import { ProductMediaFileType } from '../src/types';
 import productMediaFilesMock from './mocks/product-media-files.mock';
 
 describe('ProductMediaFilesApi E2E', () => {
@@ -71,7 +71,7 @@ describe('ProductMediaFilesApi E2E', () => {
   });
 
   it('should fetch a media file by code', async () => {
-    const mockMediaFile: ProductMediaFile = {
+    const mockMediaFile: ProductMediaFileType = {
       code: 'media_1',
       original_filename: 'img.jpg',
       mime_type: 'image/jpeg',

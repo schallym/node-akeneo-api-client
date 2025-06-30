@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../akeneo-api-client';
-import { ProductModel } from '../../types';
+import { ProductModelType } from '../../types';
 import { BaseApi } from './base-api.service';
 
 export type ProductModelsSearchParams = {
@@ -23,12 +23,12 @@ export type ProductModelsGetParams = {
 };
 
 export type CreateProductModelRequest = Partial<
-  Omit<ProductModel, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'family_variant' | 'family'>
+  Omit<ProductModelType, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'family_variant' | 'family'>
 > &
-  Required<Pick<ProductModel, 'family_variant' | 'family'>>;
+  Required<Pick<ProductModelType, 'family_variant' | 'family'>>;
 
 export type UpdateProductModelRequest = Partial<
-  Omit<ProductModel, 'created' | 'updated' | 'metadata' | 'quality_scores'>
+  Omit<ProductModelType, 'created' | 'updated' | 'metadata' | 'quality_scores'>
 > & {
   add_categories?: string[];
   remove_categories?: string[];
@@ -42,7 +42,7 @@ export type SeveralProductModelsUpdateOrCreationResponseLine = {
 };
 
 export class ProductModelsApi extends BaseApi<
-  ProductModel,
+  ProductModelType,
   ProductModelsGetParams,
   ProductModelsSearchParams,
   CreateProductModelRequest,
@@ -73,7 +73,7 @@ export class ProductModelsApi extends BaseApi<
     await this.client.httpClient.post(`${this.endpoint}/${identifier}/proposal`, {});
   }
 
-  public async getDraft(identifier: string): Promise<ProductModel> {
+  public async getDraft(identifier: string): Promise<ProductModelType> {
     return this.client.httpClient.get(`${this.endpoint}/${identifier}/draft`).then((response) => response.data);
   }
 }

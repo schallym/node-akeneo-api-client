@@ -1,4 +1,4 @@
-export type ProductMediaFile = {
+export type ProductMediaFileType = {
   _links: {
     download: {
       href: string;

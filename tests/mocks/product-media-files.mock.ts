@@ -1,6 +1,6 @@
-import { ProductMediaFile } from '../../src/types';
+import { ProductMediaFileType } from '../../src/types';
 
-const productMediaFileMock: ProductMediaFile = {
+const productMediaFileMock: ProductMediaFileType = {
   _links: {
     download: {
       href: 'https://akeneo.test/api/rest/v1/media-files/media_1/download',

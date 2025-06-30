@@ -1,6 +1,6 @@
 import { ProductsApi, UpdateProductRequest } from './products-api.service';
 import { AkeneoApiClient } from '../';
-import { Product } from '../../types';
+import { ProductType } from '../../types';
 
 jest.mock('../akeneo-api-client');
 
@@ -26,7 +26,7 @@ describe('ProductsApi', () => {
 
   describe('get', () => {
     it('should send GET request with correct identifier', async () => {
-      const mockProduct: Product = {
+      const mockProduct: ProductType = {
         uuid: '1234-5678-9012',
         identifier: testIdentifier,
         enabled: true,
@@ -49,7 +49,7 @@ describe('ProductsApi', () => {
     });
 
     it('should send GET request with additional parameters', async () => {
-      const mockProduct: Product = {
+      const mockProduct: ProductType = {
         uuid: '1234-5678-9012',
         identifier: testIdentifier,
         enabled: true,
@@ -76,7 +76,7 @@ describe('ProductsApi', () => {
 
   describe('list', () => {
     it('should send GET request with correct endpoint', async () => {
-      const mockProduct: Product = {
+      const mockProduct: ProductType = {
         uuid: '1234-5678-9012',
         identifier: testIdentifier,
         enabled: true,
@@ -99,7 +99,7 @@ describe('ProductsApi', () => {
     });
 
     it('should send GET request with search parameters', async () => {
-      const mockProduct: Product = {
+      const mockProduct: ProductType = {
         uuid: '1234-5678-9012',
         identifier: testIdentifier,
         enabled: true,
@@ -141,7 +141,7 @@ describe('ProductsApi', () => {
 
   describe('create', () => {
     it('should send POST request with correct data', async () => {
-      const mockProduct: Product = {
+      const mockProduct: ProductType = {
         uuid: '1234-5678-9012',
         identifier: testIdentifier,
         enabled: true,
@@ -175,7 +175,7 @@ describe('ProductsApi', () => {
 
   describe('updateOrCreateSeveral', () => {
     it('should send PATCH request with correctly formatted data', async () => {
-      const products: Partial<Product>[] = [
+      const products: Partial<ProductType>[] = [
         { identifier: 'prod1', values: { name: [{ locale: null, scope: null, data: 'Product 1' }] } },
         { identifier: 'prod2', values: { name: [{ locale: null, scope: null, data: 'Product 2' }] } },
       ];
@@ -216,7 +216,7 @@ describe('ProductsApi', () => {
 
   describe('getDraft', () => {
     it('should send GET request and return draft product', async () => {
-      const mockProduct: Product = {
+      const mockProduct: ProductType = {
         uuid: '1234-5678-9012',
         identifier: testIdentifier,
         enabled: true,

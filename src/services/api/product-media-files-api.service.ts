@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../';
-import { PaginatedResponse, ProductMediaFile } from '../../types';
+import { PaginatedResponse, ProductMediaFileType } from '../../types';
 
 export type ProductMediaFilesSearchParams = {
   page?: number;
@@ -18,11 +18,11 @@ export class ProductMediaFilesApi {
 
   constructor(private readonly client: AkeneoApiClient) {}
 
-  public async get(code: string): Promise<ProductMediaFile> {
+  public async get(code: string): Promise<ProductMediaFileType> {
     return this.client.httpClient.get(`${this.endpoint}/${code}`).then((response) => response.data);
   }
 
-  public async list(params?: ProductMediaFilesSearchParams): Promise<PaginatedResponse<ProductMediaFile>> {
+  public async list(params?: ProductMediaFilesSearchParams): Promise<PaginatedResponse<ProductMediaFileType>> {
     return this.client.httpClient.get(this.endpoint, { params }).then((response) => response.data);
   }
 

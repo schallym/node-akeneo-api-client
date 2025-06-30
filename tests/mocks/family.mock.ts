@@ -35,8 +35,8 @@ export default {
     .join('\n'),
   listVariantFamilies: {
     _links: {
-      self: { href: 'https://akeneo.test/api/rest/v1/products?page=2' },
-      first: { href: 'https://akeneo.test/api/rest/v1/products' },
+      self: { href: 'https://akeneo.test/api/rest/v1/families/family1/variants?page=2' },
+      first: { href: 'https://akeneo.test/api/rest/v1/families/family1/variants' },
     },
     current_page: 1,
     _embedded: {
