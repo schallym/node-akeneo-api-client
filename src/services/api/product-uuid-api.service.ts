@@ -1,4 +1,4 @@
-import AkeneoApiClient from '../akeneo-api-client';
+import { AkeneoApiClient } from '../';
 import { ProductUuid } from '../../types';
 import { BaseApi } from './base-api.service';
 import { ProductsGetParams, ProductsSearchParams } from './products-api.service';

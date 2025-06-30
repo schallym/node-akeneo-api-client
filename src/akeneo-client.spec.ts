@@ -1,5 +1,5 @@
 import AkeneoClient from './akeneo-client';
-import AkeneoApiClient from './services/akeneo-api-client';
+import { AkeneoApiClient } from './services';
 import { ProductModelsApi, ProductsApi, ProductsUuidApi } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosRequestConfig } from 'axios';

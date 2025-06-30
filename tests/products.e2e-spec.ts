@@ -1,5 +1,5 @@
 import nock from 'nock';
-import AkeneoApiClient from '../src/services/akeneo-api-client';
+import { AkeneoApiClient } from '../src/services';
 import { ProductsApi, UpdateProductRequest } from '../src/services/api';
 import productMock from './mocks/products.mock';
 

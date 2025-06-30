@@ -1,5 +1,5 @@
 import nock from 'nock';
-import AkeneoApiClient from '../src/services/akeneo-api-client';
+import { AkeneoApiClient } from '../src/services';
 import productsUuidMock from './mocks/products-uuid.mock';
 import { ProductsUuidApi } from '../src/services/api';
 import { UpdateProductRequest } from '../src/services/api';
@@ -28,6 +28,7 @@ describe('Products UUID API E2E Tests', () => {
 
   beforeEach(() => {
     nock.cleanAll();
+
     nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
       access_token: 'new_access_token',
       refresh_token: 'new_refresh_token',
@@ -73,12 +74,6 @@ describe('Products UUID API E2E Tests', () => {
   });
 
   it('should handle API authentication process', async () => {
-    nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
-      access_token: 'new_access_token',
-      refresh_token: 'new_refresh_token',
-      expires_in: 3600,
-    });
-
     nock(baseUrl)
       .get('/api/rest/v1/products-uuid/1234-5678-9012/draft')
       .matchHeader('Authorization', 'Bearer new_access_token')

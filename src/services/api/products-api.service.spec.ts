@@ -1,5 +1,5 @@
 import { ProductsApi, UpdateProductRequest } from './products-api.service';
-import AkeneoApiClient from '../akeneo-api-client';
+import { AkeneoApiClient } from '../';
 import { Product } from '../../types';
 
 jest.mock('../akeneo-api-client');

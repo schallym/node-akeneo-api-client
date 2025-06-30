@@ -1,4 +1,4 @@
-import AkeneoApiClient from '../akeneo-api-client';
+import { AkeneoApiClient } from '../';
 import { PaginatedResponse } from '../../types';
 
 export abstract class BaseApi<ApiEntityType, GetParamsType, SearchParamsType, CreateRequestType, UpdateRequestType> {

@@ -8,8 +8,8 @@ jest.mock('axios', () => {
   };
 });
 
-import AkeneoApiClient from '../services/akeneo-api-client';
 import axios from 'axios';
+import { AkeneoApiClient } from './akeneo-api-client';
 
 describe('AkeneoApiClient', () => {
   const mockAxiosInstance = {

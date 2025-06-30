@@ -13,7 +13,7 @@ const defaultAxiosConfig = {
   maxContentLength: 1073741824, // 1GB
 };
 
-export default class AkeneoApiClient {
+export class AkeneoApiClient {
   public readonly httpClient: AxiosInstance;
   private readonly axiosConfig: AxiosRequestConfig;
 
