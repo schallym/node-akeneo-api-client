@@ -23,8 +23,9 @@ export type ProductModelsGetParams = {
 };
 
 export type CreateProductModelRequest = Partial<
-  Omit<ProductModel, 'created' | 'updated' | 'metadata' | 'quality_scores'>
->;
+  Omit<ProductModel, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'family_variant' | 'family'>
+> &
+  Required<Pick<ProductModel, 'family_variant' | 'family'>>;
 
 export type UpdateProductModelRequest = Partial<
   Omit<ProductModel, 'created' | 'updated' | 'metadata' | 'quality_scores'>

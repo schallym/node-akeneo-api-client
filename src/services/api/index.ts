@@ -4,3 +4,4 @@ export * from './product-uuid-api.service';
 export * from './product-models-api.service';
 export * from './product-media-files-api.service';
 export * from './jobs-api.service';
+export * from './families-api.service';
