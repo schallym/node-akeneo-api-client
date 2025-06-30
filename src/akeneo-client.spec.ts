@@ -1,6 +1,6 @@
 import AkeneoClient from './akeneo-client';
 import { AkeneoApiClient } from './services';
-import { ProductModelsApi, ProductsApi, ProductsUuidApi } from './services/api';
+import { JobsApi, ProductMediaFilesApi, ProductModelsApi, ProductsApi, ProductsUuidApi } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosRequestConfig } from 'axios';
 
@@ -84,5 +84,7 @@ describe('AkeneoClient', () => {
     expect(client.products).toBeInstanceOf(ProductsApi);
     expect(client.productsUuid).toBeInstanceOf(ProductsUuidApi);
     expect(client.productModels).toBeInstanceOf(ProductModelsApi);
+    expect(client.productMediaFiles).toBeInstanceOf(ProductMediaFilesApi);
+    expect(client.jobs).toBeInstanceOf(JobsApi);
   });
 });

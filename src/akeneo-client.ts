@@ -1,4 +1,4 @@
-import { ProductMediaFilesApi, ProductModelsApi, ProductsApi, ProductsUuidApi } from './services/api';
+import { JobsApi, ProductMediaFilesApi, ProductModelsApi, ProductsApi, ProductsUuidApi } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { AkeneoApiClient } from './services';
@@ -12,6 +12,7 @@ export default class AkeneoClient {
   public readonly productsUuid: ProductsUuidApi;
   public readonly productModels: ProductModelsApi;
   public readonly productMediaFiles: ProductMediaFilesApi;
+  public readonly jobs: JobsApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -22,5 +23,6 @@ export default class AkeneoClient {
     this.productsUuid = new ProductsUuidApi(this.apiClient);
     this.productModels = new ProductModelsApi(this.apiClient);
     this.productMediaFiles = new ProductMediaFilesApi(this.apiClient);
+    this.jobs = new JobsApi(this.apiClient);
   }
 }
