@@ -1,45 +1,28 @@
 import nock from 'nock';
-import { AkeneoApiClient } from '../src/services';
 import productsUuidMock from './mocks/products-uuid.mock';
-import { ProductsUuidApi } from '../src/services/api';
 import { UpdateProductRequest } from '../src/services/api';
+import AkeneoClient from '../src/akeneo-client';
+import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('Products UUID API E2E Tests', () => {
-  const baseUrl = 'https://akeneo.test';
-  let akeneoClient: AkeneoApiClient;
-  let productUuidApi: ProductsUuidApi;
+  let akeneoClient: AkeneoClient;
 
   beforeAll(() => {
-    akeneoClient = new AkeneoApiClient({
-      baseUrl,
-      username: 'test_user',
-      password: 'test_password',
-      clientId: 'client_id',
-      secret: 'secret',
-    });
-
-    productUuidApi = new ProductsUuidApi(akeneoClient);
-    nock.disableNetConnect();
+    akeneoClient = setupAkeneoClient();
   });
 
   afterAll(() => {
-    nock.enableNetConnect();
+    teardownNock();
   });
 
   beforeEach(() => {
-    nock.cleanAll();
-
-    nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
-      access_token: 'new_access_token',
-      refresh_token: 'new_refresh_token',
-      expires_in: 3600,
-    });
+    setupNock();
   });
 
   it('should retrieve a draft product', async () => {
     nock(baseUrl).get('/api/rest/v1/products-uuid/1234-5678-9012/draft').reply(200, productsUuidMock.getDraft);
 
-    const product = await productUuidApi.getDraft('1234-5678-9012');
+    const product = await akeneoClient.productsUuid.getDraft('1234-5678-9012');
 
     expect(product).toEqual(productsUuidMock.getDraft);
     expect(product.uuid).toBe('1234-5678-9012');
@@ -48,7 +31,7 @@ describe('Products UUID API E2E Tests', () => {
   it('should submit a draft for approval', async () => {
     nock(baseUrl).post('/api/rest/v1/products-uuid/1234-5678-9012/proposal').reply(204);
 
-    await productUuidApi.submitDraftForApproval('1234-5678-9012');
+    await akeneoClient.productsUuid.submitDraftForApproval('1234-5678-9012');
   });
 
   it('should update or create multiple products', async () => {
@@ -65,7 +48,7 @@ describe('Products UUID API E2E Tests', () => {
 
     nock(baseUrl).patch('/api/rest/v1/products-uuid').reply(200, productsUuidMock.updateCreateSeveral);
 
-    const result = await productUuidApi.updateOrCreateSeveral(products);
+    const result = await akeneoClient.productsUuid.updateOrCreateSeveral(products);
 
     expect(result).toHaveLength(2);
     expect(result[0].uuid).toBe('prod1');
@@ -79,7 +62,7 @@ describe('Products UUID API E2E Tests', () => {
       .matchHeader('Authorization', 'Bearer new_access_token')
       .reply(200, productsUuidMock.getDraft);
 
-    const product = await productUuidApi.getDraft('1234-5678-9012');
+    const product = await akeneoClient.productsUuid.getDraft('1234-5678-9012');
 
     expect(product).toEqual(productsUuidMock.getDraft);
   });
@@ -90,6 +73,6 @@ describe('Products UUID API E2E Tests', () => {
       message: 'Product "nonexistent_product" does not exist.',
     });
 
-    await expect(productUuidApi.getDraft('nonexistent_product')).rejects.toThrow();
+    await expect(akeneoClient.productsUuid.getDraft('nonexistent_product')).rejects.toThrow();
   });
 });

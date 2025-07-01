@@ -5,3 +5,4 @@ export * from './product-model.type';
 export * from './product-media-file.type';
 export * from './family.type';
 export * from './attribute.type';
+export * from './attribute-group.type';

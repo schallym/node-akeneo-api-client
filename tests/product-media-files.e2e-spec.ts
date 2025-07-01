@@ -1,37 +1,23 @@
 import nock from 'nock';
-import { AkeneoApiClient } from '../src/services';
-import { CreateProductMediaFileRequest, ProductMediaFilesApi } from '../src/services/api';
+import { CreateProductMediaFileRequest } from '../src/services/api';
 import { ProductMediaFileType } from '../src/types';
 import productMediaFilesMock from './mocks/product-media-files.mock';
+import AkeneoClient from '../src/akeneo-client';
+import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('ProductMediaFilesApi E2E', () => {
-  const baseUrl = 'https://akeneo.test';
-  let akeneoClient: AkeneoApiClient;
-  let mediaFilesApi: ProductMediaFilesApi;
+  let akeneoClient: AkeneoClient;
 
   beforeAll(() => {
-    akeneoClient = new AkeneoApiClient({
-      baseUrl,
-      username: 'test_user',
-      password: 'test_password',
-      clientId: 'client_id',
-      secret: 'secret',
-    });
-    mediaFilesApi = new ProductMediaFilesApi(akeneoClient);
-    nock.disableNetConnect();
+    akeneoClient = setupAkeneoClient();
   });
 
   afterAll(() => {
-    nock.enableNetConnect();
+    teardownNock();
   });
 
   beforeEach(() => {
-    nock.cleanAll();
-    nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
-      access_token: 'access_token',
-      refresh_token: 'refresh_token',
-      expires_in: 3600,
-    });
+    setupNock();
   });
 
   it('should create a new media file', async () => {
@@ -42,7 +28,7 @@ describe('ProductMediaFilesApi E2E', () => {
       file: 'file-content',
     };
 
-    await expect(mediaFilesApi.create(data)).resolves.toBeUndefined();
+    await expect(akeneoClient.productMediaFiles.create(data)).resolves.toBeUndefined();
   });
 
   it('should list media files', async () => {
@@ -66,7 +52,7 @@ describe('ProductMediaFilesApi E2E', () => {
 
     nock(baseUrl).get('/api/rest/v1/media-files').query({ page: 1, limit: 10 }).reply(200, mockResponse);
 
-    const result = await mediaFilesApi.list({ page: 1, limit: 10 });
+    const result = await akeneoClient.productMediaFiles.list({ page: 1, limit: 10 });
     expect(result).toEqual(mockResponse);
   });
 
@@ -86,20 +72,20 @@ describe('ProductMediaFilesApi E2E', () => {
 
     nock(baseUrl).get('/api/rest/v1/media-files/media_1').reply(200, productMediaFilesMock.get);
 
-    const result = await mediaFilesApi.get('media_1');
+    const result = await akeneoClient.productMediaFiles.get('media_1');
     expect(result).toEqual(mockMediaFile);
   });
 
   it('should download a media file', async () => {
     nock(baseUrl).get('/api/rest/v1/media-files/media_1/download').reply(200, productMediaFilesMock.download);
 
-    const result = await mediaFilesApi.download('media_1');
+    const result = await akeneoClient.productMediaFiles.download('media_1');
     expect(result).toBeInstanceOf(Buffer);
   });
 
   it('should handle API errors gracefully', async () => {
     nock(baseUrl).get('/api/rest/v1/media-files/nonexistent').reply(404, { code: 404, message: 'Not found' });
 
-    await expect(mediaFilesApi.get('nonexistent')).rejects.toThrow();
+    await expect(akeneoClient.productMediaFiles.get('nonexistent')).rejects.toThrow();
   });
 });

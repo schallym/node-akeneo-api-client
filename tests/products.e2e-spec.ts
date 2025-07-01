@@ -1,43 +1,28 @@
 import nock from 'nock';
-import { AkeneoApiClient } from '../src/services';
-import { ProductsApi, UpdateProductRequest } from '../src/services/api';
 import productMock from './mocks/products.mock';
+import AkeneoClient from '../src/akeneo-client';
+import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
+import { UpdateProductRequest } from '../src/services/api';
 
 describe('Products API E2E Tests', () => {
-  const baseUrl = 'https://akeneo.test';
-  let akeneoClient: AkeneoApiClient;
-  let productApi: ProductsApi;
+  let akeneoClient: AkeneoClient;
 
   beforeAll(() => {
-    akeneoClient = new AkeneoApiClient({
-      baseUrl,
-      username: 'test_user',
-      password: 'test_password',
-      clientId: 'client_id',
-      secret: 'secret',
-    });
-
-    productApi = new ProductsApi(akeneoClient);
-    nock.disableNetConnect();
+    akeneoClient = setupAkeneoClient();
   });
 
   afterAll(() => {
-    nock.enableNetConnect();
+    teardownNock();
   });
 
   beforeEach(() => {
-    nock.cleanAll();
-    nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
-      access_token: 'new_access_token',
-      refresh_token: 'new_refresh_token',
-      expires_in: 3600,
-    });
+    setupNock();
   });
 
   it('should retrieve a draft product', async () => {
     nock(baseUrl).get('/api/rest/v1/products/test_product_123/draft').reply(200, productMock.getDraft);
 
-    const product = await productApi.getDraft('test_product_123');
+    const product = await akeneoClient.products.getDraft('test_product_123');
 
     expect(product).toEqual(productMock.getDraft);
     expect(product.identifier).toBe('test_product_123');
@@ -46,7 +31,7 @@ describe('Products API E2E Tests', () => {
   it('should submit a draft for approval', async () => {
     nock(baseUrl).post('/api/rest/v1/products/test_product_123/proposal').reply(204);
 
-    await productApi.submitDraftForApproval('test_product_123');
+    await akeneoClient.products.submitDraftForApproval('test_product_123');
   });
 
   it('should update or create multiple products', async () => {
@@ -63,7 +48,7 @@ describe('Products API E2E Tests', () => {
 
     nock(baseUrl).patch('/api/rest/v1/products').reply(200, productMock.updateCreateSeveral);
 
-    const result = await productApi.updateOrCreateSeveral(products);
+    const result = await akeneoClient.products.updateOrCreateSeveral(products);
 
     expect(result).toHaveLength(2);
     expect(result[0].identifier).toBe('prod1');
@@ -83,7 +68,7 @@ describe('Products API E2E Tests', () => {
       .matchHeader('Authorization', 'Bearer new_access_token')
       .reply(200, productMock.getDraft);
 
-    const product = await productApi.getDraft('test_product_123');
+    const product = await akeneoClient.products.getDraft('test_product_123');
 
     expect(product).toEqual(productMock.getDraft);
   });
@@ -94,6 +79,6 @@ describe('Products API E2E Tests', () => {
       message: 'Product "nonexistent_product" does not exist.',
     });
 
-    await expect(productApi.getDraft('nonexistent_product')).rejects.toThrow();
+    await expect(akeneoClient.products.getDraft('nonexistent_product')).rejects.toThrow();
   });
 });

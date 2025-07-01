@@ -5,3 +5,5 @@ export * from './product-models-api.service';
 export * from './product-media-files-api.service';
 export * from './jobs-api.service';
 export * from './families-api.service';
+export * from './attributes-api.service';
+export * from './attribute-groups-api.service';

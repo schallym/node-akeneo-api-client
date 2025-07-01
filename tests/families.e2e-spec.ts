@@ -1,37 +1,23 @@
 import nock from 'nock';
-import { AkeneoApiClient } from '../src/services';
-import { CreateVariantFamilyRequest, FamiliesApi } from '../src/services/api';
+import { CreateVariantFamilyRequest } from '../src/services/api';
 import { Family, VariantFamily } from '../src/types';
 import familyMock from './mocks/family.mock';
+import AkeneoClient from '../src/akeneo-client';
+import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
-describe('FamiliesApi E2E', () => {
-  const baseUrl = 'https://akeneo.test';
-  let akeneoClient: AkeneoApiClient;
-  let familiesApi: FamiliesApi;
+describe('akeneoClient.families E2E', () => {
+  let akeneoClient: AkeneoClient;
 
   beforeAll(() => {
-    akeneoClient = new AkeneoApiClient({
-      baseUrl,
-      username: 'test_user',
-      password: 'test_password',
-      clientId: 'client_id',
-      secret: 'secret',
-    });
-    familiesApi = new FamiliesApi(akeneoClient);
-    nock.disableNetConnect();
+    akeneoClient = setupAkeneoClient();
   });
 
   afterAll(() => {
-    nock.enableNetConnect();
+    teardownNock();
   });
 
   beforeEach(() => {
-    nock.cleanAll();
-    nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
-      access_token: 'access_token',
-      refresh_token: 'refresh_token',
-      expires_in: 3600,
-    });
+    setupNock();
   });
 
   it('should update or create several families', async () => {
@@ -44,7 +30,7 @@ describe('FamiliesApi E2E', () => {
 
     nock(baseUrl).patch('/api/rest/v1/families').reply(200, mockResponse);
 
-    const result = await familiesApi.updateOrCreateSeveral(families);
+    const result = await akeneoClient.families.updateOrCreateSeveral(families);
 
     expect(result).toEqual([
       { code: 200, attributes: ['attr1'] },
@@ -61,20 +47,20 @@ describe('FamiliesApi E2E', () => {
 
     nock(baseUrl).post(`/api/rest/v1/families/${familyCode}/variants`).reply(201);
 
-    await expect(familiesApi.createVariantFamily(familyCode, data)).resolves.toBeUndefined();
+    await expect(akeneoClient.families.createVariantFamily(familyCode, data)).resolves.toBeUndefined();
   });
 
   it('should handle API errors gracefully', async () => {
     nock(baseUrl).patch('/api/rest/v1/families').reply(400, { code: 400, message: 'Bad request' });
 
-    await expect(familiesApi.updateOrCreateSeveral([{ code: 'bad' }])).rejects.toThrow();
+    await expect(akeneoClient.families.updateOrCreateSeveral([{ code: 'bad' }])).rejects.toThrow();
   });
 
   it('should list variant families', async () => {
     const familyCode = 'family1';
     nock(baseUrl).get(`/api/rest/v1/families/${familyCode}/variants`).reply(200, familyMock.listVariantFamilies);
 
-    const result = await familiesApi.listVariantFamilies(familyCode);
+    const result = await akeneoClient.families.listVariantFamilies(familyCode);
 
     expect(result._embedded.items).toHaveLength(1);
     expect(result._embedded.items[0].code).toBe('tables');
@@ -84,7 +70,7 @@ describe('FamiliesApi E2E', () => {
     const familyCode = 'tables';
     nock(baseUrl).get(`/api/rest/v1/families/${familyCode}/variants`).reply(200, familyMock.getVariantFamily);
 
-    const result = await familiesApi.getVariantFamily(familyCode);
+    const result = await akeneoClient.families.getVariantFamily(familyCode);
 
     expect(result.code).toBe('tables');
     expect(result.labels.en_US).toBe('Tables');
@@ -97,7 +83,7 @@ describe('FamiliesApi E2E', () => {
 
     nock(baseUrl).patch(`/api/rest/v1/families/${familyCode}/variants/${code}`).reply(204);
 
-    await expect(familiesApi.updateVariantFamily(familyCode, code, data)).resolves.toBeUndefined();
+    await expect(akeneoClient.families.updateVariantFamily(familyCode, code, data)).resolves.toBeUndefined();
   });
 
   it('should handle variant family creation errors gracefully', async () => {
@@ -111,7 +97,7 @@ describe('FamiliesApi E2E', () => {
       .post(`/api/rest/v1/families/${familyCode}/variants`)
       .reply(400, { code: 400, message: 'Bad request' });
 
-    await expect(familiesApi.createVariantFamily(familyCode, data)).rejects.toThrow();
+    await expect(akeneoClient.families.createVariantFamily(familyCode, data)).rejects.toThrow();
   });
 
   it('should update or create several variant families', async () => {
@@ -125,7 +111,7 @@ describe('FamiliesApi E2E', () => {
       .patch(`/api/rest/v1/families/${familyCode}/variants`)
       .reply(200, familyMock.updateCreateSeveralVariantFamilies);
 
-    const result = await familiesApi.updateOrCreateSeveralVariantFamilies(familyCode, variantFamilies);
+    const result = await akeneoClient.families.updateOrCreateSeveralVariantFamilies(familyCode, variantFamilies);
 
     expect(result).toEqual([
       {

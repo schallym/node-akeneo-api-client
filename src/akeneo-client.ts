@@ -1,4 +1,6 @@
 import {
+  AttributeGroupsApi,
+  AttributesApi,
   FamiliesApi,
   JobsApi,
   ProductMediaFilesApi,
@@ -21,6 +23,8 @@ export default class AkeneoClient {
   public readonly productMediaFiles: ProductMediaFilesApi;
   public readonly jobs: JobsApi;
   public readonly families: FamiliesApi;
+  public readonly attributes: AttributesApi;
+  public readonly attributeGroups: AttributeGroupsApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -33,5 +37,7 @@ export default class AkeneoClient {
     this.productMediaFiles = new ProductMediaFilesApi(this.apiClient);
     this.jobs = new JobsApi(this.apiClient);
     this.families = new FamiliesApi(this.apiClient);
+    this.attributes = new AttributesApi(this.apiClient);
+    this.attributeGroups = new AttributeGroupsApi(this.apiClient);
   }
 }

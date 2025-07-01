@@ -1,37 +1,23 @@
 import nock from 'nock';
-import { AkeneoApiClient } from '../src/services';
-import { AttributesApi, CreateAttributeOptionRequest } from '../src/services/api/attributes-api.service';
+import { CreateAttributeOptionRequest } from '../src/services/api';
 import { Attribute, AttributeTypes } from '../src/types';
 import attributeMock from './mocks/attribute.mock';
+import AkeneoClient from '../src/akeneo-client';
+import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
-describe('AttributesApi E2E', () => {
-  const baseUrl = 'https://akeneo.test';
-  let akeneoClient: AkeneoApiClient;
-  let attributesApi: AttributesApi;
+describe('keneoClient.attributes E2E', () => {
+  let akeneoClient: AkeneoClient;
 
   beforeAll(() => {
-    akeneoClient = new AkeneoApiClient({
-      baseUrl,
-      username: 'test_user',
-      password: 'test_password',
-      clientId: 'client_id',
-      secret: 'secret',
-    });
-    attributesApi = new AttributesApi(akeneoClient);
-    nock.disableNetConnect();
+    akeneoClient = setupAkeneoClient();
   });
 
   afterAll(() => {
-    nock.enableNetConnect();
+    teardownNock();
   });
 
   beforeEach(() => {
-    nock.cleanAll();
-    nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
-      access_token: 'access_token',
-      refresh_token: 'refresh_token',
-      expires_in: 3600,
-    });
+    setupNock();
   });
 
   it('should update or create several attributes', async () => {
@@ -42,7 +28,7 @@ describe('AttributesApi E2E', () => {
 
     nock(baseUrl).patch('/api/rest/v1/attributes').reply(200, attributeMock.updateCreateSeveralAttributeOptions);
 
-    const result = await attributesApi.updateOrCreateSeveral(attributes);
+    const result = await akeneoClient.attributes.updateOrCreateSeveral(attributes);
 
     expect(result).toEqual([
       {
@@ -68,7 +54,7 @@ describe('AttributesApi E2E', () => {
       .query({ page: 1, limit: 10 })
       .reply(200, attributeMock.listAttributeOptions);
 
-    const result = await attributesApi.listAttributeOptions(attributeCode, { page: 1, limit: 10 });
+    const result = await akeneoClient.attributes.listAttributeOptions(attributeCode, { page: 1, limit: 10 });
 
     expect(result).toEqual(attributeMock.listAttributeOptions);
   });
@@ -81,7 +67,7 @@ describe('AttributesApi E2E', () => {
       .get(`/api/rest/v1/attributes/${attributeCode}/options/${optionCode}`)
       .reply(200, attributeMock.getAttributeOption);
 
-    const result = await attributesApi.getAttributeOption(attributeCode, optionCode);
+    const result = await akeneoClient.attributes.getAttributeOption(attributeCode, optionCode);
 
     expect(result).toEqual(attributeMock.getAttributeOption);
   });
@@ -95,7 +81,7 @@ describe('AttributesApi E2E', () => {
       .post(`/api/rest/v1/attributes/${attributeCode}/options`, (body) => body.code === 'opt2')
       .reply(201, mockOption);
 
-    const result = await attributesApi.createAttributeOption(attributeCode, data);
+    const result = await akeneoClient.attributes.createAttributeOption(attributeCode, data);
 
     expect(result).toEqual(mockOption);
   });
@@ -112,7 +98,9 @@ describe('AttributesApi E2E', () => {
       )
       .reply(204);
 
-    await expect(attributesApi.updateAttributeOption(attributeCode, optionCode, data)).resolves.toBeUndefined();
+    await expect(
+      akeneoClient.attributes.updateAttributeOption(attributeCode, optionCode, data),
+    ).resolves.toBeUndefined();
   });
 
   it('should update or create several attribute options', async () => {
@@ -128,7 +116,7 @@ describe('AttributesApi E2E', () => {
 
     nock(baseUrl).patch(`/api/rest/v1/attributes/${attributeCode}/options`).reply(200, mockResponse);
 
-    const result = await attributesApi.updateOrCreateSeveralAttributeOptions(attributeCode, options);
+    const result = await akeneoClient.attributes.updateOrCreateSeveralAttributeOptions(attributeCode, options);
 
     expect(result).toEqual([
       { line: 1, code: 'opt1', status_code: 200, message: 'ok' },
@@ -139,6 +127,6 @@ describe('AttributesApi E2E', () => {
   it('should handle API errors gracefully', async () => {
     nock(baseUrl).patch('/api/rest/v1/attributes').reply(400, { code: 400, message: 'Bad request' });
 
-    await expect(attributesApi.updateOrCreateSeveral([{ code: 'bad' }])).rejects.toThrow();
+    await expect(akeneoClient.attributes.updateOrCreateSeveral([{ code: 'bad' }])).rejects.toThrow();
   });
 });
