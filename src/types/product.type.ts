@@ -21,7 +21,7 @@ export type ProductType = {
 export type ProductUuid = Omit<ProductType, 'identifier'>;
 
 export type ProductValue = {
-  data: any;
+  data: string | number | boolean | object;
   locale?: string | null;
   scope?: string | null;
   attribute_type?: string;

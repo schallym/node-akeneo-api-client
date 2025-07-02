@@ -24,7 +24,12 @@ describe('ProductMediaFilesApi E2E', () => {
     nock(baseUrl).post('/api/rest/v1/media-files').reply(201);
 
     const data: CreateProductMediaFileRequest = {
-      product: 'test-product',
+      product: {
+        identifier: 'product_123',
+        attributes: 'image',
+        scope: null,
+        locale: null,
+      },
       file: 'file-content',
     };
 

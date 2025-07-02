@@ -1,8 +1,12 @@
 import {
+  AssociationTypesApi,
   AttributeGroupsApi,
   AttributesApi,
+  CategoriesApi,
+  ChannelsApi,
   FamiliesApi,
   JobsApi,
+  LocalesApi,
   ProductMediaFilesApi,
   ProductModelsApi,
   ProductsApi,
@@ -25,6 +29,10 @@ export default class AkeneoClient {
   public readonly families: FamiliesApi;
   public readonly attributes: AttributesApi;
   public readonly attributeGroups: AttributeGroupsApi;
+  public readonly associationTypes: AssociationTypesApi;
+  public readonly categories: CategoriesApi;
+  public readonly channels: ChannelsApi;
+  public readonly locales: LocalesApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -39,5 +47,9 @@ export default class AkeneoClient {
     this.families = new FamiliesApi(this.apiClient);
     this.attributes = new AttributesApi(this.apiClient);
     this.attributeGroups = new AttributeGroupsApi(this.apiClient);
+    this.associationTypes = new AssociationTypesApi(this.apiClient);
+    this.categories = new CategoriesApi(this.apiClient);
+    this.channels = new ChannelsApi(this.apiClient);
+    this.locales = new LocalesApi(this.apiClient);
   }
 }

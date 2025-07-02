@@ -50,6 +50,10 @@ export class AttributesApi extends BaseApi<
     super(client, '/api/rest/v1/attributes');
   }
 
+  public async delete(): Promise<void> {
+    throw new Error('Method not implemented. Deletion of attributes is not supported by the API.');
+  }
+
   public async updateOrCreateSeveral(
     data: Partial<Attribute>[],
   ): Promise<SeveralAttributesUpdateOrCreationResponseLine[]> {

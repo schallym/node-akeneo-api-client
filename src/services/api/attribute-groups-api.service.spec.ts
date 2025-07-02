@@ -50,4 +50,12 @@ describe('AttributeGroupsApi', () => {
       ]);
     });
   });
+
+  describe('delete', () => {
+    it('should throw an error when trying to delete an attribute group', async () => {
+      await expect(api.delete()).rejects.toThrow(
+        'Method not implemented. Deletion of attribute groups is not supported by the API.',
+      );
+    });
+  });
 });

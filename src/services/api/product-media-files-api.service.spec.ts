@@ -71,7 +71,12 @@ describe('ProductMediaFilesApi', () => {
   describe('create', () => {
     it('should create a new media file', async () => {
       const data: CreateProductMediaFileRequest = {
-        product: 'prod1',
+        product: {
+          identifier: 'product_123',
+          attributes: 'attribute1,attribute2',
+          scope: 'ecommerce',
+          locale: 'en_US',
+        },
         file: 'file-content',
       };
       mockHttpClient.post.mockResolvedValue({});

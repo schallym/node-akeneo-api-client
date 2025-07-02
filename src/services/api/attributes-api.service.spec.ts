@@ -144,4 +144,12 @@ describe('AttributesApi', () => {
       ]);
     });
   });
+
+  describe('delete', () => {
+    it('should throw an error when trying to delete an attribute', async () => {
+      await expect(api.delete()).rejects.toThrow(
+        'Method not implemented. Deletion of attributes is not supported by the API.',
+      );
+    });
+  });
 });

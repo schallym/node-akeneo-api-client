@@ -8,8 +8,18 @@ export type ProductMediaFilesSearchParams = {
 };
 
 export type CreateProductMediaFileRequest = {
-  product?: string;
-  product_model?: string;
+  product?: {
+    identifier: string;
+    attributes: string;
+    scope: string | null;
+    locale: string | null;
+  };
+  product_model?: {
+    code: string;
+    attributes: string;
+    scope: string | null;
+    locale: string | null;
+  };
   file: Blob | string;
 };
 

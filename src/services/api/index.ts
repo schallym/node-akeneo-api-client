@@ -7,3 +7,7 @@ export * from './jobs-api.service';
 export * from './families-api.service';
 export * from './attributes-api.service';
 export * from './attribute-groups-api.service';
+export * from './association-types-api.service';
+export * from './categories-api.service';
+export * from './channels-api.service';
+export * from './locales-api.service';

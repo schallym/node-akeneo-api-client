@@ -1,10 +1,14 @@
 import AkeneoClient from './akeneo-client';
 import { AkeneoApiClient } from './services';
 import {
+  AssociationTypesApi,
   AttributeGroupsApi,
   AttributesApi,
+  CategoriesApi,
+  ChannelsApi,
   FamiliesApi,
   JobsApi,
+  LocalesApi,
   ProductMediaFilesApi,
   ProductModelsApi,
   ProductsApi,
@@ -98,5 +102,9 @@ describe('AkeneoClient', () => {
     expect(client.families).toBeInstanceOf(FamiliesApi);
     expect(client.attributes).toBeInstanceOf(AttributesApi);
     expect(client.attributeGroups).toBeInstanceOf(AttributeGroupsApi);
+    expect(client.associationTypes).toBeInstanceOf(AssociationTypesApi);
+    expect(client.categories).toBeInstanceOf(CategoriesApi);
+    expect(client.channels).toBeInstanceOf(ChannelsApi);
+    expect(client.locales).toBeInstanceOf(LocalesApi);
   });
 });

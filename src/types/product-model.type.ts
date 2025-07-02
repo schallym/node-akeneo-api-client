@@ -17,7 +17,7 @@ export type ProductModelType = {
 };
 
 export type ProductModelValue = {
-  data: any;
+  data: string | number | boolean | object;
   locale?: string | null;
   scope?: string | null;
   attribute_type?: string;

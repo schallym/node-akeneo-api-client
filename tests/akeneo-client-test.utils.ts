@@ -17,7 +17,6 @@ export function setupNock() {
   nock.disableNetConnect();
   nock.cleanAll();
 
-  nock.cleanAll();
   nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
     access_token: 'new_access_token',
     refresh_token: 'new_refresh_token',
@@ -26,6 +25,6 @@ export function setupNock() {
 }
 
 export function teardownNock() {
-  nock.enableNetConnect();
   nock.cleanAll();
+  nock.enableNetConnect();
 }
