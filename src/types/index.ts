@@ -13,3 +13,4 @@ export * from './locale.type';
 export * from './currency.type';
 export * from './measurement-family.type';
 export * from './reference-entities.type';
+export * from './assets.type';

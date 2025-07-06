@@ -14,3 +14,4 @@ export * from './locales-api.service';
 export * from './currencies-api.service';
 export * from './measurement-families-api.service';
 export * from './reference-entities-api.service';
+export * from './asset-families-api.service';
