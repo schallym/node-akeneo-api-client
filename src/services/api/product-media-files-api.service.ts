@@ -28,19 +28,19 @@ export class ProductMediaFilesApi {
 
   constructor(private readonly client: AkeneoApiClient) {}
 
-  public async get(code: string): Promise<ProductMediaFileType> {
+  async get(code: string): Promise<ProductMediaFileType> {
     return this.client.httpClient.get(`${this.endpoint}/${code}`).then((response) => response.data);
   }
 
-  public async list(params?: ProductMediaFilesSearchParams): Promise<PaginatedResponse<ProductMediaFileType>> {
+  async list(params?: ProductMediaFilesSearchParams): Promise<PaginatedResponse<ProductMediaFileType>> {
     return this.client.httpClient.get(this.endpoint, { params }).then((response) => response.data);
   }
 
-  public async create(data: CreateProductMediaFileRequest): Promise<void> {
+  async create(data: CreateProductMediaFileRequest): Promise<void> {
     await this.client.httpClient.post(this.endpoint, data);
   }
 
-  public async download(code: string): Promise<ArrayBuffer> {
+  async download(code: string): Promise<ArrayBuffer> {
     return this.client.httpClient
       .get(`${this.endpoint}/${code}/download`, { responseType: 'arraybuffer' })
       .then((response) => response.data);

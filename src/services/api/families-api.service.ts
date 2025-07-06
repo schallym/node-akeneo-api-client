@@ -39,7 +39,7 @@ export class FamiliesApi extends BaseApi<Family, null, FamiliesSearchParams, Cre
     super(client, '/api/rest/v1/families');
   }
 
-  public async updateOrCreateSeveral(data: Partial<Family>[]): Promise<SeveralFamiliesUpdateOrCreationResponseLine[]> {
+  async updateOrCreateSeveral(data: Partial<Family>[]): Promise<SeveralFamiliesUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
       .patch(`${this.endpoint}`, data.map((item) => JSON.stringify(item)).join('\n'), {
         headers: {
@@ -54,7 +54,7 @@ export class FamiliesApi extends BaseApi<Family, null, FamiliesSearchParams, Cre
       });
   }
 
-  public async listVariantFamilies(
+  async listVariantFamilies(
     familyCode: string,
     params?: VariantFamiliesSearchParams,
   ): Promise<PaginatedResponse<VariantFamily>> {
@@ -63,19 +63,19 @@ export class FamiliesApi extends BaseApi<Family, null, FamiliesSearchParams, Cre
       .then((response) => response.data);
   }
 
-  public async getVariantFamily(familyCode: string): Promise<VariantFamily> {
+  async getVariantFamily(familyCode: string): Promise<VariantFamily> {
     return this.client.httpClient.get(`${this.endpoint}/${familyCode}/variants`).then((response) => response.data);
   }
 
-  public async createVariantFamily(familyCode: string, data: CreateVariantFamilyRequest): Promise<void> {
+  async createVariantFamily(familyCode: string, data: CreateVariantFamilyRequest): Promise<void> {
     await this.client.httpClient.post(`${this.endpoint}/${familyCode}/variants`, data);
   }
 
-  public async updateVariantFamily(familyCode: string, code: string, data: Partial<VariantFamily>): Promise<void> {
+  async updateVariantFamily(familyCode: string, code: string, data: Partial<VariantFamily>): Promise<void> {
     await this.client.httpClient.patch(`${this.endpoint}/${familyCode}/variants/${code}`, data);
   }
 
-  public async updateOrCreateSeveralVariantFamilies(
+  async updateOrCreateSeveralVariantFamilies(
     familyCode: string,
     data: Partial<VariantFamily>[],
   ): Promise<SeveralVariantFamiliesUpdateOrCreationResponseLine[]> {

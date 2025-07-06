@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../';
-import { ProductType } from '../../types';
+import { Product } from '../../types';
 import { BaseApi } from './base-api.service';
 
 export type ProductsSearchParams = {
@@ -26,15 +26,17 @@ export type ProductsGetParams = {
 };
 
 export type CreateProductRequest = Partial<
-  Omit<ProductType, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
->;
+  Omit<Product, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses' | 'identifier'>
+> &
+  Required<Pick<Product, 'identifier'>>;
 
 export type UpdateProductRequest = Partial<
-  Omit<ProductType, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
-> & {
-  add_categories?: string[];
-  remove_categories?: string[];
-};
+  Omit<Product, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses' | 'identifier'>
+> &
+  Required<Pick<Product, 'identifier'>> & {
+    add_categories?: string[];
+    remove_categories?: string[];
+  };
 
 export type SeveralProductsUpdateOrCreationResponseLine = {
   line: number;
@@ -44,7 +46,7 @@ export type SeveralProductsUpdateOrCreationResponseLine = {
 };
 
 export class ProductsApi extends BaseApi<
-  ProductType,
+  Product,
   ProductsGetParams,
   ProductsSearchParams,
   CreateProductRequest,
@@ -54,9 +56,7 @@ export class ProductsApi extends BaseApi<
     super(client, '/api/rest/v1/products');
   }
 
-  public async updateOrCreateSeveral(
-    data: UpdateProductRequest[],
-  ): Promise<SeveralProductsUpdateOrCreationResponseLine[]> {
+  async updateOrCreateSeveral(data: UpdateProductRequest[]): Promise<SeveralProductsUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
       .patch(`${this.endpoint}`, data.map((item) => JSON.stringify(item)).join('\n'), {
         headers: {
@@ -71,11 +71,11 @@ export class ProductsApi extends BaseApi<
       });
   }
 
-  public async submitDraftForApproval(identifier: string): Promise<void> {
+  async submitDraftForApproval(identifier: string): Promise<void> {
     await this.client.httpClient.post(`${this.endpoint}/${identifier}/proposal`, {});
   }
 
-  public async getDraft(identifier: string): Promise<ProductType> {
+  async getDraft(identifier: string): Promise<Product> {
     return this.client.httpClient.get(`${this.endpoint}/${identifier}/draft`).then((response) => response.data);
   }
 }

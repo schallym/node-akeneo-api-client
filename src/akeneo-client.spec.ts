@@ -6,13 +6,16 @@ import {
   AttributesApi,
   CategoriesApi,
   ChannelsApi,
+  CurrenciesApi,
   FamiliesApi,
   JobsApi,
   LocalesApi,
+  MeasurementFamiliesApi,
   ProductMediaFilesApi,
   ProductModelsApi,
   ProductsApi,
   ProductsUuidApi,
+  ReferenceEntitiesApi,
 } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosRequestConfig } from 'axios';
@@ -106,5 +109,8 @@ describe('AkeneoClient', () => {
     expect(client.categories).toBeInstanceOf(CategoriesApi);
     expect(client.channels).toBeInstanceOf(ChannelsApi);
     expect(client.locales).toBeInstanceOf(LocalesApi);
+    expect(client.currencies).toBeInstanceOf(CurrenciesApi);
+    expect(client.measurementFamilies).toBeInstanceOf(MeasurementFamiliesApi);
+    expect(client.referenceEntities).toBeInstanceOf(ReferenceEntitiesApi);
   });
 });

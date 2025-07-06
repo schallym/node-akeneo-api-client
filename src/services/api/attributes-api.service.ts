@@ -50,13 +50,11 @@ export class AttributesApi extends BaseApi<
     super(client, '/api/rest/v1/attributes');
   }
 
-  public async delete(): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented. Deletion of attributes is not supported by the API.');
   }
 
-  public async updateOrCreateSeveral(
-    data: Partial<Attribute>[],
-  ): Promise<SeveralAttributesUpdateOrCreationResponseLine[]> {
+  async updateOrCreateSeveral(data: Partial<Attribute>[]): Promise<SeveralAttributesUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
       .patch(`${this.endpoint}`, data.map((item) => JSON.stringify(item)).join('\n'), {
         headers: {
@@ -71,7 +69,7 @@ export class AttributesApi extends BaseApi<
       });
   }
 
-  public async listAttributeOptions(
+  async listAttributeOptions(
     attributeCode: string,
     params?: AttributeOptionsSearchParams,
   ): Promise<PaginatedResponse<AttributeOption>> {
@@ -80,22 +78,19 @@ export class AttributesApi extends BaseApi<
       .then((response) => response.data);
   }
 
-  public async getAttributeOption(attributeCode: string, optionCode: string): Promise<AttributeOption> {
+  async getAttributeOption(attributeCode: string, optionCode: string): Promise<AttributeOption> {
     return this.client.httpClient
       .get(`${this.endpoint}/${attributeCode}/options/${optionCode}`)
       .then((response) => response.data);
   }
 
-  public async createAttributeOption(
-    attributeCode: string,
-    data: CreateAttributeOptionRequest,
-  ): Promise<AttributeOption> {
+  async createAttributeOption(attributeCode: string, data: CreateAttributeOptionRequest): Promise<AttributeOption> {
     return this.client.httpClient
       .post(`${this.endpoint}/${attributeCode}/options`, data)
       .then((response) => response.data);
   }
 
-  public async updateAttributeOption(
+  async updateAttributeOption(
     attributeCode: string,
     optionCode: string,
     data: Partial<AttributeOption>,
@@ -103,7 +98,7 @@ export class AttributesApi extends BaseApi<
     await this.client.httpClient.patch(`${this.endpoint}/${attributeCode}/options/${optionCode}`, data);
   }
 
-  public async updateOrCreateSeveralAttributeOptions(
+  async updateOrCreateSeveralAttributeOptions(
     attributeCode: string,
     data: Partial<AttributeOption>[],
   ): Promise<SeveralAttributeOptionsUpdateOrCreationResponseLine[]> {

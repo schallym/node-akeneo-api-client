@@ -1,6 +1,6 @@
-import { ProductType } from '../../src/types';
+import { Product } from '../../src/types';
 
-const productsMock: ProductType = {
+const productsMock: Product = {
   uuid: '1234-5678-9012',
   identifier: 'test_product_123',
   enabled: true,

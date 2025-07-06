@@ -14,7 +14,7 @@ const defaultAxiosConfig = {
 };
 
 export class AkeneoApiClient {
-  public readonly httpClient: AxiosInstance;
+  readonly httpClient: AxiosInstance;
   private readonly axiosConfig: AxiosRequestConfig;
 
   constructor(

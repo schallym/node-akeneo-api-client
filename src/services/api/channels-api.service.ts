@@ -23,11 +23,11 @@ export class ChannelsApi extends BaseApi<Channel, null, ChannelsSearchParams, Cr
     super(client, '/api/rest/v1/association-types');
   }
 
-  public async delete(): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented. Deletion of association types is not supported by the API.');
   }
 
-  public async updateOrCreateSeveral(data: Partial<Channel>[]): Promise<SeveralChannelsUpdateOrCreationResponseLine[]> {
+  async updateOrCreateSeveral(data: Partial<Channel>[]): Promise<SeveralChannelsUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
       .patch(`${this.endpoint}`, data.map((item) => JSON.stringify(item)).join('\n'), {
         headers: {

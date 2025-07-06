@@ -29,11 +29,11 @@ export class AssociationTypesApi extends BaseApi<
     super(client, '/api/rest/v1/association-types');
   }
 
-  public async delete(): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented. Deletion of association types is not supported by the API.');
   }
 
-  public async updateOrCreateSeveral(
+  async updateOrCreateSeveral(
     data: Partial<AssociationType>[],
   ): Promise<SeveralAssociationTypesUpdateOrCreationResponseLine[]> {
     return this.client.httpClient

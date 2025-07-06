@@ -1,6 +1,6 @@
 import nock from 'nock';
 import productsUuidMock from './mocks/products-uuid.mock';
-import { UpdateProductRequest } from '../src/services/api';
+import { UpdateProductUuidRequest } from '../src/services/api';
 import AkeneoClient from '../src/akeneo-client';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
@@ -35,7 +35,7 @@ describe('Products UUID API E2E Tests', () => {
   });
 
   it('should update or create multiple products', async () => {
-    const products: UpdateProductRequest[] = [
+    const products: UpdateProductUuidRequest[] = [
       {
         uuid: 'prod1',
         values: { name: [{ locale: null, scope: null, data: 'Product 1' }] },

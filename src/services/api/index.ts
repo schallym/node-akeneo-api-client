@@ -11,3 +11,6 @@ export * from './association-types-api.service';
 export * from './categories-api.service';
 export * from './channels-api.service';
 export * from './locales-api.service';
+export * from './currencies-api.service';
+export * from './measurement-families-api.service';
+export * from './reference-entities-api.service';

@@ -9,11 +9,11 @@ export class JobsApi {
 
   constructor(private readonly client: AkeneoApiClient) {}
 
-  public async launchExportJob(code: string): Promise<LaunchJobResponse> {
+  async launchExportJob(code: string): Promise<LaunchJobResponse> {
     return this.client.httpClient.post(`${this.endpoint}/export/${code}`, {}).then((response) => response.data);
   }
 
-  public async launchImportJob(code: string): Promise<LaunchJobResponse> {
+  async launchImportJob(code: string): Promise<LaunchJobResponse> {
     return this.client.httpClient.post(`${this.endpoint}/import/${code}`, {}).then((response) => response.data);
   }
 }

@@ -35,11 +35,11 @@ export class AttributeGroupsApi extends BaseApi<
     super(client, '/api/rest/v1/attribute-groups');
   }
 
-  public async delete(): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented. Deletion of attribute groups is not supported by the API.');
   }
 
-  public async updateOrCreateSeveral(
+  async updateOrCreateSeveral(
     data: Partial<AttributeGroup>[],
   ): Promise<SeveralAttributeGroupsUpdateOrCreationResponseLine[]> {
     return this.client.httpClient

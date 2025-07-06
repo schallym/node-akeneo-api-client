@@ -4,13 +4,16 @@ import {
   AttributesApi,
   CategoriesApi,
   ChannelsApi,
+  CurrenciesApi,
   FamiliesApi,
   JobsApi,
   LocalesApi,
+  MeasurementFamiliesApi,
   ProductMediaFilesApi,
   ProductModelsApi,
   ProductsApi,
   ProductsUuidApi,
+  ReferenceEntitiesApi,
 } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
@@ -18,21 +21,24 @@ import { AkeneoApiClient } from './services';
 
 export default class AkeneoClient {
   private readonly apiClient: AkeneoApiClient;
-  public readonly httpClient: AxiosInstance;
+  readonly httpClient: AxiosInstance;
 
   // API services
-  public readonly products: ProductsApi;
-  public readonly productsUuid: ProductsUuidApi;
-  public readonly productModels: ProductModelsApi;
-  public readonly productMediaFiles: ProductMediaFilesApi;
-  public readonly jobs: JobsApi;
-  public readonly families: FamiliesApi;
-  public readonly attributes: AttributesApi;
-  public readonly attributeGroups: AttributeGroupsApi;
-  public readonly associationTypes: AssociationTypesApi;
-  public readonly categories: CategoriesApi;
-  public readonly channels: ChannelsApi;
-  public readonly locales: LocalesApi;
+  readonly products: ProductsApi;
+  readonly productsUuid: ProductsUuidApi;
+  readonly productModels: ProductModelsApi;
+  readonly productMediaFiles: ProductMediaFilesApi;
+  readonly jobs: JobsApi;
+  readonly families: FamiliesApi;
+  readonly attributes: AttributesApi;
+  readonly attributeGroups: AttributeGroupsApi;
+  readonly associationTypes: AssociationTypesApi;
+  readonly categories: CategoriesApi;
+  readonly channels: ChannelsApi;
+  readonly locales: LocalesApi;
+  readonly currencies: CurrenciesApi;
+  readonly measurementFamilies: MeasurementFamiliesApi;
+  readonly referenceEntities: ReferenceEntitiesApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -51,5 +57,8 @@ export default class AkeneoClient {
     this.categories = new CategoriesApi(this.apiClient);
     this.channels = new ChannelsApi(this.apiClient);
     this.locales = new LocalesApi(this.apiClient);
+    this.currencies = new CurrenciesApi(this.apiClient);
+    this.measurementFamilies = new MeasurementFamiliesApi(this.apiClient);
+    this.referenceEntities = new ReferenceEntitiesApi(this.apiClient);
   }
 }

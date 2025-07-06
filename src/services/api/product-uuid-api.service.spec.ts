@@ -114,7 +114,8 @@ describe('ProductsUuidApi', () => {
     });
 
     it('should use the correct endpoint for update method', async () => {
-      const updateData: Partial<ProductUuid> = {
+      const updateData: UpdateProductUuidRequest = {
+        uuid: 'testUuid',
         values: { name: [{ locale: 'en_US', scope: null, data: 'Updated Product' }] },
       };
 

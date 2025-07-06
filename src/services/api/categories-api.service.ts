@@ -46,13 +46,11 @@ export class CategoriesApi extends BaseApi<
     super(client, '/api/rest/v1/categories');
   }
 
-  public async delete(): Promise<void> {
+  async delete(): Promise<void> {
     throw new Error('Method not implemented. Deletion of categories is not supported by the API.');
   }
 
-  public async updateOrCreateSeveral(
-    data: Partial<Category>[],
-  ): Promise<SeveralCategoriesUpdateOrCreationResponseLine[]> {
+  async updateOrCreateSeveral(data: Partial<Category>[]): Promise<SeveralCategoriesUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
       .patch(`${this.endpoint}`, data.map((item) => JSON.stringify(item)).join('\n'), {
         headers: {
@@ -67,11 +65,11 @@ export class CategoriesApi extends BaseApi<
       });
   }
 
-  public async createCategoryMediaFile(data: CreateCategoryMediaFileRequest): Promise<void> {
+  async createCategoryMediaFile(data: CreateCategoryMediaFileRequest): Promise<void> {
     await this.client.httpClient.post('/api/rest/v1/category-media-files', data);
   }
 
-  public async downloadCategoryMediaFile(filePath: string): Promise<ArrayBuffer> {
+  async downloadCategoryMediaFile(filePath: string): Promise<ArrayBuffer> {
     return this.client.httpClient
       .get(`/api/rest/v1/category-media-files/${filePath}/download`, {
         responseType: 'arraybuffer',

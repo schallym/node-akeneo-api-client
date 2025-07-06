@@ -52,7 +52,7 @@ export class ProductModelsApi extends BaseApi<
     super(client, '/api/rest/v1/product-models');
   }
 
-  public async updateOrCreateSeveral(
+  async updateOrCreateSeveral(
     data: UpdateProductModelRequest[],
   ): Promise<SeveralProductModelsUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
@@ -69,11 +69,11 @@ export class ProductModelsApi extends BaseApi<
       });
   }
 
-  public async submitDraftForApproval(identifier: string): Promise<void> {
+  async submitDraftForApproval(identifier: string): Promise<void> {
     await this.client.httpClient.post(`${this.endpoint}/${identifier}/proposal`, {});
   }
 
-  public async getDraft(identifier: string): Promise<ProductModelType> {
+  async getDraft(identifier: string): Promise<ProductModelType> {
     return this.client.httpClient.get(`${this.endpoint}/${identifier}/draft`).then((response) => response.data);
   }
 }

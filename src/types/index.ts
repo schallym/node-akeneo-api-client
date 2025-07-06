@@ -10,3 +10,6 @@ export * from './association-type.type';
 export * from './category.type';
 export * from './channel.type';
 export * from './locale.type';
+export * from './currency.type';
+export * from './measurement-family.type';
+export * from './reference-entities.type';

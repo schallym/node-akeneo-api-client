@@ -4,15 +4,17 @@ import { BaseApi } from './base-api.service';
 import { ProductsGetParams, ProductsSearchParams } from './products-api.service';
 
 export type CreateProductUuidRequest = Partial<
-  Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
->;
+  Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses' | 'uuid'>
+> &
+  Required<Pick<ProductUuid, 'uuid'>>;
 
 export type UpdateProductUuidRequest = Partial<
-  Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
-> & {
-  add_categories?: string[];
-  remove_categories?: string[];
-};
+  Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses' | 'uuid'>
+> &
+  Required<Pick<ProductUuid, 'uuid'>> & {
+    add_categories?: string[];
+    remove_categories?: string[];
+  };
 
 export type SeveralProductsUuidUpdateOrCreationResponseLine = {
   line: number;
@@ -32,7 +34,7 @@ export class ProductsUuidApi extends BaseApi<
     super(client, '/api/rest/v1/products-uuid');
   }
 
-  public async updateOrCreateSeveral(
+  async updateOrCreateSeveral(
     data: Partial<ProductUuid>[],
   ): Promise<SeveralProductsUuidUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
@@ -49,11 +51,11 @@ export class ProductsUuidApi extends BaseApi<
       });
   }
 
-  public async submitDraftForApproval(uuid: string): Promise<void> {
+  async submitDraftForApproval(uuid: string): Promise<void> {
     await this.client.httpClient.post(`${this.endpoint}/${uuid}/proposal`, {});
   }
 
-  public async getDraft(uuid: string): Promise<ProductUuid> {
+  async getDraft(uuid: string): Promise<ProductUuid> {
     return this.client.httpClient.get(`${this.endpoint}/${uuid}/draft`).then((response) => response.data);
   }
 }
