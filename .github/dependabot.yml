@@ -7,5 +7,5 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 5
     commit-message:
-      prefix: chore           # 👉 makes PR titles start with "chore:"
-      include: scope          # optional – adds "(deps)" or "(deps-dev)"
+      prefix: chore
+      include: scope
