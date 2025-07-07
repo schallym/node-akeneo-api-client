@@ -26,12 +26,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/schallym/akeneo-api-client.git"
+    "url": "https://github.com/schallym/node-akeneo-api-client.git"
   },
   "bugs": {
-    "url": "https://github.com/schallym/akeneo-api-client/issues"
+    "url": "https://github.com/schallym/node-akeneo-api-client/issues"
   },
-  "homepage": "https://github.com/schallym/akeneo-api-client#readme",
+  "homepage": "https://github.com/schallym/node-akeneo-api-client#readme",
   "files": [
     "dist",
     "README.md",
