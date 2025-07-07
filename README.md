@@ -133,77 +133,6 @@ const category: Category = await client.categories.get('category-code');
 
 We welcome contributions from the community! Please read our [Contributing Guide](CONTRIBUTING.md) to get started.
 
-### Development Setup
-
-1. **Fork the repository**
-
-   Click the "Fork" button at the top right of the repository page.
-
-2. **Clone your fork**
-   ```bash
-   git clone https://github.com/your-username/node-akeneo-api-client.git
-   cd node-akeneo-api-client
-   ```
-
-3. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-4. **Run tests**
-   ```bash
-   npm test
-   ```
-
-5. **Run linting**
-   ```bash
-   npm run lint
-   ```
-
-### Contribution Workflow
-
-1. **Create a feature branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-
-2. **Make your changes**
-    - Write your code
-    - Add tests for new functionality
-    - Update documentation as needed
-
-3. **Test your changes**
-   ```bash
-   npm run test
-   npm run lint
-   npm run build
-   ```
-
-4. **Commit your changes**
-   ```bash
-   git add .
-   git commit -m "feat: add your feature description"
-   ```
-
-   Please follow [Conventional Commits](https://www.conventionalcommits.org/) format.
-
-5. **Push to your fork**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-6. **Create a Pull Request**
-
-   Go to the original repository and click "New Pull Request".
-
-### Code Style Guidelines
-
-- Use TypeScript for all new code
-- Follow the existing code style (enforced by ESLint and Prettier)
-- Write comprehensive tests for new features
-- Update documentation for any API changes
-- Keep commits atomic and well-documented
-
 ### Reporting Issues
 
 If you find a bug or want to request a feature:
@@ -218,19 +147,6 @@ If you find a bug or want to request a feature:
 ### Code of Conduct
 
 By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
-
-## Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run tests with coverage
-npm run test:coverage
-
-# Run integration tests (requires Akeneo instance)
-npm run test:integration
-```
 
 ## Supported Akeneo Versions
 

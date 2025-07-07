@@ -15,6 +15,7 @@ Please follow these guidelines to help us maintain a high-quality codebase.
 - Add or update tests for your changes.
 - Run `npm test` to ensure all tests pass before submitting a pull request.
 - If you add new features or fix bugs, update the relevant documentation.
+- Test coverage **must be 100%** for lines, functions, branches, and statements.
 
 ## Pull Requests
 
@@ -22,6 +23,7 @@ Please follow these guidelines to help us maintain a high-quality codebase.
 - Reference any related issues in your PR description.
 - Ensure your branch is up to date with `main` before submitting.
 - Be responsive to feedback and make requested changes promptly.
+- Please follow [Conventional Commits](https://www.conventionalcommits.org/) format.
 
 ## Code of Conduct
 
