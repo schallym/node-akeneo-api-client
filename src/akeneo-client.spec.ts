@@ -1,7 +1,7 @@
 import AkeneoClient from './akeneo-client';
 import { AkeneoApiClient } from './services';
 import {
-  AssetFamiliesApi,
+  AssetManagerApi,
   AssociationTypesApi,
   AttributeGroupsApi,
   AttributesApi,
@@ -113,6 +113,6 @@ describe('AkeneoClient', () => {
     expect(client.currencies).toBeInstanceOf(CurrenciesApi);
     expect(client.measurementFamilies).toBeInstanceOf(MeasurementFamiliesApi);
     expect(client.referenceEntities).toBeInstanceOf(ReferenceEntitiesApi);
-    expect(client.assetFamilies).toBeInstanceOf(AssetFamiliesApi);
+    expect(client.assetManager).toBeInstanceOf(AssetManagerApi);
   });
 });

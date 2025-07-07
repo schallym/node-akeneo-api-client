@@ -1,5 +1,5 @@
-import { AssetFamily, PaginatedResponse } from '../../types';
-import { AkeneoApiClient } from '../akeneo-api-client';
+import { AssetFamily, PaginatedResponse } from '../../../types';
+import { AkeneoApiClient } from '../../akeneo-api-client';
 
 export type AssetFamiliesSearchParams = {
   search_after?: string;

@@ -1,5 +1,5 @@
 import {
-  AssetFamiliesApi,
+  AssetManagerApi,
   AssociationTypesApi,
   AttributeGroupsApi,
   AttributesApi,
@@ -40,7 +40,7 @@ export default class AkeneoClient {
   readonly currencies: CurrenciesApi;
   readonly measurementFamilies: MeasurementFamiliesApi;
   readonly referenceEntities: ReferenceEntitiesApi;
-  readonly assetFamilies: AssetFamiliesApi;
+  readonly assetManager: AssetManagerApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -62,6 +62,6 @@ export default class AkeneoClient {
     this.currencies = new CurrenciesApi(this.apiClient);
     this.measurementFamilies = new MeasurementFamiliesApi(this.apiClient);
     this.referenceEntities = new ReferenceEntitiesApi(this.apiClient);
-    this.assetFamilies = new AssetFamiliesApi(this.apiClient);
+    this.assetManager = new AssetManagerApi(this.apiClient);
   }
 }

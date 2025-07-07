@@ -45,7 +45,7 @@ export type ReferenceEntityRecord = {
 export type ReferenceEntityRecordValue = {
   locale?: string | null;
   channel?: string | null;
-  data: string | number | boolean | object;
+  data: string | number | boolean | object | string[];
 };
 
 export enum ReferenceEntityAttributeType {

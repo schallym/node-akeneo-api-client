@@ -1,6 +1,6 @@
 import { AssetFamiliesApi, UpdateOrCreateAssetFamilyRequest } from './asset-families-api.service';
-import { AkeneoApiClient } from '../akeneo-api-client';
-import { AssetFamily, PaginatedResponse } from '../../types';
+import { AkeneoApiClient } from '../../akeneo-api-client';
+import { AssetFamily, PaginatedResponse } from '../../../types';
 
 describe('AssetFamiliesApi', () => {
   const mockHttpClient = {
