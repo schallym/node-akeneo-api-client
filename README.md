@@ -10,24 +10,16 @@ A complete and up-to-date Node.js client for the Akeneo PIM REST API. This libra
 
 - 🚀 **Complete API Coverage** - Supports all Akeneo REST API endpoints
 - 📦 **TypeScript Support** - Full TypeScript definitions included
-- 🔐 **Multiple Authentication Methods** - OAuth2, Client Credentials, and API Token
+- 🔐 **Multiple Authentication Methods** - Classic connection and App connection
 - 🔄 **Automatic Token Refresh** - Handles token expiration automatically
 - 📄 **Pagination Support** - Built-in pagination handling for large datasets
 - 🛡️ **Error Handling** - Comprehensive error handling with detailed messages
-- 📊 **Rate Limiting** - Respects Akeneo API rate limits
 - 🧪 **Well Tested** - Extensive test coverage
-- 📚 **Comprehensive Documentation** - Full API documentation with examples
 
 ## Installation
 
 ```bash
-npm install node-akeneo-api-client
-```
-
-or
-
-```bash
-yarn add node-akeneo-api-client
+npm install @schally/node-akeneo-api-client
 ```
 
 ## Quick Start
@@ -35,9 +27,9 @@ yarn add node-akeneo-api-client
 ### Basic Setup
 
 ```javascript
-const { AkeneoClient } = require('node-akeneo-api-client');
+const { AkeneoClient } = require('@schally/node-akeneo-api-client');
 
-// Initialize with OAuth2 credentials
+// Initialize with classic connection
 const client = new AkeneoClient({
   baseUrl: 'https://your-akeneo-instance.com',
   clientId: 'your-client-id',
@@ -46,18 +38,23 @@ const client = new AkeneoClient({
   password: 'your-password'
 });
 
-// Or initialize with API token (if using token-based authentication)
+// Or initialize with App token
 const client = new AkeneoClient({
   baseUrl: 'https://your-akeneo-instance.com',
-  token: 'your-api-token'
+  accessToken: 'your-app-token',
+  clientId: 'app-client-id',
 });
 ```
 
 ### Basic Usage Examples
 
 ```javascript
-// Get all products
-const products = await client.products.getAll();
+// List activated products with count
+const products = await client.products.list({ 
+    limit: 100,
+    search: JSON.stringify({ enabled: [{ operator: '=', value: true }] }), 
+    with_count: true
+});
 
 // Get a specific product
 const product = await client.products.get('product-sku');
@@ -92,182 +89,11 @@ await client.products.delete('product-sku');
 
 ## API Reference
 
-### Client Configuration
-
-```javascript
-const client = new AkeneoClient({
-  baseUrl: 'https://your-akeneo-instance.com', // Required
-  clientId: 'your-client-id',                   // Required for OAuth2
-  clientSecret: 'your-client-secret',           // Required for OAuth2
-  username: 'your-username',                    // Required for OAuth2
-  password: 'your-password',                    // Required for OAuth2
-  token: 'your-api-token',                      // Alternative to OAuth2
-  timeout: 30000,                               // Request timeout in ms (default: 30000)
-  retries: 3,                                   // Number of retries (default: 3)
-  retryDelay: 1000,                            // Delay between retries in ms (default: 1000)
-  rateLimitDelay: 1000                         // Delay when rate limited (default: 1000)
-});
-```
-
 ### Available Endpoints
 
-#### Products
-```javascript
-// Get all products with pagination
-const products = await client.products.getAll({ limit: 100, page: 1 });
+Please refer to the [official Akeneo API documentation](https://api.akeneo.com/api-reference-index.html) for detailed information on each endpoint.
 
-// Get products with filters
-const filteredProducts = await client.products.getAll({
-  filters: {
-    family: 'clothing',
-    enabled: true
-  }
-});
-
-// Get a single product
-const product = await client.products.get('product-sku');
-
-// Create a product
-const newProduct = await client.products.create(productData);
-
-// Update a product
-await client.products.update('product-sku', updateData);
-
-// Delete a product
-await client.products.delete('product-sku');
-```
-
-#### Product Models
-```javascript
-// Get all product models
-const models = await client.productModels.getAll();
-
-// Get a specific product model
-const model = await client.productModels.get('model-code');
-
-// Create a product model
-const newModel = await client.productModels.create(modelData);
-
-// Update a product model
-await client.productModels.update('model-code', updateData);
-
-// Delete a product model
-await client.productModels.delete('model-code');
-```
-
-#### Categories
-```javascript
-// Get all categories
-const categories = await client.categories.getAll();
-
-// Get a specific category
-const category = await client.categories.get('category-code');
-
-// Create a category
-const newCategory = await client.categories.create(categoryData);
-
-// Update a category
-await client.categories.update('category-code', updateData);
-
-// Delete a category
-await client.categories.delete('category-code');
-```
-
-#### Attributes
-```javascript
-// Get all attributes
-const attributes = await client.attributes.getAll();
-
-// Get a specific attribute
-const attribute = await client.attributes.get('attribute-code');
-
-// Create an attribute
-const newAttribute = await client.attributes.create(attributeData);
-
-// Update an attribute
-await client.attributes.update('attribute-code', updateData);
-
-// Delete an attribute
-await client.attributes.delete('attribute-code');
-```
-
-#### Families
-```javascript
-// Get all families
-const families = await client.families.getAll();
-
-// Get a specific family
-const family = await client.families.get('family-code');
-
-// Create a family
-const newFamily = await client.families.create(familyData);
-
-// Update a family
-await client.families.update('family-code', updateData);
-
-// Delete a family
-await client.families.delete('family-code');
-```
-
-#### Media Files
-```javascript
-// Get all media files
-const mediaFiles = await client.mediaFiles.getAll();
-
-// Get a specific media file
-const mediaFile = await client.mediaFiles.get('media-file-code');
-
-// Upload a media file
-const uploadedFile = await client.mediaFiles.upload('path/to/file.jpg');
-
-// Download a media file
-const fileBuffer = await client.mediaFiles.download('media-file-code');
-```
-
-### Advanced Usage
-
-#### Pagination
-
-```javascript
-// Manual pagination
-let page = 1;
-let allProducts = [];
-let hasMore = true;
-
-while (hasMore) {
-  const response = await client.products.getAll({ page, limit: 100 });
-  allProducts = allProducts.concat(response.data);
-  hasMore = response.hasMore;
-  page++;
-}
-
-// Using the built-in iterator
-for await (const product of client.products.iterate()) {
-  console.log(product.identifier);
-}
-```
-
-#### Batch Operations
-
-```javascript
-// Batch create products
-const products = [
-  { identifier: 'product-1', family: 'accessories' },
-  { identifier: 'product-2', family: 'accessories' }
-];
-
-const results = await client.products.batchCreate(products);
-
-// Batch update products
-const updates = [
-  { identifier: 'product-1', values: { name: [{ data: 'Updated Name 1' }] } },
-  { identifier: 'product-2', values: { name: [{ data: 'Updated Name 2' }] } }
-];
-
-const updateResults = await client.products.batchUpdate(updates);
-```
-
-#### Error Handling
+### Error Handling
 
 ```javascript
 try {
@@ -399,9 +225,6 @@ By participating in this project, you agree to abide by our [Code of Conduct](CO
 # Run all tests
 npm test
 
-# Run tests in watch mode
-npm run test:watch
-
 # Run tests with coverage
 npm run test:coverage
 
@@ -409,30 +232,16 @@ npm run test:coverage
 npm run test:integration
 ```
 
-## Examples
-
-Check out the [examples](examples/) directory for more detailed usage examples:
-
-- [Basic CRUD operations](examples/basic-crud.js)
-- [Batch operations](examples/batch-operations.js)
-- [Product management](examples/product-management.js)
-- [Category management](examples/category-management.js)
-- [Media file handling](examples/media-files.js)
-
-## API Documentation
-
-For detailed API documentation, visit the [official Akeneo API documentation](https://api.akeneo.com/api-reference-index.html).
-
 ## Supported Akeneo Versions
 
-- Akeneo PIM Community Edition 4.0+
-- Akeneo PIM Enterprise Edition 4.0+
 - Akeneo PIM Cloud Edition
+
+Most API endpoints are supported for both Community and Enterprise editions, but some features may be exclusive to the Cloud edition. 
+Always refer to the [Akeneo API documentation](https://api.akeneo.com/api-reference-index.html) for specific endpoint availability.
 
 ## Requirements
 
-- Node.js 14.0 or higher
-- npm 6.0 or higher
+- Node.js 20.0 or higher
 
 ## License
 
@@ -444,10 +253,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed list of changes.
 
 ## Support
 
-- 📖 [Documentation](https://github.com/schallym/node-akeneo-api-client/wiki)
 - 🐛 [Bug Reports](https://github.com/schallym/node-akeneo-api-client/issues)
-- 💬 [Discussions](https://github.com/schallym/node-akeneo-api-client/discussions)
-- 📧 [Contact](mailto:your-email@example.com)
 
 ## Related Projects
 
@@ -457,7 +263,6 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed list of changes.
 ## Acknowledgments
 
 - Thanks to all contributors who have helped make this project better
-- Inspired by the official Akeneo PHP client
 - Built with ❤️ for the Akeneo community
 
 ---
