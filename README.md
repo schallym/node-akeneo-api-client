@@ -19,7 +19,7 @@ A complete and up-to-date Node.js client for the Akeneo PIM REST API. This libra
 ## Installation
 
 ```bash
-npm install @schally/node-akeneo-api-client
+npm install node-akeneo-api-client
 ```
 
 ## Quick Start
@@ -27,7 +27,7 @@ npm install @schally/node-akeneo-api-client
 ### Basic Setup
 
 ```javascript
-const { AkeneoClient } = require('@schally/node-akeneo-api-client');
+const { AkeneoClient } = require('node-akeneo-api-client');
 
 // Initialize with classic connection
 const client = new AkeneoClient({
