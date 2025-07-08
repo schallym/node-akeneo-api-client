@@ -5,6 +5,7 @@ import {
   AssociationTypesApi,
   AttributeGroupsApi,
   AttributesApi,
+  CatalogForAppsApi,
   CategoriesApi,
   ChannelsApi,
   CurrenciesApi,
@@ -17,6 +18,8 @@ import {
   ProductsApi,
   ProductsUuidApi,
   ReferenceEntitiesApi,
+  UIExtensionsApi,
+  UtilitiesApi,
 } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosRequestConfig } from 'axios';
@@ -114,5 +117,11 @@ describe('AkeneoClient', () => {
     expect(client.measurementFamilies).toBeInstanceOf(MeasurementFamiliesApi);
     expect(client.referenceEntities).toBeInstanceOf(ReferenceEntitiesApi);
     expect(client.assetManager).toBeInstanceOf(AssetManagerApi);
+    expect(client.utilities).toBeDefined();
+    expect(client.utilities).toBeInstanceOf(UtilitiesApi);
+    expect(client.catalogForApps).toBeDefined();
+    expect(client.catalogForApps).toBeInstanceOf(CatalogForAppsApi);
+    expect(client.uiExtensions).toBeDefined();
+    expect(client.uiExtensions).toBeInstanceOf(UIExtensionsApi);
   });
 });

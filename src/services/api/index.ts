@@ -15,3 +15,6 @@ export * from './currencies-api.service';
 export * from './measurement-families-api.service';
 export * from './reference-entities-api.service';
 export * from './asset-manager-api.service';
+export * from './utilities-api.service';
+export * from './catalog-for-apps-api.service';
+export * from './ui-extensions-api.service';

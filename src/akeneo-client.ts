@@ -3,6 +3,7 @@ import {
   AssociationTypesApi,
   AttributeGroupsApi,
   AttributesApi,
+  CatalogForAppsApi,
   CategoriesApi,
   ChannelsApi,
   CurrenciesApi,
@@ -15,6 +16,8 @@ import {
   ProductsApi,
   ProductsUuidApi,
   ReferenceEntitiesApi,
+  UIExtensionsApi,
+  UtilitiesApi,
 } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
@@ -41,6 +44,9 @@ export default class AkeneoClient {
   readonly measurementFamilies: MeasurementFamiliesApi;
   readonly referenceEntities: ReferenceEntitiesApi;
   readonly assetManager: AssetManagerApi;
+  readonly utilities: UtilitiesApi;
+  readonly catalogForApps: CatalogForAppsApi;
+  readonly uiExtensions: UIExtensionsApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -63,5 +69,8 @@ export default class AkeneoClient {
     this.measurementFamilies = new MeasurementFamiliesApi(this.apiClient);
     this.referenceEntities = new ReferenceEntitiesApi(this.apiClient);
     this.assetManager = new AssetManagerApi(this.apiClient);
+    this.utilities = new UtilitiesApi(this.apiClient);
+    this.catalogForApps = new CatalogForAppsApi(this.apiClient);
+    this.uiExtensions = new UIExtensionsApi(this.apiClient);
   }
 }
