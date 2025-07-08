@@ -1,6 +1,6 @@
 # Node Akeneo API Client
 
-[![npm version](https://img.shields.io/npm/v/node-akeneo-api-client.svg)](https://www.npmjs.com/package/node-akeneo-api-client)
+[![npm version](https://img.shields.io/npm/v/node-akeneo-api-client.svg)](https://www.npmjs.com/package/@schally/node-akeneo-api-client)
 [![License](https://img.shields.io/github/license/schallym/node-akeneo-api-client.svg)](LICENSE)
 [![Coverage Status](https://img.shields.io/codecov/c/github/schallym/node-akeneo-api-client.svg)](https://codecov.io/gh/schallym/node-akeneo-api-client)
 
@@ -19,7 +19,7 @@ A complete and up-to-date Node.js client for the Akeneo PIM REST API. This libra
 ## Installation
 
 ```bash
-npm install node-akeneo-api-client
+npm install @schally/node-akeneo-api-client
 ```
 
 ## Quick Start
@@ -27,7 +27,7 @@ npm install node-akeneo-api-client
 ### Basic Setup
 
 ```javascript
-const { AkeneoClient } = require('node-akeneo-api-client');
+const { AkeneoClient } = require('@schally/node-akeneo-api-client');
 
 // Initialize with classic connection
 const client = new AkeneoClient({
@@ -114,7 +114,7 @@ try {
 This library is written in TypeScript and includes comprehensive type definitions:
 
 ```typescript
-import { AkeneoClient, Product, Category, Family } from 'node-akeneo-api-client';
+import { AkeneoClient, Product, Category, Family } from '@schally/node-akeneo-api-client';
 
 const client = new AkeneoClient({
   baseUrl: 'https://your-akeneo-instance.com',
