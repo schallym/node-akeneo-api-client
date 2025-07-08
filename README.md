@@ -51,7 +51,7 @@ const client = new AkeneoClient({
 ```javascript
 // List activated products with count
 const products = await client.products.list({ 
-    limit: 100,
+    limit: 10,
     search: JSON.stringify({ enabled: [{ operator: '=', value: true }] }), 
     with_count: true
 });
