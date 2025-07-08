@@ -1,0 +1,3 @@
+tests/
+*.spec.ts
+*.spec.js
