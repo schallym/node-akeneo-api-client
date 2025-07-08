@@ -7,7 +7,7 @@ import {
   ProductUuid,
 } from '../../../types';
 
-export type ProductUuidsSearchParams = {
+export type CatalogProductUuidsSearchParams = {
   search_after?: string;
   limit?: number;
   updated_before?: string;
@@ -15,7 +15,7 @@ export type ProductUuidsSearchParams = {
   with_count?: boolean;
 };
 
-export type ProductsSearchParams = {
+export type CatalogProductsSearchParams = {
   search_after?: string;
   limit?: number;
   updated_before?: string;
@@ -29,13 +29,16 @@ export class CatalogProductsApi {
     this.endpoint = '/api/rest/v1/catalogs/{id}';
   }
 
-  async listProductUuids(catalogId: string, params?: ProductUuidsSearchParams): Promise<PaginatedResponse<string>> {
+  async listProductUuids(
+    catalogId: string,
+    params?: CatalogProductUuidsSearchParams,
+  ): Promise<PaginatedResponse<string>> {
     return this.client.httpClient
       .get(`${this.completeEndpoint(catalogId)}/products/uuids`, { params })
       .then((response) => response.data);
   }
 
-  async listProducts(catalogId: string, params?: ProductsSearchParams): Promise<PaginatedResponse<ProductUuid>> {
+  async listProducts(catalogId: string, params?: CatalogProductsSearchParams): Promise<PaginatedResponse<ProductUuid>> {
     return this.client.httpClient
       .get(`${this.completeEndpoint(catalogId)}/products`, { params })
       .then((response) => response.data);
@@ -49,7 +52,7 @@ export class CatalogProductsApi {
 
   async listMappedProducts(
     catalogId: string,
-    params?: ProductsSearchParams,
+    params?: CatalogProductsSearchParams,
   ): Promise<PaginatedResponse<MappedProduct>> {
     return this.client.httpClient
       .get(`${this.completeEndpoint(catalogId)}/mapped-products`, { params })
@@ -58,7 +61,7 @@ export class CatalogProductsApi {
 
   async listMappedModels(
     catalogId: string,
-    params?: ProductsSearchParams,
+    params?: CatalogProductsSearchParams,
   ): Promise<PaginatedResponse<MappedProductModel>> {
     return this.client.httpClient
       .get(`${this.completeEndpoint(catalogId)}/mapped-models`, { params })
@@ -68,7 +71,7 @@ export class CatalogProductsApi {
   async listMappedModelVariants(
     catalogId: string,
     modelCode: string,
-    params?: ProductsSearchParams,
+    params?: CatalogProductsSearchParams,
   ): Promise<PaginatedResponse<MappedProductModelVariant>> {
     return this.client.httpClient
       .get(`${this.completeEndpoint(catalogId)}/mapped-models/${modelCode}/variants`, { params })

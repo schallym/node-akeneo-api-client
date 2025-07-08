@@ -18,3 +18,5 @@ export * from './asset-manager-api.service';
 export * from './utilities-api.service';
 export * from './catalog-for-apps-api.service';
 export * from './ui-extensions-api.service';
+export * from './asset-manager';
+export * from './catalog-for-apps';

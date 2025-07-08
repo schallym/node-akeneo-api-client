@@ -1,4 +1,6 @@
 export * from './akeneo-client';
+export * from './types';
+export * from './services';
 
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosRequestConfig } from 'axios';
