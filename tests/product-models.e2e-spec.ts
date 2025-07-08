@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { UpdateProductModelRequest } from '../src/services/api';
 import productModelsMock from './mocks/product-models.mock';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('Product models API E2E Tests', () => {

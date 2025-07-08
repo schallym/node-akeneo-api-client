@@ -2,7 +2,7 @@ import nock from 'nock';
 import { CreateProductMediaFileRequest } from '../src/services/api';
 import { ProductMediaFileType } from '../src/types';
 import productMediaFilesMock from './mocks/product-media-files.mock';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('ProductMediaFilesApi E2E', () => {

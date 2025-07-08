@@ -2,7 +2,7 @@ export * from './akeneo-client';
 
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosRequestConfig } from 'axios';
-import AkeneoClient from './akeneo-client';
+import { AkeneoClient } from '../src';
 
 export function createClient(
   config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig,

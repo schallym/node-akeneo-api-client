@@ -1,5 +1,5 @@
 import nock from 'nock';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 import referenceEntityMock from './mocks/reference-entity.mock';
 import { ReferenceEntityAttributeType } from '../src/types';

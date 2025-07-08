@@ -1,7 +1,7 @@
 import nock from 'nock';
 import productsUuidMock from './mocks/products-uuid.mock';
 import { UpdateProductUuidRequest } from '../src/services/api';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('Products UUID API E2E Tests', () => {

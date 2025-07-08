@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { AssociationType } from '../src/types';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('AssociationTypesApi E2E', () => {

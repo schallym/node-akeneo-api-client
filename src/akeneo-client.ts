@@ -23,7 +23,7 @@ import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { AkeneoApiClient } from './services';
 
-export default class AkeneoClient {
+export class AkeneoClient {
   private readonly apiClient: AkeneoApiClient;
   readonly httpClient: AxiosInstance;
 

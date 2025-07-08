@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { LaunchJobResponse } from '../src/services/api';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('JobsApi E2E', () => {

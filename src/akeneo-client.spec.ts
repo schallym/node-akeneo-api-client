@@ -1,4 +1,4 @@
-import AkeneoClient from './akeneo-client';
+import { AkeneoClient } from '../src';
 import { AkeneoApiClient } from './services';
 import {
   AssetManagerApi,

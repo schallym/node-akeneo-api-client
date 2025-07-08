@@ -2,7 +2,7 @@ import nock from 'nock';
 import { CreateVariantFamilyRequest } from '../src/services/api';
 import { Family, VariantFamily } from '../src/types';
 import familyMock from './mocks/family.mock';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('akeneoClient.families E2E', () => {

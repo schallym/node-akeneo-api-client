@@ -1,5 +1,5 @@
 import nock from 'nock';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 
 export const baseUrl = 'https://akeneo.test';
 

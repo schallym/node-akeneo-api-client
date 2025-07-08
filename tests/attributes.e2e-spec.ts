@@ -2,7 +2,7 @@ import nock from 'nock';
 import { CreateAttributeOptionRequest } from '../src/services/api';
 import { Attribute, AttributeTypes } from '../src/types';
 import attributeMock from './mocks/attribute.mock';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
 describe('keneoClient.attributes E2E', () => {

@@ -1,6 +1,6 @@
 import nock from 'nock';
 import productMock from './mocks/products.mock';
-import AkeneoClient from '../src/akeneo-client';
+import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 import { UpdateProductRequest } from '../src/services/api';
 

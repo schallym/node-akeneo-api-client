@@ -1,4 +1,4 @@
-import AkeneoClient from './akeneo-client';
+import { AkeneoClient } from '../src';
 import { createClient } from './index';
 
 jest.mock('./akeneo-client');
