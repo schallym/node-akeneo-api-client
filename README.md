@@ -1,6 +1,6 @@
 # Node Akeneo API Client
 
-[![npm version](https://img.shields.io/npm/v/node-akeneo-api-client.svg)](https://www.npmjs.com/package/@schally/node-akeneo-api-client)
+[![npm version]([https://img.shields.io/npm/v/node-akeneo-api-client.svg](https://img.shields.io/npm/v/@schally/node-akeneo-api-client.svg))](https://www.npmjs.com/package/@schally/node-akeneo-api-client)
 [![License](https://img.shields.io/github/license/schallym/node-akeneo-api-client.svg)](LICENSE)
 [![Coverage Status](https://img.shields.io/codecov/c/github/schallym/node-akeneo-api-client.svg)](https://codecov.io/gh/schallym/node-akeneo-api-client)
 
