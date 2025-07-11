@@ -1,4 +1,4 @@
-import { AkeneoClient } from '../src';
+import { AkeneoClient, HttpHooksApi } from '../src';
 import { AkeneoApiClient } from './services';
 import {
   AssetManagerApi,
@@ -123,5 +123,7 @@ describe('AkeneoClient', () => {
     expect(client.catalogForApps).toBeInstanceOf(CatalogForAppsApi);
     expect(client.uiExtensions).toBeDefined();
     expect(client.uiExtensions).toBeInstanceOf(UIExtensionsApi);
+    expect(client.httpHooks).toBeDefined();
+    expect(client.httpHooks).toBeInstanceOf(HttpHooksApi);
   });
 });

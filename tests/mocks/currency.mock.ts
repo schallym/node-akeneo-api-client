@@ -1,4 +1,4 @@
-import { Currency } from '../../src/types';
+import { Currency } from '../../src';
 
 const currencyMock: Currency = {
   code: 'en_US',

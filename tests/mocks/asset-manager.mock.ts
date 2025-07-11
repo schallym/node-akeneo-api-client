@@ -1,4 +1,4 @@
-import { Asset, AssetAttribute, AssetAttributeOption, AssetAttributeType, AssetFamily } from '../../src/types';
+import { Asset, AssetAttribute, AssetAttributeOption, AssetAttributeType, AssetFamily } from '../../src';
 
 const assetFamilyMock: AssetFamily = {
   code: 'model_pictures',
