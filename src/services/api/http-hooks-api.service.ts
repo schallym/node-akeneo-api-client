@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../akeneo-api-client';
-import { HttpHook } from '../../types';
+import { HttpHook, HttpHookType } from '../../types';
 
 export type CreateOrUpdateHttpHook = Partial<Omit<HttpHook, 'hookType'>> & Required<Pick<HttpHook, 'hookType'>>;
 
@@ -18,7 +18,7 @@ export class HttpHooksApi {
     await this.client.httpClient.put(this.endpoint, hook);
   }
 
-  async delete(hookType: string): Promise<void> {
+  async delete(hookType: HttpHookType): Promise<void> {
     await this.client.httpClient.delete(`${this.endpoint}/${hookType}`);
   }
 }

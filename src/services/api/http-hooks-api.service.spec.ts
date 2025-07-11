@@ -45,8 +45,8 @@ describe('HttpHooksApi', () => {
   it('should delete a hook by type', async () => {
     httpClient.delete.mockResolvedValue(undefined);
 
-    await api.delete('foo');
+    await api.delete(HttpHookType.PRODUCT_PRE_SAVE);
 
-    expect(httpClient.delete).toHaveBeenCalledWith('/api/rest/v1/http-hook/foo');
+    expect(httpClient.delete).toHaveBeenCalledWith('/api/rest/v1/http-hook/product.preSave');
   });
 });
