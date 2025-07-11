@@ -1,4 +1,4 @@
-import { Locale } from '../../src/types';
+import { Locale } from '../../src';
 
 const localeMock: Locale = {
   code: 'en_US',

@@ -1,4 +1,4 @@
-import { ProductMediaFileType } from '../../src/types';
+import { ProductMediaFileType } from '../../src';
 
 const productMediaFileMock: ProductMediaFileType = {
   _links: {

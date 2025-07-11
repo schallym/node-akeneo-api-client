@@ -1,4 +1,4 @@
-import { ProductModelType } from '../../src/types';
+import { ProductModelType } from '../../src';
 
 const productModelsMock: ProductModelType = {
   code: 'code123',

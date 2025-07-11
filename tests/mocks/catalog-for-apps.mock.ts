@@ -1,4 +1,4 @@
-import { Catalog, MappingSchemaForProducts } from '../../src/types';
+import { Catalog, MappingSchemaForProducts } from '../../src';
 
 const catalogMock: Catalog = {
   id: '12351d98-200e-4bbc-aa19-7fdda1bd14f2',

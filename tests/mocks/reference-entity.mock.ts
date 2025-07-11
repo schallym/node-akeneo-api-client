@@ -3,7 +3,7 @@ import {
   ReferenceEntityAttribute,
   ReferenceEntityAttributeOption,
   ReferenceEntityAttributeType,
-} from '../../src/types';
+} from '../../src';
 
 const referenceEntityMock: ReferenceEntity = {
   _links: {

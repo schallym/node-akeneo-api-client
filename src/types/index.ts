@@ -16,3 +16,4 @@ export * from './reference-entities.type';
 export * from './assets.type';
 export * from './catalog-for-apps.type';
 export * from './ui-extension.type';
+export * from './http-hook.type';

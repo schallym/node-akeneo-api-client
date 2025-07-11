@@ -1,4 +1,4 @@
-import { MeasurementFamily } from '../../src/types';
+import { MeasurementFamily } from '../../src';
 
 const measurementFamilyMock: MeasurementFamily = {
   code: 'weight',

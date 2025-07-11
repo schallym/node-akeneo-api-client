@@ -1,4 +1,4 @@
-import { Product } from '../../src/types';
+import { Product } from '../../src';
 
 const productsMock: Product = {
   uuid: '1234-5678-9012',

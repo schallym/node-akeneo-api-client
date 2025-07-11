@@ -1,4 +1,4 @@
-import { AttributeOption } from '../../src/types';
+import { AttributeOption } from '../../src';
 
 const attributeOptionMock: AttributeOption = {
   code: 'color_red',

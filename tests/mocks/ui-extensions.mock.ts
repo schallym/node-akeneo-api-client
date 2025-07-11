@@ -1,4 +1,4 @@
-import { UIExtensionPosition, UIExtensionType } from '../../src/types';
+import { UIExtensionPosition, UIExtensionType } from '../../src';
 
 export default {
   list: [

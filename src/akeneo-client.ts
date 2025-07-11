@@ -1,4 +1,5 @@
 import {
+  AkeneoApiClient,
   AssetManagerApi,
   AssociationTypesApi,
   AttributeGroupsApi,
@@ -8,6 +9,7 @@ import {
   ChannelsApi,
   CurrenciesApi,
   FamiliesApi,
+  HttpHooksApi,
   JobsApi,
   LocalesApi,
   MeasurementFamiliesApi,
@@ -18,10 +20,9 @@ import {
   ReferenceEntitiesApi,
   UIExtensionsApi,
   UtilitiesApi,
-} from './services/api';
+} from './services';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { AkeneoApiClient } from './services';
 
 export class AkeneoClient {
   private readonly apiClient: AkeneoApiClient;
@@ -47,6 +48,7 @@ export class AkeneoClient {
   readonly utilities: UtilitiesApi;
   readonly catalogForApps: CatalogForAppsApi;
   readonly uiExtensions: UIExtensionsApi;
+  readonly httpHooks: HttpHooksApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -72,5 +74,6 @@ export class AkeneoClient {
     this.utilities = new UtilitiesApi(this.apiClient);
     this.catalogForApps = new CatalogForAppsApi(this.apiClient);
     this.uiExtensions = new UIExtensionsApi(this.apiClient);
+    this.httpHooks = new HttpHooksApi(this.apiClient);
   }
 }

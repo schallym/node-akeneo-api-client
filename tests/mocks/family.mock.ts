@@ -1,4 +1,4 @@
-import { VariantFamily } from '../../src/types';
+import { VariantFamily } from '../../src';
 
 const variantFamilyMock: VariantFamily = {
   code: 'tables',
