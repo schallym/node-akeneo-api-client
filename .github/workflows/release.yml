@@ -13,9 +13,16 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
+          persist-credentials: false
+      - name: Configure credentials helper
+        run: |
+          git config --global credential.helper store
+          git config --global \
+            url."https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/".insteadOf "https://github.com/"
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -24,5 +31,5 @@ jobs:
       - name: Run semantic-release
         uses: cycjimmy/semantic-release-action@v4
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
