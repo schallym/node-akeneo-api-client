@@ -18,13 +18,5 @@
     "src/**/*",
     "tests/**/*",
     "../../../Library/Caches/JetBrains/WebStorm2025.1/javascript/typings/node/22.15.33/node_modules/@types/node/buffer.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "tests",
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/*.e2e-spec.ts"
   ]
 }
