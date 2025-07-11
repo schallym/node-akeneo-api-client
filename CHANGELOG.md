@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/schallym/node-akeneo-api-client/compare/v1.0.12...v1.1.0) (2025-07-11)
+
+
+### Features
+
+* **endpoints:** Add HTTP Hooks endpoints ([#12](https://github.com/schallym/node-akeneo-api-client/issues/12)) ([d12e025](https://github.com/schallym/node-akeneo-api-client/commit/d12e0257ea23e198be4dc324a030a5483ffb629e))
+
 ## [1.0.12](https://github.com/schallym/node-akeneo-api-client/compare/v1.0.11...v1.0.12) (2025-07-08)
 
 ## [1.0.11](https://github.com/schallym/node-akeneo-api-client/compare/v1.0.10...v1.0.11) (2025-07-08)
