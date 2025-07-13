@@ -3,6 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@schally/node-akeneo-api-client.svg)](https://www.npmjs.com/package/@schally/node-akeneo-api-client)
 [![License](https://img.shields.io/github/license/schallym/node-akeneo-api-client.svg)](LICENSE)
 [![Coverage Status](https://img.shields.io/codecov/c/github/schallym/node-akeneo-api-client.svg)](https://codecov.io/gh/schallym/node-akeneo-api-client)
+[![Known Vulnerabilities](https://snyk.io/test/github/your-org/your-repo/badge.svg)](https://snyk.io/test/github/your-org/your-repo)
 
 A complete and up-to-date Node.js client for the Akeneo PIM REST API. This library provides a simple and intuitive interface to interact with all Akeneo PIM endpoints, supporting both Community and Enterprise editions.
 
