@@ -34,7 +34,7 @@ const { AkeneoClient } = require('@schally/node-akeneo-api-client');
 const client = new AkeneoClient({
   baseUrl: 'https://your-akeneo-instance.com',
   clientId: 'your-client-id',
-  clientSecret: 'your-client-secret',
+  secret: 'your-client-secret',
   username: 'your-username',
   password: 'your-password'
 });
