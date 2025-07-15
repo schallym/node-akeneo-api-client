@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/schallym/node-akeneo-api-client/compare/v1.1.2...v1.1.3) (2025-07-15)
+
+
+### Bug Fixes
+
+* **api:** fix issue when we try to update a single entity with several updates endpoints ([#20](https://github.com/schallym/node-akeneo-api-client/issues/20)) ([e1f69fa](https://github.com/schallym/node-akeneo-api-client/commit/e1f69fa73ebb176c09053b5ede219326202719d7))
+
 ## [1.1.2](https://github.com/schallym/node-akeneo-api-client/compare/v1.1.1...v1.1.2) (2025-07-15)
 
 ## [1.1.1](https://github.com/schallym/node-akeneo-api-client/compare/v1.1.0...v1.1.1) (2025-07-15)
