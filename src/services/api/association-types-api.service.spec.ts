@@ -50,6 +50,24 @@ describe('AssociationTypesApi', () => {
       ]);
     });
 
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const types: Partial<AssociationType>[] = [{ code: 'assoc1', labels: { en_US: 'A1' } }];
+
+      const mockResponseData = { line: 1, code: 'assoc1', status_code: 200, message: 'ok' };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveral(types);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/association-types', JSON.stringify(types[0]), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+
+      expect(result).toEqual([{ line: 1, code: 'assoc1', status_code: 200, message: 'ok' }]);
+    });
+
     it('should handle API errors gracefully', async () => {
       mockHttpClient.patch.mockRejectedValue(new Error('Bad request'));
 

@@ -51,6 +51,24 @@ describe('FamiliesApi', () => {
         { code: 'family2', status_code: 201, attributes: ['attr2'] },
       ]);
     });
+
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const families: Partial<Family>[] = [{ code: 'family1', labels: { en_US: 'Family 1' } }];
+
+      const mockResponseData = { code: 'family1', status_code: 200, attributes: ['attr1'] };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveral(families);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/families', JSON.stringify(families[0]), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+
+      expect(result).toEqual([mockResponseData]);
+    });
   });
 
   describe('createVariantFamily', () => {
@@ -142,6 +160,28 @@ describe('FamiliesApi', () => {
         { line: 1, code: 'variant1', status_code: 200, message: 'ok' },
         { line: 2, code: 'variant2', status_code: 201, message: 'created' },
       ]);
+    });
+
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const familyCode = 'family1';
+      const variantFamilies = [{ code: 'variant1', labels: { en_US: 'Variant 1' } }];
+      const mockResponseData = { line: 1, code: 'variant1', status_code: 200, message: 'ok' };
+
+      mockHttpClient.patch = jest.fn().mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveralVariantFamilies(familyCode, variantFamilies);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(
+        '/api/rest/v1/families/family1/variants',
+        JSON.stringify(variantFamilies[0]),
+        {
+          headers: {
+            'Content-Type': 'application/vnd.akeneo.collection+json',
+          },
+        },
+      );
+
+      expect(result).toEqual([mockResponseData]);
     });
   });
 });

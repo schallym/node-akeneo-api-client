@@ -52,6 +52,24 @@ describe('CategoriesApi', () => {
       ]);
     });
 
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const categories: Partial<Category>[] = [{ code: 'cat1', labels: { en_US: 'C1' } }];
+
+      const mockResponseData = { line: 1, code: 'cat1', status_code: 200, message: 'ok' };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveral(categories);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/categories', JSON.stringify(categories[0]), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+
+      expect(result).toEqual([mockResponseData]);
+    });
+
     it('should handle API errors gracefully', async () => {
       mockHttpClient.patch.mockRejectedValue(new Error('Bad request'));
 
