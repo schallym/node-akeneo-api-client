@@ -54,6 +54,27 @@ describe('ProductsUuidApi', () => {
         { line: 2, uuid: 'uuid2', status_code: 201, message: 'Created' },
       ]);
     });
+
+    it('should send PATCH request with single product and return response', async () => {
+      const product: UpdateProductUuidRequest = {
+        uuid: 'uuid1',
+        values: { name: [{ locale: null, scope: null, data: 'Single Product' }] },
+      };
+
+      const mockResponseData = { line: 1, uuid: 'uuid1', status_code: 200, message: 'Updated' };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveral([product]);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/products-uuid', JSON.stringify(product), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+
+      expect(result).toEqual([mockResponseData]);
+    });
   });
 
   describe('submitDraftForApproval', () => {

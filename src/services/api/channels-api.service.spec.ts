@@ -50,6 +50,24 @@ describe('ChannelsApi', () => {
       ]);
     });
 
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const channels: Partial<Channel>[] = [{ code: 'ecommerce', labels: { en_US: 'Ecommerce' } }];
+
+      const mockResponseData = { line: 1, code: 'ecommerce', status_code: 200, message: 'ok' };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveral(channels);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/association-types', JSON.stringify(channels[0]), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+
+      expect(result).toEqual([{ line: 1, code: 'ecommerce', status_code: 200, message: 'ok' }]);
+    });
+
     it('should handle API errors gracefully', async () => {
       mockHttpClient.patch.mockRejectedValue(new Error('Bad request'));
 

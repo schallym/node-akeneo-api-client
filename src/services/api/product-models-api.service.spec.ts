@@ -69,6 +69,35 @@ describe('ProductModelsApi', () => {
         { line: 2, code: 'model2', status_code: 201, message: 'Created' },
       ]);
     });
+
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const productModel = {
+        code: 'model1',
+        family: 'shoes',
+        family_variant: 'shoes_size',
+        values: { color: [{ locale: null, scope: null, data: 'red' }] },
+      };
+
+      const mockResponseData = { line: 1, code: 'model1', status_code: 201, message: 'Created' };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveral([productModel]);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/product-models', JSON.stringify(productModel), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+
+      expect(result).toEqual([{ line: 1, code: 'model1', status_code: 201, message: 'Created' }]);
+    });
+
+    it('should handle API errors gracefully', async () => {
+      mockHttpClient.patch.mockRejectedValue(new Error('Bad request'));
+
+      await expect(api.updateOrCreateSeveral([{ code: 'bad_model' }])).rejects.toThrow('Bad request');
+    });
   });
 
   describe('submitDraftForApproval', () => {

@@ -49,6 +49,24 @@ describe('AttributeGroupsApi', () => {
         { line: 2, code: 'group2', status_code: 201, message: 'created' },
       ]);
     });
+
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const groups: Partial<AttributeGroup>[] = [{ code: 'group1', sort_order: 1 }];
+
+      const mockResponseData = { line: 1, code: 'group1', status_code: 200, message: 'ok' };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveral(groups);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/attribute-groups', JSON.stringify(groups[0]), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+
+      expect(result).toEqual([mockResponseData]);
+    });
   });
 
   describe('delete', () => {

@@ -62,7 +62,7 @@ export class AttributesApi extends BaseApi<
         },
       })
       .then((response) => {
-        return response.data
+        return (typeof response.data === 'string' ? response.data : JSON.stringify(response.data))
           .trim()
           .split('\n')
           .map((line: string) => JSON.parse(line));
@@ -109,7 +109,7 @@ export class AttributesApi extends BaseApi<
         },
       })
       .then((response) => {
-        return response.data
+        return (typeof response.data === 'string' ? response.data : JSON.stringify(response.data))
           .trim()
           .split('\n')
           .map((line: string) => JSON.parse(line));

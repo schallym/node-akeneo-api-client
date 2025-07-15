@@ -51,6 +51,24 @@ describe('AttributesApi', () => {
         { line: 2, code: 'attr2', status_code: 201, message: 'created' },
       ]);
     });
+
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const attributes: Partial<Attribute>[] = [{ code: 'attr1', type: AttributeTypes.TEXT, group: 'group1' }];
+
+      const mockResponseData = { line: 1, code: 'attr1', status_code: 200, message: 'ok' };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveral(attributes);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/attributes', JSON.stringify(attributes[0]), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+
+      expect(result).toEqual([{ line: 1, code: 'attr1', status_code: 200, message: 'ok' }]);
+    });
   });
 
   describe('listAttributeOptions', () => {
@@ -142,6 +160,28 @@ describe('AttributesApi', () => {
         { line: 1, code: 'opt1', status_code: 200, message: 'ok' },
         { line: 2, code: 'opt2', status_code: 201, message: 'created' },
       ]);
+    });
+
+    it('should send PATCH request with correct data and parse response with non string response', async () => {
+      const attributeCode = 'attr1';
+      const options = [{ code: 'opt1', labels: { en_US: 'Option 1' } }];
+      const mockResponseData = { line: 1, code: 'opt1', status_code: 200, message: 'ok' };
+
+      mockHttpClient.patch.mockResolvedValue({ data: mockResponseData });
+
+      const result = await api.updateOrCreateSeveralAttributeOptions(attributeCode, options);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(
+        '/api/rest/v1/attributes/attr1/options',
+        JSON.stringify(options[0]),
+        {
+          headers: {
+            'Content-Type': 'application/vnd.akeneo.collection+json',
+          },
+        },
+      );
+
+      expect(result).toEqual([{ line: 1, code: 'opt1', status_code: 200, message: 'ok' }]);
     });
   });
 
