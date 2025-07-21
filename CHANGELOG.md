@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/schallym/node-akeneo-api-client/compare/v1.1.3...v1.1.4) (2025-07-21)
+
+
+### Bug Fixes
+
+* **api:** manage launch import job api endpoint options ([#21](https://github.com/schallym/node-akeneo-api-client/issues/21)) ([da8a7d2](https://github.com/schallym/node-akeneo-api-client/commit/da8a7d209cbd980bd1719f8256cb7c5794e13c9c))
+
 ## [1.1.3](https://github.com/schallym/node-akeneo-api-client/compare/v1.1.2...v1.1.3) (2025-07-15)
 
 
