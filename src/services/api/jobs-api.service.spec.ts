@@ -40,5 +40,17 @@ describe('JobsApi', () => {
       expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/jobs/import/job_123', {});
       expect(result).toEqual(mockResponse);
     });
+
+    it('should call the endpoint with options if provided', async () => {
+      const mockResponse: LaunchJobResponse = { execution_id: 'exec_3' };
+      mockHttpClient.post.mockResolvedValue({ data: mockResponse });
+
+      const result = await api.launchImportJob(testCode, { import_mode: 'create_or_update' });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/jobs/import/job_123', {
+        import_mode: 'create_or_update',
+      });
+      expect(result).toEqual(mockResponse);
+    });
   });
 });
