@@ -34,6 +34,14 @@ describe('JobsApi E2E', () => {
     expect(result).toEqual(mockResponse);
   });
 
+  it('should launch an import job with options', async () => {
+    const mockResponse: LaunchJobResponse = { execution_id: 'exec_import_2' };
+    nock(baseUrl).post('/api/rest/v1/jobs/import/job_789', { import_mode: 'update_only' }).reply(200, mockResponse);
+
+    const result = await akeneoClient.jobs.launchImportJob('job_789', { import_mode: 'update_only' });
+    expect(result).toEqual(mockResponse);
+  });
+
   it('should handle API errors gracefully', async () => {
     nock(baseUrl).post('/api/rest/v1/jobs/export/nonexistent').reply(404, { code: 404, message: 'Not found' });
 
