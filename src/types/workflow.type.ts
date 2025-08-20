@@ -32,7 +32,7 @@ export type WorkflowStep = {
   code: string;
   type: string;
   labels: { [localCode: string]: string };
-  descriptions: Record<string, string>;
+  descriptions: { [localCode: string]: string };
   allotted_time?: { value: number; unit: string } | null;
   channels_and_locales?: Record<string, string[]>;
 };
