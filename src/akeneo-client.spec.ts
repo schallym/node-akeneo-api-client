@@ -1,4 +1,4 @@
-import { AkeneoClient, HttpHooksApi } from '../src';
+import { AkeneoClient } from '../src';
 import { AkeneoApiClient } from './services';
 import {
   AssetManagerApi,
@@ -10,6 +10,7 @@ import {
   ChannelsApi,
   CurrenciesApi,
   FamiliesApi,
+  HttpHooksApi,
   JobsApi,
   LocalesApi,
   MeasurementFamiliesApi,
@@ -20,6 +21,7 @@ import {
   ReferenceEntitiesApi,
   UIExtensionsApi,
   UtilitiesApi,
+  WorkflowApi,
 } from './services/api';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosRequestConfig } from 'axios';
@@ -125,5 +127,7 @@ describe('AkeneoClient', () => {
     expect(client.uiExtensions).toBeInstanceOf(UIExtensionsApi);
     expect(client.httpHooks).toBeDefined();
     expect(client.httpHooks).toBeInstanceOf(HttpHooksApi);
+    expect(client.workflows).toBeDefined();
+    expect(client.workflows).toBeInstanceOf(WorkflowApi);
   });
 });
