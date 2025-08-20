@@ -20,6 +20,7 @@ import {
   ReferenceEntitiesApi,
   UIExtensionsApi,
   UtilitiesApi,
+  WorkflowApi,
 } from './services';
 import { AkeneoAuthAppConfig, AkeneoAuthConnectionConfig } from './types';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
@@ -49,6 +50,7 @@ export class AkeneoClient {
   readonly catalogForApps: CatalogForAppsApi;
   readonly uiExtensions: UIExtensionsApi;
   readonly httpHooks: HttpHooksApi;
+  readonly workflows: WorkflowApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -75,5 +77,6 @@ export class AkeneoClient {
     this.catalogForApps = new CatalogForAppsApi(this.apiClient);
     this.uiExtensions = new UIExtensionsApi(this.apiClient);
     this.httpHooks = new HttpHooksApi(this.apiClient);
+    this.workflows = new WorkflowApi(this.apiClient);
   }
 }

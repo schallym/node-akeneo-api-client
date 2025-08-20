@@ -21,3 +21,4 @@ export * from './ui-extensions-api.service';
 export * from './http-hooks-api.service';
 export * from './asset-manager';
 export * from './catalog-for-apps';
+export * from './workflow.api';
