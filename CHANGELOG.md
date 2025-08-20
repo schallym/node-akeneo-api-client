@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/schallym/node-akeneo-api-client/compare/v1.1.5...v1.2.0) (2025-08-20)
+
+
+### Features
+
+* **api:** Add workflow endpoints ([#38](https://github.com/schallym/node-akeneo-api-client/issues/38)) ([cb6e69b](https://github.com/schallym/node-akeneo-api-client/commit/cb6e69bda81464d83363afa79b2920cc1b309ae3))
+
 ## [1.1.5](https://github.com/schallym/node-akeneo-api-client/compare/v1.1.4...v1.1.5) (2025-07-23)
 
 ## [1.1.4](https://github.com/schallym/node-akeneo-api-client/compare/v1.1.3...v1.1.4) (2025-07-21)
