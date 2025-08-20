@@ -54,7 +54,7 @@ describe('WorkflowApi E2E', () => {
   });
 
   it('should list tasks with params', async () => {
-    const params = { page: 1, limit: 10, step_uuid: 123 };
+    const params = { page: 1, limit: 10, step_uuid: 'f626d0e5-84a5-41fc-8215-65508c253edb' };
     nock(baseUrl).get('/api/rest/v1/workflows/tasks').query(params).reply(200, workflowMock.listTasks);
 
     const result = await akeneoClient.workflows.listTasks(params);

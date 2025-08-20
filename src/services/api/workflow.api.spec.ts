@@ -83,7 +83,7 @@ describe('WorkflowApi', () => {
 
   it('should list tasks with params', async () => {
     const tasks = { _embedded: { items: [{ uuid: '456' } as WorkflowTask] } };
-    const params = { page: 2, limit: 20, step_uuid: 789 };
+    const params = { page: 2, limit: 20, step_uuid: 'f626d0e5-84a5-41fc-8215-65508c253edb' };
     httpClient.get.mockResolvedValue({ data: tasks });
 
     const result = await api.listTasks(params);

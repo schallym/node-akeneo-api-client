@@ -9,7 +9,7 @@ export type ListStepAssigneesRequest = {
 export type ListTasksRequest = {
   page?: number;
   limit?: number;
-  step_uuid?: number;
+  step_uuid?: string;
 };
 
 export type CompleteTaskResponse = {
