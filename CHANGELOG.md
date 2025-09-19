@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/schallym/node-akeneo-api-client/compare/v1.2.2...v1.3.0) (2025-09-19)
+
+
+### Features
+
+* **api:** improve media files management for asset and reference entities ([#53](https://github.com/schallym/node-akeneo-api-client/issues/53)) ([f2a997e](https://github.com/schallym/node-akeneo-api-client/commit/f2a997e78cac8bac125f301b367516384035eb33))
+
 ## [1.2.2](https://github.com/schallym/node-akeneo-api-client/compare/v1.2.1...v1.2.2) (2025-09-16)
 
 ## [1.2.1](https://github.com/schallym/node-akeneo-api-client/compare/v1.2.0...v1.2.1) (2025-09-14)
