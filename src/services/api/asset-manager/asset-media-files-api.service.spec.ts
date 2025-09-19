@@ -1,4 +1,4 @@
-import { AssetMediaFilesApi, CreateAssetRecordRequest } from './asset-media-files-api.service';
+import { AssetMediaFilesApi, CreateAssetMediaFileRequest } from './asset-media-files-api.service';
 import { AkeneoApiClient } from '../../akeneo-api-client';
 
 describe('AssetMediaFilesApi', () => {
@@ -20,8 +20,13 @@ describe('AssetMediaFilesApi', () => {
 
   describe('create', () => {
     it('should send a multipart/form-data POST request', async () => {
-      const data: CreateAssetRecordRequest = { code: 'file1', file: new Blob(['test']) };
-      mockHttpClient.post.mockResolvedValue({});
+      const data: CreateAssetMediaFileRequest = { file: new Blob(['test']), fileName: 'file.png' };
+      mockHttpClient.post.mockResolvedValue({
+        headers: {
+          location: '/api/rest/v1/asset-media-files/file1',
+          'asset-media-file-code': 'file1',
+        },
+      });
 
       await api.create(data);
 
@@ -37,7 +42,9 @@ describe('AssetMediaFilesApi', () => {
     it('should handle API errors gracefully', async () => {
       mockHttpClient.post.mockRejectedValue(new Error('Upload failed'));
 
-      await expect(api.create({ code: 'bad', file: 'file' })).rejects.toThrow('Upload failed');
+      await expect(api.create({ file: new Blob(['file-content']), fileName: 'file.png' })).rejects.toThrow(
+        'Upload failed',
+      );
     });
   });
 

@@ -37,7 +37,7 @@ export type ReferenceEntityAttributeOption = {
 
 export type ReferenceEntityRecord = {
   code: string;
-  values: { [attributeCode: string]: ReferenceEntityRecordValue };
+  values: { [attributeCode: string]: ReferenceEntityRecordValue[] };
   created: string;
   updated: string;
 };

@@ -1,8 +1,13 @@
 import { AkeneoApiClient } from '../../akeneo-api-client';
 
-export type CreateAssetRecordRequest = {
-  code: string;
-  file: Blob | File | string;
+export type CreateAssetMediaFileRequest = {
+  file: Blob | File;
+  fileName?: string;
+};
+
+export type CreateAssetMediaFileResponse = {
+  location: string;
+  mediaFileCode: string;
 };
 
 export class AssetMediaFilesApi {
@@ -12,16 +17,20 @@ export class AssetMediaFilesApi {
     this.endpoint = '/api/rest/v1/asset-media-files';
   }
 
-  async create(data: CreateAssetRecordRequest): Promise<void> {
+  async create(data: CreateAssetMediaFileRequest): Promise<CreateAssetMediaFileResponse> {
     const formData = new FormData();
-    formData.append('file', data.file);
-    formData.append('code', data.code);
+    formData.append('file', data.file, data.fileName);
 
-    await this.client.httpClient.post(`${this.endpoint}`, formData, {
+    const response = await this.client.httpClient.post(`${this.endpoint}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
+
+    return {
+      location: response.headers.location,
+      mediaFileCode: response.headers['asset-media-file-code'],
+    };
   }
 
   async download(code: string): Promise<ArrayBuffer> {
