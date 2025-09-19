@@ -2,7 +2,7 @@ import nock from 'nock';
 import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 import referenceEntityMock from './mocks/reference-entity.mock';
-import { ReferenceEntityAttributeType } from '../src/types';
+import { ReferenceEntityAttributeType } from '../src';
 
 describe('ReferenceEntities E2E', () => {
   let akeneoClient: AkeneoClient;
@@ -195,14 +195,16 @@ describe('ReferenceEntities E2E', () => {
       nock(baseUrl).post('/api/rest/v1/reference-entities-media-files').reply(201);
 
       await expect(
-        akeneoClient.referenceEntities.mediaFiles.create({ code: 'file1', file: 'file-content' }),
-      ).resolves.toBeUndefined();
+        akeneoClient.referenceEntities.mediaFiles.create({ file: new Blob(['file-content']), fileName: 'file.png' }),
+      ).resolves.toBeDefined();
     });
 
     it('should handle API errors when creating a media file', async () => {
       nock(baseUrl).post('/api/rest/v1/reference-entities-media-files').reply(400, { message: 'Bad request' });
 
-      await expect(akeneoClient.referenceEntities.mediaFiles.create({ code: 'bad', file: 'file' })).rejects.toThrow();
+      await expect(
+        akeneoClient.referenceEntities.mediaFiles.create({ file: new Blob(['file-content']), fileName: 'file.png' }),
+      ).rejects.toThrow();
     });
 
     it('should download a media file as ArrayBuffer', async () => {

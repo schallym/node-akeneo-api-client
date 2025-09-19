@@ -152,14 +152,14 @@ describe('AssetManagerApi', () => {
       nock(baseUrl).post('/api/rest/v1/asset-media-files').reply(201, {});
 
       const data = { code: 'file1', file: new Blob(['test']) };
-      await expect(akeneoClient.assetManager.mediaFiles.create(data)).resolves.toBeUndefined();
+      await expect(akeneoClient.assetManager.mediaFiles.create(data)).resolves.toBeDefined();
     });
 
     it('should handle errors when creating an asset media file', async () => {
       nock(baseUrl).post('/api/rest/v1/asset-media-files').reply(400, { message: 'Upload failed' });
 
       await expect(
-        akeneoClient.assetManager.mediaFiles.create({ code: 'bad', file: new Blob(['test']) }),
+        akeneoClient.assetManager.mediaFiles.create({ file: new Blob(['test']), fileName: 'file1.png' }),
       ).rejects.toThrow();
     });
 

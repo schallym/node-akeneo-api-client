@@ -20,8 +20,13 @@ describe('ReferenceEntitiesMediaFilesApi', () => {
 
   describe('create', () => {
     it('should send POST request with FormData', async () => {
-      mockHttpClient.post.mockResolvedValue({});
-      const data = { code: 'file1', file: 'file-content' };
+      mockHttpClient.post.mockResolvedValue({
+        headers: {
+          location: '/api/rest/v1/reference-entities-media-files/file1',
+          'reference-entities-media-file-code': 'file1',
+        },
+      });
+      const data = { file: new Blob(['file-content']), fileName: 'file.png' };
 
       await api.create(data);
 
@@ -35,7 +40,9 @@ describe('ReferenceEntitiesMediaFilesApi', () => {
     it('should handle API errors gracefully', async () => {
       mockHttpClient.post.mockRejectedValue(new Error('Bad request'));
 
-      await expect(api.create({ code: 'bad', file: 'file' })).rejects.toThrow('Bad request');
+      await expect(api.create({ file: new Blob(['file-content']), fileName: 'file.png' })).rejects.toThrow(
+        'Bad request',
+      );
     });
   });
 
