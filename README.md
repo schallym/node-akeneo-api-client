@@ -120,13 +120,13 @@ import { AkeneoClient, Product, Category, Family } from '@schally/node-akeneo-ap
 const client = new AkeneoClient({
   baseUrl: 'https://your-akeneo-instance.com',
   clientId: 'your-client-id',
-  clientSecret: 'your-client-secret',
+  secret: 'your-client-secret',
   username: 'your-username',
   password: 'your-password'
 });
 
 // TypeScript will provide full autocompletion and type checking
-const products: Product[] = await client.products.getAll();
+const products: Product[] = await client.products.list();
 const category: Category = await client.categories.get('category-code');
 ```
 
