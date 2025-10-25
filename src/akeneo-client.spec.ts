@@ -14,6 +14,7 @@ import {
   JobsApi,
   LocalesApi,
   MeasurementFamiliesApi,
+  PermissionsApi,
   ProductMediaFilesApi,
   ProductModelsApi,
   ProductsApi,
@@ -129,5 +130,7 @@ describe('AkeneoClient', () => {
     expect(client.httpHooks).toBeInstanceOf(HttpHooksApi);
     expect(client.workflows).toBeDefined();
     expect(client.workflows).toBeInstanceOf(WorkflowApi);
+    expect(client.permissions).toBeDefined();
+    expect(client.permissions).toBeInstanceOf(PermissionsApi);
   });
 });

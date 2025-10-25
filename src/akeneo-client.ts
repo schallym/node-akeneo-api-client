@@ -13,6 +13,7 @@ import {
   JobsApi,
   LocalesApi,
   MeasurementFamiliesApi,
+  PermissionsApi,
   ProductMediaFilesApi,
   ProductModelsApi,
   ProductsApi,
@@ -51,6 +52,7 @@ export class AkeneoClient {
   readonly uiExtensions: UIExtensionsApi;
   readonly httpHooks: HttpHooksApi;
   readonly workflows: WorkflowApi;
+  readonly permissions: PermissionsApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -78,5 +80,6 @@ export class AkeneoClient {
     this.uiExtensions = new UIExtensionsApi(this.apiClient);
     this.httpHooks = new HttpHooksApi(this.apiClient);
     this.workflows = new WorkflowApi(this.apiClient);
+    this.permissions = new PermissionsApi(this.apiClient);
   }
 }
