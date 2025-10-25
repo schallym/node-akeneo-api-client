@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/schallym/node-akeneo-api-client/compare/v1.3.1...v1.4.0) (2025-10-25)
+
+
+### Features
+
+* **api:** add permissions api ([#76](https://github.com/schallym/node-akeneo-api-client/issues/76)) ([9c7890b](https://github.com/schallym/node-akeneo-api-client/commit/9c7890b162e834bbc41ef494cb0565066ee6aa50))
+
 ## [1.3.1](https://github.com/schallym/node-akeneo-api-client/compare/v1.3.0...v1.3.1) (2025-10-15)
 
 # [1.3.0](https://github.com/schallym/node-akeneo-api-client/compare/v1.2.2...v1.3.0) (2025-09-19)
