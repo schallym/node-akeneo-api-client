@@ -22,3 +22,4 @@ export * from './http-hooks-api.service';
 export * from './asset-manager';
 export * from './catalog-for-apps';
 export * from './workflow.api';
+export * from './permissions-api.service';

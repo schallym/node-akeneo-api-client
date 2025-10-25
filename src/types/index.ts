@@ -18,3 +18,4 @@ export * from './catalog-for-apps.type';
 export * from './ui-extension.type';
 export * from './http-hook.type';
 export * from './workflow.type';
+export * from './permissions.type';
