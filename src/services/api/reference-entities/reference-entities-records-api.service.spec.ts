@@ -39,16 +39,15 @@ describe('ReferenceEntitiesRecordsApi', () => {
 
   describe('list', () => {
     it('should fetch a paginated list of records', async () => {
-      const mockResponse: PaginatedResponse<ReferenceEntityRecord>[] = [
-        {
-          _embedded: { items: [{ code: 'rec1', values: {}, created: '', updated: '' }] },
-          current_page: 2,
-          _links: {
-            self: { href: '/api/rest/v1/reference-entities/brand/records?page=2&limit=10' },
-            first: { href: '/api/rest/v1/reference-entities/brand/records?limit=10' },
-          },
+      const mockResponse: PaginatedResponse<ReferenceEntityRecord> = {
+        _embedded: { items: [{ code: 'rec1', values: {}, created: '', updated: '' }] },
+        current_page: 2,
+        _links: {
+          self: { href: '/api/rest/v1/reference-entities/brand/records?page=2&limit=10' },
+          first: { href: '/api/rest/v1/reference-entities/brand/records?limit=10' },
         },
-      ];
+      };
+
       mockHttpClient.get.mockResolvedValue({ data: mockResponse });
 
       const result = await api.list('brand', { search: 'foo' });
