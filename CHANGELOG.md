@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.3...v1.4.4) (2025-12-24)
+
+
+### Bug Fixes
+
+* **type:** update list method to return a single paginated response and adjust test mock ([#105](https://github.com/schallym/node-akeneo-api-client/issues/105)) ([f8ec062](https://github.com/schallym/node-akeneo-api-client/commit/f8ec0627746aca58f5c34a90b6c7cf1ba80cd091))
+
 ## [1.4.3](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.2...v1.4.3) (2025-11-14)
 
 ## [1.4.2](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.1...v1.4.2) (2025-11-04)
