@@ -38,7 +38,7 @@ export class ReferenceEntitiesRecordsApi {
   async list(
     referenceEntityCode: string,
     params?: ReferenceEntityRecordSearchParams,
-  ): Promise<PaginatedResponse<ReferenceEntityRecord>[]> {
+  ): Promise<PaginatedResponse<ReferenceEntityRecord>> {
     return this.client.httpClient.get(`${this.completeEndpoint(referenceEntityCode)}`, { params }).then((response) => {
       return response.data;
     });
