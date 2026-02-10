@@ -16,6 +16,8 @@ export type ProductModelType = {
   quality_scores?: ProductModelQualityScore[];
 };
 
+export type ProductModel = ProductModelType;
+
 export type ProductModelValue = {
   data: string | number | boolean | object | string[];
   locale?: string | null;
