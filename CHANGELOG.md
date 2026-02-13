@@ -1,3 +1,10 @@
+## [1.4.8](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.7...v1.4.8) (2026-02-13)
+
+
+### Bug Fixes
+
+* package.json & package-lock.json to reduce vulnerabilities ([#129](https://github.com/schallym/node-akeneo-api-client/issues/129)) ([2b76164](https://github.com/schallym/node-akeneo-api-client/commit/2b7616438a40e6289a1b35848d8bed98ffa1c7ba))
+
 ## [1.4.7](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.6...v1.4.7) (2026-02-13)
 
 
