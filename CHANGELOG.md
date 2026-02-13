@@ -1,3 +1,10 @@
+## [1.4.7](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.6...v1.4.7) (2026-02-13)
+
+
+### Bug Fixes
+
+* correct ProductModel type definition ([#128](https://github.com/schallym/node-akeneo-api-client/issues/128)) ([dad446a](https://github.com/schallym/node-akeneo-api-client/commit/dad446a782c74188ca2655e737e1fc45e224ee42))
+
 ## [1.4.6](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.5...v1.4.6) (2026-02-03)
 
 ## [1.4.5](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.4...v1.4.5) (2026-01-27)
