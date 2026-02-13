@@ -115,7 +115,7 @@ try {
 This library is written in TypeScript and includes comprehensive type definitions:
 
 ```typescript
-import { AkeneoClient, Product, Category, Family } from '@schally/node-akeneo-api-client';
+import { AkeneoClient, Product, ProductModel, Category, Family } from '@schally/node-akeneo-api-client';
 
 const client = new AkeneoClient({
   baseUrl: 'https://your-akeneo-instance.com',
