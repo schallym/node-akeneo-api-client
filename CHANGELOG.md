@@ -1,3 +1,10 @@
+## [1.4.11](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.10...v1.4.11) (2026-03-30)
+
+
+### Bug Fixes
+
+* **types:** add custom_variables to UIExtension type ([#148](https://github.com/schallym/node-akeneo-api-client/issues/148)) ([f38fff8](https://github.com/schallym/node-akeneo-api-client/commit/f38fff8bc3a61166609fa58e2ddfa0ed095b31b2))
+
 ## [1.4.10](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.9...v1.4.10) (2026-03-30)
 
 
