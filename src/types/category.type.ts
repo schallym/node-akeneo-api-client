@@ -5,7 +5,7 @@ export type Category = {
   position?: number;
   labels: { [localeCode: string]: string };
   values: {
-    [key: string]: CategoryValue[];
+    [key: string]: CategoryValue;
   };
   channel_requirements?: string[];
 };
