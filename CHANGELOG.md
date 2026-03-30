@@ -1,3 +1,10 @@
+## [1.4.10](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.9...v1.4.10) (2026-03-30)
+
+
+### Bug Fixes
+
+* **typing:** Fix typing issue ([#147](https://github.com/schallym/node-akeneo-api-client/issues/147)) ([a84a4e2](https://github.com/schallym/node-akeneo-api-client/commit/a84a4e28e65efe981fbb169a96a277f3372d2427))
+
 ## [1.4.9](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.8...v1.4.9) (2026-03-09)
 
 ## [1.4.8](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.7...v1.4.8) (2026-02-13)
