@@ -14,6 +14,7 @@ export type UIExtensionConfiguration = {
   labels: { [locale: string]: string };
   secret?: string;
   url: string;
+  custom_variables: { [key: string]: string };
 };
 
 export enum UIExtensionType {
