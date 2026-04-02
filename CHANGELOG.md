@@ -1,3 +1,10 @@
+## [1.4.13](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.12...v1.4.13) (2026-04-02)
+
+
+### Bug Fixes
+
+* update ESLint configuration and dependencies ([#154](https://github.com/schallym/node-akeneo-api-client/issues/154)) ([fd339ad](https://github.com/schallym/node-akeneo-api-client/commit/fd339ad46d782c58786f3bbbc83e9b295a2a9ea6))
+
 ## [1.4.12](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.11...v1.4.12) (2026-04-02)
 
 ## [1.4.11](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.10...v1.4.11) (2026-03-30)
