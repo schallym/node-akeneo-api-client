@@ -68,9 +68,10 @@ describe('akeneoClient.families E2E', () => {
 
   it('should get a variant family', async () => {
     const familyCode = 'tables';
-    nock(baseUrl).get(`/api/rest/v1/families/${familyCode}/variants`).reply(200, familyMock.getVariantFamily);
+    const code = 'tables';
+    nock(baseUrl).get(`/api/rest/v1/families/${familyCode}/variants/${code}`).reply(200, familyMock.getVariantFamily);
 
-    const result = await akeneoClient.families.getVariantFamily(familyCode);
+    const result = await akeneoClient.families.getVariantFamily(familyCode, code);
 
     expect(result.code).toBe('tables');
     expect(result.labels.en_US).toBe('Tables');

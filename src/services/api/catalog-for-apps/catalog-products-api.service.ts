@@ -34,7 +34,7 @@ export class CatalogProductsApi {
     params?: CatalogProductUuidsSearchParams,
   ): Promise<PaginatedResponse<string>> {
     return this.client.httpClient
-      .get(`${this.completeEndpoint(catalogId)}/products/uuids`, { params })
+      .get(`${this.completeEndpoint(catalogId)}/product-uuids`, { params })
       .then((response) => response.data);
   }
 

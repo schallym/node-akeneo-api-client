@@ -25,7 +25,7 @@ describe('CatalogProductsApi', () => {
     mockHttpClient.get.mockResolvedValue({ data: mockResponse });
 
     const result = await api.listProductUuids(catalogId, { limit: 10 });
-    expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/catalogs/catalog-123/products/uuids', {
+    expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/catalogs/catalog-123/product-uuids', {
       params: { limit: 10 },
     });
     expect(result).toEqual(mockResponse);

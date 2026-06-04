@@ -67,6 +67,12 @@ export class AssetAttributesApi {
     );
   }
 
+  async deleteAttributeOption(assetFamilyCode: string, attributeCode: string, optionCode: string): Promise<void> {
+    await this.client.httpClient.delete(
+      `${this.completeEndpoint(assetFamilyCode)}/${attributeCode}/options/${optionCode}`,
+    );
+  }
+
   private completeEndpoint(assetFamilyCode: string): string {
     return this.endpoint.replace('{asset_family_code}', assetFamilyCode);
   }

@@ -104,7 +104,7 @@ describe('CatalogForAppsApi E2E', () => {
 
     it('should list product uuids', async () => {
       nock(baseUrl)
-        .get(`/api/rest/v1/catalogs/${catalogId}/products/uuids`)
+        .get(`/api/rest/v1/catalogs/${catalogId}/product-uuids`)
         .query({ limit: 10 })
         .reply(200, catalogForAppsMock.catalogProducts.uuids);
 
@@ -165,7 +165,7 @@ describe('CatalogForAppsApi E2E', () => {
 
     it('should handle errors for listProductUuids', async () => {
       nock(baseUrl)
-        .get(`/api/rest/v1/catalogs/${catalogId}/products/uuids`)
+        .get(`/api/rest/v1/catalogs/${catalogId}/product-uuids`)
         .query(true)
         .reply(500, { message: 'Error' });
 

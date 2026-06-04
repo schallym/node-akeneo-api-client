@@ -29,7 +29,7 @@ describe('ChannelsApi E2E', () => {
       '\n' +
       JSON.stringify({ line: 2, code: 'mobile', status_code: 201, message: 'created' });
 
-    nock(baseUrl).patch('/api/rest/v1/association-types').reply(200, mockResponse);
+    nock(baseUrl).patch('/api/rest/v1/channels').reply(200, mockResponse);
 
     const result = await akeneoClient.channels.updateOrCreateSeveral(channels);
 
@@ -40,14 +40,14 @@ describe('ChannelsApi E2E', () => {
   });
 
   it('should handle API errors gracefully', async () => {
-    nock(baseUrl).patch('/api/rest/v1/association-types').reply(400, { code: 400, message: 'Bad request' });
+    nock(baseUrl).patch('/api/rest/v1/channels').reply(400, { code: 400, message: 'Bad request' });
 
     await expect(akeneoClient.channels.updateOrCreateSeveral([{ code: 'bad' }])).rejects.toThrow();
   });
 
   it('should throw when trying to delete a channel', async () => {
     await expect(akeneoClient.channels.delete()).rejects.toThrow(
-      'Method not implemented. Deletion of association types is not supported by the API.',
+      'Method not implemented. Deletion of channels is not supported by the API.',
     );
   });
 });

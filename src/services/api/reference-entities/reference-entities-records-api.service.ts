@@ -8,6 +8,14 @@ export type ReferenceEntityRecordSearchParams = {
   search_after?: string;
 };
 
+export type AllReferenceEntityRecordsSearchParams = {
+  reference_entity?: string;
+  search?: string;
+  channel?: string;
+  locales?: string;
+  search_after?: string;
+};
+
 export type UpdateOrCreateReferenceEntityRecordRequest = Partial<
   Omit<ReferenceEntityRecord, 'code' | 'created' | 'updated'> & {
     code: string;
@@ -40,6 +48,12 @@ export class ReferenceEntitiesRecordsApi {
     params?: ReferenceEntityRecordSearchParams,
   ): Promise<PaginatedResponse<ReferenceEntityRecord>> {
     return this.client.httpClient.get(`${this.completeEndpoint(referenceEntityCode)}`, { params }).then((response) => {
+      return response.data;
+    });
+  }
+
+  async listAll(params?: AllReferenceEntityRecordsSearchParams): Promise<PaginatedResponse<ReferenceEntityRecord>> {
+    return this.client.httpClient.get('/api/rest/v1/reference-entities/records', { params }).then((response) => {
       return response.data;
     });
   }

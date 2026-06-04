@@ -112,4 +112,29 @@ export default {
   completeTask: {
     status: 'completed',
   },
+  list: {
+    _links: {
+      self: { href: 'https://demo.akeneo.com/api/rest/v1/workflows?page=1&limit=10' },
+      first: { href: 'https://demo.akeneo.com/api/rest/v1/workflows?page=1&limit=10' },
+    },
+    current_page: 1,
+    _embedded: {
+      items: [
+        {
+          uuid: '6f37476a-04c2-46c0-b6d0-e18316959068',
+          code: 'enrichment_workflow',
+          labels: {
+            en_US: 'Enrichment workflow',
+          },
+          enabled: true,
+        },
+      ],
+    },
+  },
+  startExecutions: {
+    code: 201,
+    message: 'Workflow executions started successfully.',
+    processed: 2,
+    errors: [],
+  },
 };

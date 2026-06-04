@@ -9,6 +9,7 @@ import {
   CategoriesApi,
   ChannelsApi,
   CurrenciesApi,
+  DataArchitectAgentApi,
   FamiliesApi,
   HttpHooksApi,
   JobsApi,
@@ -20,6 +21,7 @@ import {
   ProductsApi,
   ProductsUuidApi,
   ReferenceEntitiesApi,
+  RuleDefinitionsApi,
   UIExtensionsApi,
   UtilitiesApi,
   WorkflowApi,
@@ -132,5 +134,9 @@ describe('AkeneoClient', () => {
     expect(client.workflows).toBeInstanceOf(WorkflowApi);
     expect(client.permissions).toBeDefined();
     expect(client.permissions).toBeInstanceOf(PermissionsApi);
+    expect(client.ruleDefinitions).toBeDefined();
+    expect(client.ruleDefinitions).toBeInstanceOf(RuleDefinitionsApi);
+    expect(client.dataArchitectAgent).toBeDefined();
+    expect(client.dataArchitectAgent).toBeInstanceOf(DataArchitectAgentApi);
   });
 });
