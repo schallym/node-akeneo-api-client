@@ -103,15 +103,16 @@ describe('FamiliesApi', () => {
   });
 
   describe('getVariantFamily', () => {
-    it('should send GET request and return variant family', async () => {
+    it('should send GET request to the variant resource and return the variant family', async () => {
       const familyCode = 'family1';
-      const mockVariantFamily = { code: 'family1', variant_attribute_sets: [] };
+      const code = 'variant1';
+      const mockVariantFamily = { code: 'variant1', variant_attribute_sets: [] };
 
       mockHttpClient.get = jest.fn().mockResolvedValue({ data: mockVariantFamily });
 
-      const result = await api.getVariantFamily(familyCode);
+      const result = await api.getVariantFamily(familyCode, code);
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/families/family1/variants');
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/families/family1/variants/variant1');
       expect(result).toBe(mockVariantFamily);
     });
   });

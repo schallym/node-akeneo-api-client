@@ -1,7 +1,28 @@
 import { AkeneoApiClient } from '../';
-import { ProductUuid } from '../../types';
+import { PaginatedResponse, ProductUuid } from '../../types';
 import { BaseApi } from './base-api.service';
 import { ProductsGetParams, ProductsSearchParams } from './products-api.service';
+
+export type ProductsUuidSearchQueryParams = {
+  pagination_type?: 'page' | 'search_after';
+  page?: number;
+  search_after?: string;
+  limit?: number;
+  with_count?: boolean;
+};
+
+export type ProductsUuidSearchQuery = {
+  search?: string;
+  scope?: string;
+  locales?: string;
+  attributes?: string;
+  convert_measurements?: boolean;
+  with_attribute_options?: boolean;
+  with_asset_share_links?: boolean;
+  with_quality_scores__products?: boolean;
+  with_completenesses?: boolean;
+  with_workflow_execution_statuses?: boolean;
+};
 
 export type CreateProductUuidRequest = Partial<
   Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses' | 'uuid'>
@@ -57,5 +78,14 @@ export class ProductsUuidApi extends BaseApi<
 
   async getDraft(uuid: string): Promise<ProductUuid> {
     return this.client.httpClient.get(`${this.endpoint}/${uuid}/draft`).then((response) => response.data);
+  }
+
+  async search(
+    query?: ProductsUuidSearchQuery,
+    params?: ProductsUuidSearchQueryParams,
+  ): Promise<PaginatedResponse<ProductUuid>> {
+    return this.client.httpClient
+      .post(`${this.endpoint}/search`, query ?? {}, { params })
+      .then((response) => response.data);
   }
 }

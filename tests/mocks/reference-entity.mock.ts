@@ -76,5 +76,12 @@ export default {
         first: { href: '/api/rest/v1/reference-entities/brand/records?limit=10' },
       },
     },
+    listAll: {
+      _embedded: { items: [referenceEntityRecordMock] },
+      _links: {
+        self: { href: '/api/rest/v1/reference-entities/records' },
+        first: { href: '/api/rest/v1/reference-entities/records' },
+      },
+    },
   },
 };

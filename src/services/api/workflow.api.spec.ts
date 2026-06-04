@@ -11,9 +11,20 @@ describe('WorkflowApi', () => {
     httpClient = {
       get: jest.fn(),
       patch: jest.fn(),
+      post: jest.fn(),
     };
     client = { httpClient } as unknown as AkeneoApiClient;
     api = new WorkflowApi(client);
+  });
+
+  it('should list workflows', async () => {
+    const workflows = { _embedded: { items: [{ uuid: '123', code: 'wf' } as Workflow] }, current_page: 1, _links: {} };
+    httpClient.get.mockResolvedValue({ data: workflows });
+
+    const result = await api.list({ page: 1, limit: 10 });
+
+    expect(httpClient.get).toHaveBeenCalledWith('/api/rest/v1/workflows', { params: { page: 1, limit: 10 } });
+    expect(result).toEqual(workflows);
   });
 
   it('should get a workflow by uuid', async () => {
@@ -99,6 +110,20 @@ describe('WorkflowApi', () => {
     const result = await api.completeTask('task-456');
 
     expect(httpClient.patch).toHaveBeenCalledWith('/api/rest/v1/workflows/tasks/task-456');
+    expect(result).toEqual(response);
+  });
+
+  it('should start workflow executions', async () => {
+    const data = [
+      { workflow: { uuid: 'wf-1' }, product: { uuid: 'p-1' } },
+      { workflow: { uuid: 'wf-1' }, product_model: { code: 'pm-1' } },
+    ];
+    const response = { code: 201, message: 'OK', processed: 2, errors: [] };
+    httpClient.post.mockResolvedValue({ data: response });
+
+    const result = await api.startExecutions(data);
+
+    expect(httpClient.post).toHaveBeenCalledWith('/api/rest/v1/workflows/executions', data);
     expect(result).toEqual(response);
   });
 });

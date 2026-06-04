@@ -23,3 +23,5 @@ export * from './asset-manager';
 export * from './catalog-for-apps';
 export * from './workflow.api';
 export * from './permissions-api.service';
+export * from './rule-definitions-api.service';
+export * from './data-architect-agent-api.service';

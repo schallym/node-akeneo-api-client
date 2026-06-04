@@ -63,8 +63,10 @@ export class FamiliesApi extends BaseApi<Family, null, FamiliesSearchParams, Cre
       .then((response) => response.data);
   }
 
-  async getVariantFamily(familyCode: string): Promise<VariantFamily> {
-    return this.client.httpClient.get(`${this.endpoint}/${familyCode}/variants`).then((response) => response.data);
+  async getVariantFamily(familyCode: string, code: string): Promise<VariantFamily> {
+    return this.client.httpClient
+      .get(`${this.endpoint}/${familyCode}/variants/${code}`)
+      .then((response) => response.data);
   }
 
   async createVariantFamily(familyCode: string, data: CreateVariantFamilyRequest): Promise<void> {

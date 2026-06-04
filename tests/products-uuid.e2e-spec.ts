@@ -56,6 +56,17 @@ describe('Products UUID API E2E Tests', () => {
     expect(result[1].uuid).toBe('prod2');
   });
 
+  it('should search products', async () => {
+    const query = { search: 'filters', with_completenesses: true };
+
+    nock(baseUrl).post('/api/rest/v1/products-uuid/search').query({ limit: 10 }).reply(200, productsUuidMock.search);
+
+    const result = await akeneoClient.productsUuid.search(query, { limit: 10 });
+
+    expect(result).toEqual(productsUuidMock.search);
+    expect(result._embedded.items[0].uuid).toBe('1234-5678-9012');
+  });
+
   it('should handle API authentication process', async () => {
     nock(baseUrl)
       .get('/api/rest/v1/products-uuid/1234-5678-9012/draft')

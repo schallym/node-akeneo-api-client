@@ -9,6 +9,7 @@ export type Family = {
 
 export type VariantFamily = {
   code: string;
+  common_attributes?: string[];
   variant_attribute_sets: {
     level: number;
     axes: string[];

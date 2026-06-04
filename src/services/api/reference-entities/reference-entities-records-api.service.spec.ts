@@ -65,6 +65,34 @@ describe('ReferenceEntitiesRecordsApi', () => {
     });
   });
 
+  describe('listAll', () => {
+    it('should fetch a paginated list of records across all reference entities', async () => {
+      const mockResponse: PaginatedResponse<ReferenceEntityRecord> = {
+        _embedded: { items: [{ code: 'rec1', values: {}, created: '', updated: '' }] },
+        current_page: 1,
+        _links: {
+          self: { href: '/api/rest/v1/reference-entities/records' },
+          first: { href: '/api/rest/v1/reference-entities/records' },
+        },
+      };
+
+      mockHttpClient.get.mockResolvedValue({ data: mockResponse });
+
+      const result = await api.listAll({ reference_entity: 'brand', search: 'foo' });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/reference-entities/records', {
+        params: { reference_entity: 'brand', search: 'foo' },
+      });
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should handle errors when listing all records', async () => {
+      mockHttpClient.get.mockRejectedValue(new Error('API error'));
+
+      await expect(api.listAll()).rejects.toThrow('API error');
+    });
+  });
+
   describe('updateOrCreate', () => {
     it('should send PATCH request with correct data', async () => {
       const data = { code: 'rec1', values: {} };

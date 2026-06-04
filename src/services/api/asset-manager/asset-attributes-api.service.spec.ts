@@ -10,6 +10,7 @@ describe('AssetAttributesApi', () => {
   const mockHttpClient = {
     get: jest.fn(),
     patch: jest.fn(),
+    delete: jest.fn(),
   };
 
   const mockClient = {
@@ -139,6 +140,24 @@ describe('AssetAttributesApi', () => {
       await expect(api.updateOrCreateAttributeOption('family1', 'attr1', { code: 'bad' })).rejects.toThrow(
         'Bad request',
       );
+    });
+  });
+
+  describe('deleteAttributeOption', () => {
+    it('should send DELETE request to the correct endpoint', async () => {
+      mockHttpClient.delete.mockResolvedValue({});
+
+      await api.deleteAttributeOption('family1', 'attr1', 'opt1');
+
+      expect(mockHttpClient.delete).toHaveBeenCalledWith(
+        '/api/rest/v1/asset-families/family1/attributes/attr1/options/opt1',
+      );
+    });
+
+    it('should handle API errors gracefully', async () => {
+      mockHttpClient.delete.mockRejectedValue(new Error('Bad request'));
+
+      await expect(api.deleteAttributeOption('family1', 'attr1', 'bad')).rejects.toThrow('Bad request');
     });
   });
 });

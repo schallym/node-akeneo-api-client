@@ -19,3 +19,5 @@ export * from './ui-extension.type';
 export * from './http-hook.type';
 export * from './workflow.type';
 export * from './permissions.type';
+export * from './rule-definition.type';
+export * from './data-architect-agent.type';

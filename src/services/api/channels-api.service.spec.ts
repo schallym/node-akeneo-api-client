@@ -35,7 +35,7 @@ describe('ChannelsApi', () => {
       const result = await api.updateOrCreateSeveral(channels);
 
       expect(mockHttpClient.patch).toHaveBeenCalledWith(
-        '/api/rest/v1/association-types',
+        '/api/rest/v1/channels',
         JSON.stringify(channels[0]) + '\n' + JSON.stringify(channels[1]),
         {
           headers: {
@@ -59,7 +59,7 @@ describe('ChannelsApi', () => {
 
       const result = await api.updateOrCreateSeveral(channels);
 
-      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/association-types', JSON.stringify(channels[0]), {
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/channels', JSON.stringify(channels[0]), {
         headers: {
           'Content-Type': 'application/vnd.akeneo.collection+json',
         },
@@ -78,7 +78,7 @@ describe('ChannelsApi', () => {
   describe('delete', () => {
     it('should throw an error when trying to delete a channel', async () => {
       await expect(api.delete()).rejects.toThrow(
-        'Method not implemented. Deletion of association types is not supported by the API.',
+        'Method not implemented. Deletion of channels is not supported by the API.',
       );
     });
   });

@@ -92,4 +92,24 @@ describe('UIExtensionsApi E2E', () => {
 
     await expect(akeneoClient.uiExtensions.delete('bad')).rejects.toThrow();
   });
+
+  it('should upload a file to a UI extension', async () => {
+    nock(baseUrl)
+      .post(`/api/rest/v1/ui-extensions/${uiExtensionsMock.update.uuid}`, (body) => !!body)
+      .reply(200, uiExtensionsMock.update);
+
+    const result = await akeneoClient.uiExtensions.uploadFile(uiExtensionsMock.update.uuid, {
+      file: new Blob(['extension-bundle']),
+      fileName: 'extension.zip',
+      name: 'my_awesome_button_extension',
+      version: 'V1.02.4',
+    });
+    expect(result).toEqual(uiExtensionsMock.update);
+  });
+
+  it('should handle errors when uploading a file to a UI extension', async () => {
+    nock(baseUrl).post('/api/rest/v1/ui-extensions/bad').reply(404, { message: 'Not found' });
+
+    await expect(akeneoClient.uiExtensions.uploadFile('bad', { file: new Blob(['x']) })).rejects.toThrow();
+  });
 });

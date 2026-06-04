@@ -30,4 +30,16 @@ describe('UtilitiesApi E2E', () => {
 
     await expect(akeneoClient.utilities.getSystemInformation()).rejects.toThrow();
   });
+
+  it('should fetch the list of all available endpoints', async () => {
+    const mockList = {
+      host: 'https://akeneo.test',
+      authentication: { oauth: { route: '/api/oauth/v1/token', methods: ['POST'] } },
+      routes: { products: { route: '/api/rest/v1/products', methods: ['GET', 'POST'] } },
+    };
+    nock(baseUrl).get('/api/rest/v1').reply(200, mockList);
+
+    const result = await akeneoClient.utilities.listEndpoints();
+    expect(result).toEqual(mockList);
+  });
 });

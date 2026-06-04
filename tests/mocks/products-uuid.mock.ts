@@ -43,4 +43,15 @@ export default {
     },
   },
   getDraft: productsUuidMock,
+  search: {
+    _links: {
+      self: { href: 'https://akeneo.test/api/rest/v1/products-uuid/search' },
+      first: { href: 'https://akeneo.test/api/rest/v1/products-uuid/search' },
+    },
+    current_page: 1,
+    items_count: 1,
+    _embedded: {
+      items: [productsUuidMock],
+    },
+  },
 };

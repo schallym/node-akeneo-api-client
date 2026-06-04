@@ -20,11 +20,11 @@ export type SeveralChannelsUpdateOrCreationResponseLine = {
 
 export class ChannelsApi extends BaseApi<Channel, null, ChannelsSearchParams, CreateChannelRequest, Partial<Channel>> {
   constructor(client: AkeneoApiClient) {
-    super(client, '/api/rest/v1/association-types');
+    super(client, '/api/rest/v1/channels');
   }
 
   async delete(): Promise<void> {
-    throw new Error('Method not implemented. Deletion of association types is not supported by the API.');
+    throw new Error('Method not implemented. Deletion of channels is not supported by the API.');
   }
 
   async updateOrCreateSeveral(data: Partial<Channel>[]): Promise<SeveralChannelsUpdateOrCreationResponseLine[]> {

@@ -8,6 +8,7 @@ import {
   CategoriesApi,
   ChannelsApi,
   CurrenciesApi,
+  DataArchitectAgentApi,
   FamiliesApi,
   HttpHooksApi,
   JobsApi,
@@ -19,6 +20,7 @@ import {
   ProductsApi,
   ProductsUuidApi,
   ReferenceEntitiesApi,
+  RuleDefinitionsApi,
   UIExtensionsApi,
   UtilitiesApi,
   WorkflowApi,
@@ -53,6 +55,8 @@ export class AkeneoClient {
   readonly httpHooks: HttpHooksApi;
   readonly workflows: WorkflowApi;
   readonly permissions: PermissionsApi;
+  readonly ruleDefinitions: RuleDefinitionsApi;
+  readonly dataArchitectAgent: DataArchitectAgentApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -81,5 +85,7 @@ export class AkeneoClient {
     this.httpHooks = new HttpHooksApi(this.apiClient);
     this.workflows = new WorkflowApi(this.apiClient);
     this.permissions = new PermissionsApi(this.apiClient);
+    this.ruleDefinitions = new RuleDefinitionsApi(this.apiClient);
+    this.dataArchitectAgent = new DataArchitectAgentApi(this.apiClient);
   }
 }

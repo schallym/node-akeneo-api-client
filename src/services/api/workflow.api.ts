@@ -16,11 +16,35 @@ export type CompleteTaskResponse = {
   status: string;
 };
 
+export type ListWorkflowsParams = {
+  page?: number;
+  limit?: number;
+};
+
+export type WorkflowExecutionRequest = {
+  workflow: { uuid: string };
+  product?: { uuid: string };
+  product_model?: { code: string };
+};
+
+export type WorkflowExecutionsResponse = {
+  code?: number;
+  message?: string;
+  processed?: number;
+  errors?: { index?: number; message?: string }[];
+};
+
 export class WorkflowApi {
   private readonly endpoint: string;
 
   constructor(private readonly client: AkeneoApiClient) {
     this.endpoint = '/api/rest/v1/workflows';
+  }
+
+  async list(params?: ListWorkflowsParams): Promise<PaginatedResponse<Workflow>> {
+    return this.client.httpClient.get(this.endpoint, { params }).then((response) => {
+      return response.data;
+    });
   }
 
   async get(workflowUuid: string): Promise<Workflow> {
@@ -46,6 +70,12 @@ export class WorkflowApi {
 
   async completeTask(taskUuid: string): Promise<CompleteTaskResponse> {
     return this.client.httpClient.patch(`${this.endpoint}/tasks/${taskUuid}`).then((response) => {
+      return response.data;
+    });
+  }
+
+  async startExecutions(data: WorkflowExecutionRequest[]): Promise<WorkflowExecutionsResponse> {
+    return this.client.httpClient.post(`${this.endpoint}/executions`, data).then((response) => {
       return response.data;
     });
   }

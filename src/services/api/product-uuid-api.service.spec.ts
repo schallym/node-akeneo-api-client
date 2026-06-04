@@ -112,6 +112,35 @@ describe('ProductsUuidApi', () => {
     });
   });
 
+  describe('search', () => {
+    it('should send POST request with query body and pagination params', async () => {
+      const mockResponse = {
+        _links: {},
+        current_page: 1,
+        items_count: 1,
+        _embedded: { items: [{ uuid: 'uuid1' }] },
+      };
+      mockHttpClient.post.mockResolvedValue({ data: mockResponse });
+
+      const query = { search: 'filters', scope: 'ecommerce', with_completenesses: true };
+      const params = { pagination_type: 'search_after' as const, limit: 10, with_count: true };
+
+      const result = await api.search(query, params);
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/products-uuid/search', query, { params });
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should default to an empty body when no query is provided', async () => {
+      const mockResponse = { _links: {}, current_page: 1, _embedded: { items: [] } };
+      mockHttpClient.post.mockResolvedValue({ data: mockResponse });
+
+      await api.search();
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/products-uuid/search', {}, { params: undefined });
+    });
+  });
+
   describe('inherited BaseApi methods', () => {
     it('should use the correct endpoint for get method', async () => {
       const mockProduct: ProductUuid = {

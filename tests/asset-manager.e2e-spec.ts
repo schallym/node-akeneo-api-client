@@ -145,6 +145,24 @@ describe('AssetManagerApi', () => {
       const result = await akeneoClient.assetManager.attributes.listAttributeOptions('model_pictures', 'attr1');
       expect(result).toEqual(assetManagerMock.attribute.option.list);
     });
+
+    it('should delete an asset attribute option', async () => {
+      nock(baseUrl).delete('/api/rest/v1/asset-families/model_pictures/attributes/attr1/options/option1').reply(204);
+
+      await expect(
+        akeneoClient.assetManager.attributes.deleteAttributeOption('model_pictures', 'attr1', 'option1'),
+      ).resolves.toBeUndefined();
+    });
+
+    it('should handle errors when deleting an asset attribute option', async () => {
+      nock(baseUrl)
+        .delete('/api/rest/v1/asset-families/model_pictures/attributes/attr1/options/bad')
+        .reply(404, { message: 'Not found' });
+
+      await expect(
+        akeneoClient.assetManager.attributes.deleteAttributeOption('model_pictures', 'attr1', 'bad'),
+      ).rejects.toThrow();
+    });
   });
 
   describe('AssetMediaFilesApi E2E', () => {

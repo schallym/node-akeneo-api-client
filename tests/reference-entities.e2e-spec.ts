@@ -176,6 +176,16 @@ describe('ReferenceEntities E2E', () => {
       await expect(akeneoClient.referenceEntities.records.list('brand')).rejects.toThrow();
     });
 
+    it('should fetch all records across all reference entities', async () => {
+      nock(baseUrl)
+        .get('/api/rest/v1/reference-entities/records')
+        .query({ reference_entity: 'brand' })
+        .reply(200, referenceEntityMock.record.listAll);
+
+      const result = await akeneoClient.referenceEntities.records.listAll({ reference_entity: 'brand' });
+      expect(result).toEqual(referenceEntityMock.record.listAll);
+    });
+
     it('should handle API errors when updating or creating a reference entity record', async () => {
       nock(baseUrl).patch('/api/rest/v1/reference-entities/brand/records/bad').reply(400, { message: 'Bad request' });
 

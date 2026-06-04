@@ -97,4 +97,25 @@ describe('WorkflowApi E2E', () => {
 
     await expect(akeneoClient.workflows.completeTask(taskUuid)).rejects.toThrow();
   });
+
+  it('should list workflows', async () => {
+    const params = { page: 1, limit: 10 };
+    nock(baseUrl).get('/api/rest/v1/workflows').query(params).reply(200, workflowMock.list);
+
+    const result = await akeneoClient.workflows.list(params);
+    expect(result).toEqual(workflowMock.list);
+  });
+
+  it('should start workflow executions', async () => {
+    const data = [
+      {
+        workflow: { uuid: '6f37476a-04c2-46c0-b6d0-e18316959068' },
+        product: { uuid: '7108ee60-a1ea-4fe1-baca-b39909e23d24' },
+      },
+    ];
+    nock(baseUrl).post('/api/rest/v1/workflows/executions').reply(207, workflowMock.startExecutions);
+
+    const result = await akeneoClient.workflows.startExecutions(data);
+    expect(result).toEqual(workflowMock.startExecutions);
+  });
 });
