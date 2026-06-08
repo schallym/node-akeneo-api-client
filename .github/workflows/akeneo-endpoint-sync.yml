@@ -1,0 +1,85 @@
+name: Sync Akeneo endpoints
+
+# Weekly: run the deterministic GAP analysis; if documented endpoints are missing
+# from the client, have Claude Code implement one resource's worth of them (with
+# tests) and open a draft PR for review.
+on:
+  schedule:
+    - cron: '0 6 * * 5' # every Friday at 6:00 UTC
+  workflow_dispatch:
+    inputs:
+      resource:
+        description: 'Limit to a single resource (OpenAPI tag/path, e.g. assets). Optional.'
+        required: false
+        type: string
+      model:
+        description: 'Claude model id'
+        required: false
+        default: claude-opus-4-8
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: akeneo-endpoint-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # 1) Deterministic gate — only spend tokens / open a PR if something is missing.
+      - name: Detect missing endpoints
+        id: gap
+        run: |
+          node .claude/skills/akeneo-api-gap-analysis/scripts/gap-analysis.mjs --json --refresh > gap.json
+          missing=$(jq '[.operations[] | select(.status == "missing")] | length' gap.json)
+          echo "missing=$missing" >> "$GITHUB_OUTPUT"
+          echo "Missing operations: $missing"
+
+      # 2) Implement with Claude Code (headless) — only when there is a gap.
+      - name: Install Claude Code
+        if: steps.gap.outputs.missing != '0'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Implement missing endpoints
+        if: steps.gap.outputs.missing != '0'
+        run: bash scripts/akeneo-implement.sh
+        env:
+          # Preferred: OAuth token from a Claude Max/Pro plan (`claude setup-token`).
+          # Falls back to a pay-as-you-go API key if the OAuth secret is unset.
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ inputs.model || 'claude-opus-4-8' }}
+          RESOURCE_FILTER: ${{ inputs.resource }}
+
+      # 3) Open a draft PR with whatever Claude changed (no-op if nothing changed).
+      - name: Create Pull Request
+        if: steps.gap.outputs.missing != '0'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.PAT_TOKEN }} # reused from release.yml; lets other workflows run on the PR
+          base: main
+          branch: chore/akeneo-sync-run-${{ github.run_number }}
+          delete-branch: true
+          draft: true
+          title: 'feat: implement missing Akeneo endpoint(s)'
+          body-path: akeneo-pr-body.md
+          commit-message: 'feat: implement missing Akeneo endpoint(s)'
+          labels: |
+            automated
+            akeneo-api

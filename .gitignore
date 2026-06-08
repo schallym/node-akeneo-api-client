@@ -10,3 +10,8 @@
 ###> Unit test reports ###
 /coverage/
 ###< Unit test reports ###
+
+###> Akeneo endpoint sync (CI transient artifacts) ###
+/gap.json
+/akeneo-pr-body.md
+###< Akeneo endpoint sync ###
