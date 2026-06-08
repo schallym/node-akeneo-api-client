@@ -1,3 +1,5 @@
+## [1.5.1](https://github.com/schallym/node-akeneo-api-client/compare/v1.5.0...v1.5.1) (2026-06-08)
+
 # [1.5.0](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.18...v1.5.0) (2026-06-04)
 
 ## [1.4.18](https://github.com/schallym/node-akeneo-api-client/compare/v1.4.17...v1.4.18) (2026-05-19)
