@@ -116,7 +116,6 @@ describe('ProductModelsApi', () => {
         code: testCode,
         family: 'test_family',
         family_variant: 'test_variant',
-        groups: ['group1'],
         categories: ['category1'],
         created: '2023-01-01T00:00:00Z',
         updated: '2023-01-02T00:00:00Z',
@@ -141,7 +140,6 @@ describe('ProductModelsApi', () => {
         code: testCode,
         family: 'test_family',
         family_variant: 'test_variant',
-        groups: ['group1'],
         categories: ['category1'],
         created: '2023-01-01T00:00:00Z',
         updated: '2023-01-02T00:00:00Z',
@@ -166,7 +164,55 @@ describe('ProductModelsApi', () => {
 
       await api.update(testCode, updateData);
 
-      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}`, updateData);
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}`, updateData, {
+        params: undefined,
+      });
+    });
+
+    it('should pass query params to the update method', async () => {
+      const updateData = {
+        values: { name: [{ locale: 'en_US', scope: null, data: 'Updated Product Model' }] },
+      };
+
+      mockHttpClient.patch.mockResolvedValue({ data: {} });
+
+      await api.update(testCode, updateData, { create_missing_options: 'color' });
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}`, updateData, {
+        params: { create_missing_options: 'color' },
+      });
+    });
+
+    it('should use the correct endpoint for create method', async () => {
+      const createData = {
+        code: testCode,
+        family: 'test_family',
+        family_variant: 'test_variant',
+      };
+
+      mockHttpClient.post.mockResolvedValue({ data: {} });
+
+      await api.create(createData);
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/product-models', createData, {
+        params: undefined,
+      });
+    });
+
+    it('should pass query params to the create method', async () => {
+      const createData = {
+        code: testCode,
+        family: 'test_family',
+        family_variant: 'test_variant',
+      };
+
+      mockHttpClient.post.mockResolvedValue({ data: {} });
+
+      await api.create(createData, { create_missing_options: 'color' });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/product-models', createData, {
+        params: { create_missing_options: 'color' },
+      });
     });
   });
 });

@@ -56,6 +56,33 @@ describe('Product models API E2E Tests', () => {
     expect(result[1].code).toBe('code2');
   });
 
+  it('should create a product model with query params', async () => {
+    const data = {
+      code: 'model1',
+      family: 'shoes',
+      family_variant: 'shoes_size',
+    };
+
+    nock(baseUrl).post('/api/rest/v1/product-models', data).query({ create_missing_options: 'color' }).reply(201);
+
+    await expect(akeneoClient.productModels.create(data, { create_missing_options: 'color' })).resolves.toBeUndefined();
+  });
+
+  it('should update a product model with query params', async () => {
+    const data = {
+      values: { name: [{ locale: null, scope: null, data: 'Model 1' }] },
+    };
+
+    nock(baseUrl)
+      .patch('/api/rest/v1/product-models/model1', data as unknown as nock.RequestBodyMatcher)
+      .query({ create_missing_options: 'color' })
+      .reply(204);
+
+    await expect(
+      akeneoClient.productModels.update('model1', data, { create_missing_options: 'color' }),
+    ).resolves.toBeUndefined();
+  });
+
   it('should handle API authentication process', async () => {
     nock(baseUrl).post('/api/oauth/v1/token').reply(200, {
       access_token: 'new_access_token',

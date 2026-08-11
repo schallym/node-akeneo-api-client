@@ -188,7 +188,14 @@ describe('CategoriesApi E2E', () => {
   it('should send POST request to create a category media file', async () => {
     const data = { category: { code: 'cat1', attribute_code: 'image' }, file: 'filedata' };
 
-    nock(baseUrl).post('/api/rest/v1/category-media-files', data).reply(201);
+    nock(baseUrl)
+      .post('/api/rest/v1/category-media-files', (body) => {
+        const raw = typeof body === 'string' ? body : JSON.stringify(body);
+        return (
+          raw.includes('name="category"') && raw.includes('"attribute_code":"image"') && raw.includes('name="file"')
+        );
+      })
+      .reply(201);
 
     await expect(akeneoClient.categories.createCategoryMediaFile(data)).resolves.toBeUndefined();
   });

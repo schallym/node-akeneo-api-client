@@ -202,7 +202,12 @@ describe('CategoriesApi', () => {
 
       await api.createCategoryMediaFile(data);
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/category-media-files', data);
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/category-media-files', expect.any(FormData), {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const formData = mockHttpClient.post.mock.calls[0][1] as FormData;
+      expect(formData.get('category')).toEqual(JSON.stringify(data.category));
+      expect(formData.get('file')).toEqual('filedata');
     });
   });
 

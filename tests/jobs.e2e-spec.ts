@@ -19,7 +19,7 @@ describe('JobsApi E2E', () => {
   });
 
   it('should launch an export job', async () => {
-    const mockResponse: LaunchJobResponse = { execution_id: 'exec_export_1' };
+    const mockResponse: LaunchJobResponse = { job_execution_id: 12345 };
     nock(baseUrl).post('/api/rest/v1/jobs/export/job_123').reply(200, mockResponse);
 
     const result = await akeneoClient.jobs.launchExportJob('job_123');
@@ -27,7 +27,7 @@ describe('JobsApi E2E', () => {
   });
 
   it('should launch an import job', async () => {
-    const mockResponse: LaunchJobResponse = { execution_id: 'exec_import_1' };
+    const mockResponse: LaunchJobResponse = { job_execution_id: 'exec_import_1' };
     nock(baseUrl).post('/api/rest/v1/jobs/import/job_456').reply(200, mockResponse);
 
     const result = await akeneoClient.jobs.launchImportJob('job_456');
@@ -35,7 +35,7 @@ describe('JobsApi E2E', () => {
   });
 
   it('should launch an import job with options', async () => {
-    const mockResponse: LaunchJobResponse = { execution_id: 'exec_import_2' };
+    const mockResponse: LaunchJobResponse = { job_execution_id: 'exec_import_2' };
     nock(baseUrl).post('/api/rest/v1/jobs/import/job_789', { import_mode: 'update_only' }).reply(200, mockResponse);
 
     const result = await akeneoClient.jobs.launchImportJob('job_789', { import_mode: 'update_only' });

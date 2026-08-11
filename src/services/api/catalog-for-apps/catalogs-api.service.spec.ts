@@ -61,7 +61,17 @@ describe('CatalogApi', () => {
     mockHttpClient.post.mockResolvedValue({ data: mockCatalog });
 
     const result = await api.duplicate('1');
-    expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/catalogs/1/duplicate');
+    expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/catalogs/1/duplicate', {});
+    expect(result).toEqual(mockCatalog);
+  });
+
+  it('should duplicate a catalog with options', async () => {
+    const mockCatalog: Catalog = { id: '2', name: 'Duplicated Catalog' } as Catalog;
+    const data = { name: 'Duplicated Catalog', skip_required_checks: true, replace_mapping_locales_with: 'en_US' };
+    mockHttpClient.post.mockResolvedValue({ data: mockCatalog });
+
+    const result = await api.duplicate('1', data);
+    expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/catalogs/1/duplicate', data);
     expect(result).toEqual(mockCatalog);
   });
 });

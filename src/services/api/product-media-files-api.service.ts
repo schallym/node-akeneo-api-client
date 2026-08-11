@@ -10,13 +10,13 @@ export type ProductMediaFilesSearchParams = {
 export type CreateProductMediaFileRequest = {
   product?: {
     identifier: string;
-    attributes: string;
+    attribute: string;
     scope: string | null;
     locale: string | null;
   };
   product_model?: {
     code: string;
-    attributes: string;
+    attribute: string;
     scope: string | null;
     locale: string | null;
   };
@@ -37,7 +37,20 @@ export class ProductMediaFilesApi {
   }
 
   async create(data: CreateProductMediaFileRequest): Promise<void> {
-    await this.client.httpClient.post(this.endpoint, data);
+    const formData = new FormData();
+    if (data.product) {
+      formData.append('product', JSON.stringify(data.product));
+    }
+    if (data.product_model) {
+      formData.append('product_model', JSON.stringify(data.product_model));
+    }
+    formData.append('file', data.file);
+
+    await this.client.httpClient.post(this.endpoint, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   }
 
   async download(code: string): Promise<ArrayBuffer> {

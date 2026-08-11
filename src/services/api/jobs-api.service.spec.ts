@@ -20,7 +20,7 @@ describe('JobsApi', () => {
 
   describe('launchExportJob', () => {
     it('should call the correct endpoint and return the response', async () => {
-      const mockResponse: LaunchJobResponse = { execution_id: 'exec_1' };
+      const mockResponse: LaunchJobResponse = { job_execution_id: 12345 };
       mockHttpClient.post.mockResolvedValue({ data: mockResponse });
 
       const result = await api.launchExportJob(testCode);
@@ -32,7 +32,7 @@ describe('JobsApi', () => {
 
   describe('launchImportJob', () => {
     it('should call the correct endpoint and return the response', async () => {
-      const mockResponse: LaunchJobResponse = { execution_id: 'exec_2' };
+      const mockResponse: LaunchJobResponse = { job_execution_id: 'exec_2' };
       mockHttpClient.post.mockResolvedValue({ data: mockResponse });
 
       const result = await api.launchImportJob(testCode);
@@ -42,7 +42,7 @@ describe('JobsApi', () => {
     });
 
     it('should call the endpoint with options if provided', async () => {
-      const mockResponse: LaunchJobResponse = { execution_id: 'exec_3' };
+      const mockResponse: LaunchJobResponse = { job_execution_id: 'exec_3' };
       mockHttpClient.post.mockResolvedValue({ data: mockResponse });
 
       const result = await api.launchImportJob(testCode, { import_mode: 'create_or_update' });

@@ -1,7 +1,20 @@
 import { AkeneoApiClient } from '../';
 import { PaginatedResponse, ProductUuid } from '../../types';
 import { BaseApi } from './base-api.service';
-import { ProductsGetParams, ProductsSearchParams } from './products-api.service';
+import {
+  ProductsCreateQueryParams,
+  ProductsGetParams,
+  ProductsSearchParams,
+  ProductsUpdateQueryParams,
+} from './products-api.service';
+
+export type ProductsUuidSearchParams = ProductsSearchParams & {
+  with_root_parent?: boolean;
+};
+
+export type ProductsUuidGetParams = ProductsGetParams & {
+  with_root_parent?: boolean;
+};
 
 export type ProductsUuidSearchQueryParams = {
   pagination_type?: 'page' | 'search_after';
@@ -21,16 +34,39 @@ export type ProductsUuidSearchQuery = {
   with_asset_share_links?: boolean;
   with_quality_scores__products?: boolean;
   with_completenesses?: boolean;
+  with_readiness?: 'scores_only' | 'detailed';
   with_workflow_execution_statuses?: boolean;
 };
 
 export type CreateProductUuidRequest = Partial<
-  Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses' | 'uuid'>
+  Omit<
+    ProductUuid,
+    | 'created'
+    | 'updated'
+    | 'metadata'
+    | 'quality_scores'
+    | 'completenesses'
+    | 'readiness'
+    | 'workflow_execution_statuses'
+    | 'root_parent'
+    | 'uuid'
+  >
 > &
   Required<Pick<ProductUuid, 'uuid'>>;
 
 export type UpdateProductUuidRequest = Partial<
-  Omit<ProductUuid, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses' | 'uuid'>
+  Omit<
+    ProductUuid,
+    | 'created'
+    | 'updated'
+    | 'metadata'
+    | 'quality_scores'
+    | 'completenesses'
+    | 'readiness'
+    | 'workflow_execution_statuses'
+    | 'root_parent'
+    | 'uuid'
+  >
 > &
   Required<Pick<ProductUuid, 'uuid'>> & {
     add_categories?: string[];
@@ -46,13 +82,21 @@ export type SeveralProductsUuidUpdateOrCreationResponseLine = {
 
 export class ProductsUuidApi extends BaseApi<
   ProductUuid,
-  ProductsGetParams,
-  ProductsSearchParams,
+  ProductsUuidGetParams,
+  ProductsUuidSearchParams,
   CreateProductUuidRequest,
   UpdateProductUuidRequest
 > {
   constructor(client: AkeneoApiClient) {
     super(client, '/api/rest/v1/products-uuid');
+  }
+
+  async create(data: CreateProductUuidRequest, params?: ProductsCreateQueryParams): Promise<void> {
+    await this.client.httpClient.post(this.endpoint, data, { params });
+  }
+
+  async update(uuid: string, data: UpdateProductUuidRequest, params?: ProductsUpdateQueryParams): Promise<void> {
+    await this.client.httpClient.patch(`${this.endpoint}/${uuid}`, data, { params });
   }
 
   async updateOrCreateSeveral(

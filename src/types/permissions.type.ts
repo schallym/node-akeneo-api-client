@@ -1,6 +1,6 @@
 export type ViewEditPermission = {
-  canView: boolean;
-  canEdit: boolean;
+  canView: 'true' | 'false';
+  canEdit: 'true' | 'false';
 };
 
 export type LocalePermissions = {

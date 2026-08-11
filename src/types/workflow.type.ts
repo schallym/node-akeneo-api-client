@@ -17,7 +17,7 @@ export type WorkflowTask = {
   uuid: string;
   status: string;
   created_at: string;
-  due_date: string;
+  due_date: string | null;
   rejected: boolean;
   product?: {
     uuid: string;
@@ -25,6 +25,14 @@ export type WorkflowTask = {
   product_model?: {
     code: string;
   };
+  pending_attributes?: { [attributeCode: string]: WorkflowTaskPendingAttribute[] };
+};
+
+export type WorkflowTaskPendingAttribute = {
+  locale?: string | null;
+  scope?: string | null;
+  rejected: boolean;
+  comment?: string;
 };
 
 export type WorkflowStep = {

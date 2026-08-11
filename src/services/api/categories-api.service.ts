@@ -26,7 +26,7 @@ export type SeveralCategoriesUpdateOrCreationResponseLine = {
 };
 
 export type CreateCategoryMediaFileRequest = {
-  category?: {
+  category: {
     code: string;
     attribute_code: string;
     locale?: string | null;
@@ -66,7 +66,15 @@ export class CategoriesApi extends BaseApi<
   }
 
   async createCategoryMediaFile(data: CreateCategoryMediaFileRequest): Promise<void> {
-    await this.client.httpClient.post('/api/rest/v1/category-media-files', data);
+    const formData = new FormData();
+    formData.append('category', JSON.stringify(data.category));
+    formData.append('file', data.file);
+
+    await this.client.httpClient.post('/api/rest/v1/category-media-files', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   }
 
   async downloadCategoryMediaFile(filePath: string): Promise<ArrayBuffer> {

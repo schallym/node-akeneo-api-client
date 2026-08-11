@@ -1,7 +1,7 @@
 import { AkeneoApiClient } from '../akeneo-api-client';
 
 export type LaunchJobResponse = {
-  execution_id: string;
+  job_execution_id: number | string;
 };
 
 export type LaunchImportJobOptions = {

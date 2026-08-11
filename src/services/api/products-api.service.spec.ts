@@ -135,7 +135,24 @@ describe('ProductsApi', () => {
 
       await api.update(testIdentifier, mockProduct);
 
-      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/products/${testIdentifier}`, mockProduct);
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/products/${testIdentifier}`, mockProduct, {
+        params: undefined,
+      });
+    });
+
+    it('should pass query params to the update method', async () => {
+      const mockProduct: UpdateProductRequest = {
+        identifier: testIdentifier,
+        values: { name: [{ locale: 'en_US', scope: null, data: 'Updated Product' }] },
+      };
+
+      mockHttpClient.patch.mockResolvedValue({ data: {} });
+
+      await api.update(testIdentifier, mockProduct, { create_missing_options: 'color', update_parent_values: true });
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/products/${testIdentifier}`, mockProduct, {
+        params: { create_missing_options: 'color', update_parent_values: true },
+      });
     });
   });
 
@@ -157,7 +174,24 @@ describe('ProductsApi', () => {
 
       await api.create(mockProduct);
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/products', mockProduct);
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/products', mockProduct, { params: undefined });
+    });
+
+    it('should pass query params to the create method', async () => {
+      const mockProduct: CreateProductRequest = {
+        identifier: testIdentifier,
+        values: {
+          color: [{ locale: null, scope: null, data: 'red' }],
+        },
+      };
+
+      mockHttpClient.post.mockResolvedValue({ data: {} });
+
+      await api.create(mockProduct, { create_missing_options: 'color' });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/products', mockProduct, {
+        params: { create_missing_options: 'color' },
+      });
     });
   });
 

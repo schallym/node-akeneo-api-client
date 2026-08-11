@@ -1,6 +1,6 @@
 export type Category = {
   code: string;
-  parent?: string;
+  parent?: string | null;
   updated: string;
   position?: number;
   labels: { [localeCode: string]: string };
@@ -8,6 +8,7 @@ export type Category = {
     [key: string]: CategoryValue;
   };
   channel_requirements?: string[];
+  validations?: CategoryValidations;
 };
 
 export type CategoryValue = {
@@ -16,4 +17,10 @@ export type CategoryValue = {
   locale?: string | null;
   channel?: string | null;
   attribute_code?: string;
+};
+
+export type CategoryValidations = {
+  max_categories_per_product?: number;
+  only_leaves?: boolean;
+  is_mandatory?: boolean;
 };

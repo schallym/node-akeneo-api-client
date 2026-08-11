@@ -20,13 +20,39 @@ describe('ProductMediaFilesApi E2E', () => {
     setupNock();
   });
 
-  it('should create a new media file', async () => {
-    nock(baseUrl).post('/api/rest/v1/media-files').reply(201);
+  it('should create a new media file for a product', async () => {
+    nock(baseUrl)
+      .post('/api/rest/v1/media-files', (body) => {
+        const raw = typeof body === 'string' ? body : JSON.stringify(body);
+        return raw.includes('name="product"') && raw.includes('"attribute":"image"') && raw.includes('name="file"');
+      })
+      .reply(201);
 
     const data: CreateProductMediaFileRequest = {
       product: {
         identifier: 'product_123',
-        attributes: 'image',
+        attribute: 'image',
+        scope: null,
+        locale: null,
+      },
+      file: 'file-content',
+    };
+
+    await expect(akeneoClient.productMediaFiles.create(data)).resolves.toBeUndefined();
+  });
+
+  it('should create a new media file for a product model', async () => {
+    nock(baseUrl)
+      .post('/api/rest/v1/media-files', (body) => {
+        const raw = typeof body === 'string' ? body : JSON.stringify(body);
+        return raw.includes('name="product_model"') && raw.includes('"code":"model_123"');
+      })
+      .reply(201);
+
+    const data: CreateProductMediaFileRequest = {
+      product_model: {
+        code: 'model_123',
+        attribute: 'image',
         scope: null,
         locale: null,
       },

@@ -1,9 +1,8 @@
 export type ProductModelType = {
   code: string;
-  family: string;
+  family: string | null;
   family_variant: string;
   categories: string[];
-  groups: string[];
   parent?: string | null;
   values: { [attributeCode: string]: ProductModelValue[] };
   associations?: { [associationTypeCode: string]: ProductModelAssociation };
@@ -14,6 +13,8 @@ export type ProductModelType = {
     workflow_status?: string;
   };
   quality_scores?: ProductModelQualityScore[];
+  readiness?: ProductModelReadiness;
+  workflow_execution_statuses?: ProductModelWorkflowExecutionStatus[];
 };
 
 export type ProductModel = ProductModelType;
@@ -51,5 +52,46 @@ export type ProductModelQuantifiedAssociationProductModel = {
 export type ProductModelQualityScore = {
   scope: string;
   locale: string;
-  score: string;
+  data: 'A' | 'B' | 'C' | 'D' | 'E';
+};
+
+export type ProductModelReadiness = {
+  aggregated_scores_by_scope?: {
+    scope?: string;
+    score?: number;
+  }[];
+  scores_by_scope_and_locale?: {
+    [readinessCode: string]: {
+      scope?: string;
+      locale?: string;
+      score?: number;
+      unmet_requirements?: {
+        field?: string;
+        operator?: string;
+        value?: unknown;
+      }[];
+    }[];
+  };
+};
+
+export type ProductModelWorkflowExecutionStatus = {
+  uuid?: string;
+  status?: 'in_progress' | 'completed';
+  started_at?: string;
+  completed_at?: string | null;
+  workflow?: {
+    uuid?: string;
+    code?: string;
+    labels?: { [localeCode: string]: string };
+  };
+  tasks?: {
+    uuid?: string;
+    status?: 'in_progress';
+    created_at?: string;
+    step?: {
+      uuid?: string;
+      code?: string;
+      labels?: { [localeCode: string]: string };
+    };
+  }[];
 };

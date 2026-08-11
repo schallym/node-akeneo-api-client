@@ -23,7 +23,8 @@ export type AttributeOptionsSearchParams = {
 export type CreateAttributeRequest = Partial<Omit<Attribute, 'code' | 'type' | 'group'>> &
   Required<Pick<Attribute, 'code' | 'type' | 'group'>>;
 
-export type CreateAttributeOptionRequest = Partial<Omit<AttributeOption, 'code'>> & Required<Pick<Attribute, 'code'>>;
+export type CreateAttributeOptionRequest = Partial<Omit<AttributeOption, 'code'>> &
+  Required<Pick<AttributeOption, 'code'>>;
 
 export type SeveralAttributesUpdateOrCreationResponseLine = {
   line: number;

@@ -204,6 +204,28 @@ describe('AssetManagerApi', () => {
       expect(result).toEqual(assetManagerMock.asset.get);
     });
 
+    it('should fetch an asset by code with auto tags', async () => {
+      nock(baseUrl)
+        .get('/api/rest/v1/asset-families/model_pictures/assets/a1')
+        .query({ with_asset_auto_tags: true })
+        .reply(200, assetManagerMock.asset.get);
+
+      const result = await akeneoClient.assetManager.assets.get('model_pictures', 'a1', {
+        with_asset_auto_tags: true,
+      });
+      expect(result).toEqual(assetManagerMock.asset.get);
+    });
+
+    it('should fetch a paginated list of assets with auto tags', async () => {
+      nock(baseUrl)
+        .get('/api/rest/v1/asset-families/model_pictures/assets')
+        .query({ with_asset_auto_tags: true })
+        .reply(200, assetManagerMock.asset.list);
+
+      const result = await akeneoClient.assetManager.assets.list('model_pictures', { with_asset_auto_tags: true });
+      expect(result).toEqual(assetManagerMock.asset.list);
+    });
+
     it('should handle errors when fetching an asset', async () => {
       nock(baseUrl).get('/api/rest/v1/asset-families/model_pictures/assets/bad').reply(404, { message: 'Not found' });
 

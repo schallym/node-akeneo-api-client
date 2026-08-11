@@ -10,22 +10,23 @@ export type Attribute = {
   available_locales?: string[];
   unique?: boolean;
   useable_as_grid_filter?: boolean;
-  max_characters?: number;
-  validation_rule?: string;
-  validation_regexp?: string;
-  wysiwyg_enabled?: boolean;
-  number_min?: string;
-  number_max?: string;
-  decimals_allowed?: boolean;
-  negative_allowed?: boolean;
-  metric_family?: string;
-  default_metric_unit?: string;
-  date_min?: string;
-  date_max?: string;
+  max_characters?: number | null;
+  validation_rule?: string | null;
+  validation_regexp?: string | null;
+  wysiwyg_enabled?: boolean | null;
+  number_min?: string | null;
+  number_max?: string | null;
+  decimals_allowed?: boolean | null;
+  negative_allowed?: boolean | null;
+  metric_family?: string | null;
+  default_metric_unit?: string | null;
+  date_min?: string | null;
+  date_max?: string | null;
+  display_time?: boolean | null;
   allowed_extensions?: string[];
-  max_file_size?: string;
-  reference_data_name?: string;
-  default_value?: boolean;
+  max_file_size?: string | null;
+  reference_data_name?: string | null;
+  default_value?: boolean | number | string | string[] | null;
   table_configuration?: Array<{
     code: string;
     data_type: string;
@@ -35,8 +36,10 @@ export type Attribute = {
   }>;
   is_main_identifier?: boolean;
   is_mandatory?: boolean;
-  decimal_places_strategy?: 'round' | 'forbid' | 'trim';
-  decimal_places?: number;
+  decimal_places_strategy?: 'round' | 'forbid' | 'trim' | null;
+  decimal_places?: number | null;
+  enable_option_creation_during_import?: boolean | null;
+  max_items_count?: number | null;
 };
 
 export enum AttributeTypes {
@@ -53,6 +56,8 @@ export enum AttributeTypes {
   METRIC = 'pim_catalog_metric',
   REFERENCE_ENTITY = 'akeneo_reference_entity',
   REFERENCE_ENTITY_COLLECTION = 'akeneo_reference_entity_collection',
+  REFERENCE_DATA_SIMPLE_SELECT = 'pim_reference_data_simpleselect',
+  REFERENCE_DATA_MULTI_SELECT = 'pim_reference_data_multiselect',
   TABLE = 'pim_catalog_table',
   ASSET_COLLECTION = 'pim_catalog_asset_collection',
   PRICE = 'pim_catalog_price_collection',
