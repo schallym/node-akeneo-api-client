@@ -67,6 +67,33 @@ describe('Products UUID API E2E Tests', () => {
     expect(result._embedded.items[0].uuid).toBe('1234-5678-9012');
   });
 
+  it('should create a product with query params', async () => {
+    const data = {
+      uuid: '1234-5678-9012',
+      values: { color: [{ locale: null, scope: null, data: 'red' }] },
+    };
+
+    nock(baseUrl).post('/api/rest/v1/products-uuid', data).query({ create_missing_options: 'color' }).reply(201);
+
+    await expect(akeneoClient.productsUuid.create(data, { create_missing_options: 'color' })).resolves.toBeUndefined();
+  });
+
+  it('should update a product with query params', async () => {
+    const data = {
+      uuid: '1234-5678-9012',
+      values: { name: [{ locale: null, scope: null, data: 'Product 1' }] },
+    };
+
+    nock(baseUrl)
+      .patch('/api/rest/v1/products-uuid/1234-5678-9012', data as unknown as nock.RequestBodyMatcher)
+      .query({ update_parent_values: true })
+      .reply(204);
+
+    await expect(
+      akeneoClient.productsUuid.update('1234-5678-9012', data, { update_parent_values: true }),
+    ).resolves.toBeUndefined();
+  });
+
   it('should handle API authentication process', async () => {
     nock(baseUrl)
       .get('/api/rest/v1/products-uuid/1234-5678-9012/draft')

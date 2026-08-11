@@ -25,8 +25,8 @@ describe('PermissionsApi', () => {
       const mockLocalePermissions: LocalePermissions = {
         userUuid: userUuid,
         locales: {
-          en_US: { canView: true, canEdit: true },
-          fr_FR: { canView: true, canEdit: false },
+          en_US: { canView: 'true', canEdit: 'true' },
+          fr_FR: { canView: 'true', canEdit: 'false' },
         },
       };
 
@@ -45,8 +45,8 @@ describe('PermissionsApi', () => {
       const mockChannelPermissions: ChannelPermissions = {
         userUuid: userUuid,
         channels: {
-          ecommerce: { canView: true, canEdit: true },
-          mobile: { canView: true, canEdit: false },
+          ecommerce: { canView: 'true', canEdit: 'true' },
+          mobile: { canView: 'true', canEdit: 'false' },
         },
       };
 

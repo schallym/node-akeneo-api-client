@@ -4,7 +4,7 @@ export type Channel = {
   currencies: string[];
   category_tree: string;
   conversion_units?: {
-    [attributeCode: string]: string;
+    [attributeCode: string]: string | null;
   };
   labels?: {
     [localeCode: string]: string;

@@ -27,7 +27,21 @@ describe('AssetsApi', () => {
 
       const result = await api.get('family1', 'a1');
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/asset-families/family1/assets/a1');
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/asset-families/family1/assets/a1', {
+        params: undefined,
+      });
+      expect(result).toEqual(mockAsset);
+    });
+
+    it('should fetch an asset by code with params', async () => {
+      const mockAsset: Asset = { code: 'a1' } as any;
+      mockHttpClient.get.mockResolvedValue({ data: mockAsset });
+
+      const result = await api.get('family1', 'a1', { with_asset_auto_tags: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/asset-families/family1/assets/a1', {
+        params: { with_asset_auto_tags: true },
+      });
       expect(result).toEqual(mockAsset);
     });
 

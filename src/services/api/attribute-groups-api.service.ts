@@ -2,16 +2,11 @@ import { AkeneoApiClient } from '../';
 import { AttributeGroup } from '../../types';
 import { BaseApi } from './base-api.service';
 
-export type AttributeGroupsGetParams = {
-  with_table_select_options?: boolean;
-};
-
 export type AttributeGroupsSearchParams = {
   search?: string;
   page?: number;
   limit?: number;
   with_count?: boolean;
-  with_table_select_options?: boolean;
 };
 
 export type CreateAttributeGroupRequest = Partial<Omit<AttributeGroup, 'code'>> &
@@ -26,7 +21,7 @@ export type SeveralAttributeGroupsUpdateOrCreationResponseLine = {
 
 export class AttributeGroupsApi extends BaseApi<
   AttributeGroup,
-  AttributeGroupsGetParams,
+  null,
   AttributeGroupsSearchParams,
   CreateAttributeGroupRequest,
   Partial<AttributeGroup>

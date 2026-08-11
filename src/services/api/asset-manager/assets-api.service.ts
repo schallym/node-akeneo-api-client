@@ -6,6 +6,11 @@ export type AssetRecordSearchParams = {
   channel?: string;
   locales?: string;
   search_after?: string;
+  with_asset_auto_tags?: boolean;
+};
+
+export type AssetRecordGetParams = {
+  with_asset_auto_tags?: boolean;
 };
 
 export type UpdateOrCreateAssetRecordRequest = Partial<
@@ -27,10 +32,12 @@ export class AssetsApi {
     this.endpoint = '/api/rest/v1/asset-families/{asset_family_code}/assets';
   }
 
-  async get(assetFamilyCode: string, assetCode: string): Promise<Asset> {
-    return this.client.httpClient.get(`${this.completeEndpoint(assetFamilyCode)}/${assetCode}`).then((response) => {
-      return response.data;
-    });
+  async get(assetFamilyCode: string, assetCode: string, params?: AssetRecordGetParams): Promise<Asset> {
+    return this.client.httpClient
+      .get(`${this.completeEndpoint(assetFamilyCode)}/${assetCode}`, { params })
+      .then((response) => {
+        return response.data;
+      });
   }
 
   async list(assetFamilyCode: string, params?: AssetRecordSearchParams): Promise<PaginatedResponse<Asset>> {

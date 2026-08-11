@@ -84,17 +84,23 @@ describe('WorkflowApi', () => {
 
   it('should list tasks', async () => {
     const tasks = { _embedded: { items: [{ uuid: '456' } as WorkflowTask] } };
+    const params = { search: '{"step_uuid":[{"operator":"=","value":"f626d0e5-84a5-41fc-8215-65508c253edb"}]}' };
     httpClient.get.mockResolvedValue({ data: tasks });
 
-    const result = await api.listTasks();
+    const result = await api.listTasks(params);
 
-    expect(httpClient.get).toHaveBeenCalledWith('/api/rest/v1/workflows/tasks', { params: undefined });
+    expect(httpClient.get).toHaveBeenCalledWith('/api/rest/v1/workflows/tasks', { params });
     expect(result).toEqual(tasks);
   });
 
-  it('should list tasks with params', async () => {
+  it('should list tasks with pagination and attributes', async () => {
     const tasks = { _embedded: { items: [{ uuid: '456' } as WorkflowTask] } };
-    const params = { page: 2, limit: 20, step_uuid: 'f626d0e5-84a5-41fc-8215-65508c253edb' };
+    const params = {
+      search: '{"step_uuid":[{"operator":"=","value":"f626d0e5-84a5-41fc-8215-65508c253edb"}]}',
+      with_attributes: true,
+      page: 2,
+      limit: 20,
+    };
     httpClient.get.mockResolvedValue({ data: tasks });
 
     const result = await api.listTasks(params);
@@ -109,7 +115,34 @@ describe('WorkflowApi', () => {
 
     const result = await api.completeTask('task-456');
 
-    expect(httpClient.patch).toHaveBeenCalledWith('/api/rest/v1/workflows/tasks/task-456');
+    expect(httpClient.patch).toHaveBeenCalledWith('/api/rest/v1/workflows/tasks/task-456', { status: 'completed' });
+    expect(result).toEqual(response);
+  });
+
+  it('should approve a task', async () => {
+    const response = { status: 'approved' };
+    httpClient.patch.mockResolvedValue({ data: response });
+
+    const result = await api.completeTask('task-456', { status: 'approved' });
+
+    expect(httpClient.patch).toHaveBeenCalledWith('/api/rest/v1/workflows/tasks/task-456', { status: 'approved' });
+    expect(result).toEqual(response);
+  });
+
+  it('should reject a task with rejected attributes', async () => {
+    const response = { status: 'rejected' };
+    const data = {
+      status: 'rejected' as const,
+      send_back_to_step_uuid: 'f626d0e5-84a5-41fc-8215-65508c253edb',
+      rejected_attributes: {
+        name: [{ comment: 'Needs improvement', locale: 'en_US', scope: null }],
+      },
+    };
+    httpClient.patch.mockResolvedValue({ data: response });
+
+    const result = await api.completeTask('task-456', data);
+
+    expect(httpClient.patch).toHaveBeenCalledWith('/api/rest/v1/workflows/tasks/task-456', data);
     expect(result).toEqual(response);
   });
 

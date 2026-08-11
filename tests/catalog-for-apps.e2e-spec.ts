@@ -59,10 +59,20 @@ describe('CatalogForAppsApi E2E', () => {
 
     it('should duplicate a catalog', async () => {
       nock(baseUrl)
-        .post('/api/rest/v1/catalogs/12351d98-200e-4bbc-aa19-7fdda1bd14f2/duplicate')
+        .post('/api/rest/v1/catalogs/12351d98-200e-4bbc-aa19-7fdda1bd14f2/duplicate', {})
         .reply(200, catalogForAppsMock.duplicate);
 
       const result = await akeneoClient.catalogForApps.catalogs.duplicate('12351d98-200e-4bbc-aa19-7fdda1bd14f2');
+      expect(result).toEqual(catalogForAppsMock.duplicate);
+    });
+
+    it('should duplicate a catalog with options', async () => {
+      const data = { name: 'Copy of Store US', skip_required_checks: true, replace_mapping_locales_with: 'en_US' };
+      nock(baseUrl)
+        .post('/api/rest/v1/catalogs/12351d98-200e-4bbc-aa19-7fdda1bd14f2/duplicate', data)
+        .reply(200, catalogForAppsMock.duplicate);
+
+      const result = await akeneoClient.catalogForApps.catalogs.duplicate('12351d98-200e-4bbc-aa19-7fdda1bd14f2', data);
       expect(result).toEqual(catalogForAppsMock.duplicate);
     });
 

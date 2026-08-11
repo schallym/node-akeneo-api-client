@@ -7,14 +7,38 @@ export type ListStepAssigneesRequest = {
 };
 
 export type ListTasksRequest = {
+  search: string;
+  with_attributes?: boolean;
   page?: number;
   limit?: number;
-  step_uuid?: string;
 };
 
 export type CompleteTaskResponse = {
   status: string;
 };
+
+export type WorkflowTaskCompleteRequest = {
+  status: 'completed';
+};
+
+export type WorkflowTaskApproveRequest = {
+  status: 'approved';
+};
+
+export type WorkflowTaskRejectRequest = {
+  status: 'rejected';
+  send_back_to_step_uuid: string;
+  rejected_attributes?: {
+    [attributeCode: string]: {
+      comment: string;
+      locale: string | null;
+      scope: string | null;
+    }[];
+  };
+};
+
+export type WorkflowTaskUpdateRequest =
+  WorkflowTaskCompleteRequest | WorkflowTaskApproveRequest | WorkflowTaskRejectRequest;
 
 export type ListWorkflowsParams = {
   page?: number;
@@ -62,14 +86,17 @@ export class WorkflowApi {
     });
   }
 
-  async listTasks(params?: ListTasksRequest): Promise<PaginatedResponse<WorkflowTask>> {
+  async listTasks(params: ListTasksRequest): Promise<PaginatedResponse<WorkflowTask>> {
     return this.client.httpClient.get(`${this.endpoint}/tasks`, { params }).then((response) => {
       return response.data;
     });
   }
 
-  async completeTask(taskUuid: string): Promise<CompleteTaskResponse> {
-    return this.client.httpClient.patch(`${this.endpoint}/tasks/${taskUuid}`).then((response) => {
+  async completeTask(
+    taskUuid: string,
+    data: WorkflowTaskUpdateRequest = { status: 'completed' },
+  ): Promise<CompleteTaskResponse> {
+    return this.client.httpClient.patch(`${this.endpoint}/tasks/${taskUuid}`, data).then((response) => {
       return response.data;
     });
   }

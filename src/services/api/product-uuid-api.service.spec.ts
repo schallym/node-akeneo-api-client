@@ -173,7 +173,54 @@ describe('ProductsUuidApi', () => {
 
       await api.update(testUuid, updateData);
 
-      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/products-uuid/${testUuid}`, updateData);
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/products-uuid/${testUuid}`, updateData, {
+        params: undefined,
+      });
+    });
+
+    it('should pass query params to the update method', async () => {
+      const updateData: UpdateProductUuidRequest = {
+        uuid: 'testUuid',
+        values: { name: [{ locale: 'en_US', scope: null, data: 'Updated Product' }] },
+      };
+
+      mockHttpClient.patch.mockResolvedValue({ data: {} });
+
+      await api.update(testUuid, updateData, { update_parent_values: true });
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(`/api/rest/v1/products-uuid/${testUuid}`, updateData, {
+        params: { update_parent_values: true },
+      });
+    });
+
+    it('should use the correct endpoint for create method', async () => {
+      const createData = {
+        uuid: testUuid,
+        values: { name: [{ locale: 'en_US', scope: null, data: 'New Product' }] },
+      };
+
+      mockHttpClient.post.mockResolvedValue({ data: {} });
+
+      await api.create(createData);
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/products-uuid', createData, {
+        params: undefined,
+      });
+    });
+
+    it('should pass query params to the create method', async () => {
+      const createData = {
+        uuid: testUuid,
+        values: { color: [{ locale: null, scope: null, data: 'red' }] },
+      };
+
+      mockHttpClient.post.mockResolvedValue({ data: {} });
+
+      await api.create(createData, { create_missing_options: 'color' });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/products-uuid', createData, {
+        params: { create_missing_options: 'color' },
+      });
     });
   });
 });

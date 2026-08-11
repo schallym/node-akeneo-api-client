@@ -11,9 +11,8 @@ export type SeveralMeasurementFamiliesUpdateOrCreationResponseLine = {
   }[];
 };
 
-export type UpdateOrCreateMeasurementFamilyRequest = Partial<
-  Omit<MeasurementFamily, 'created' | 'updated' | 'metadata' | 'quality_scores' | 'completenesses'>
->;
+export type UpdateOrCreateMeasurementFamilyRequest = Partial<MeasurementFamily> &
+  Required<Pick<MeasurementFamily, 'code'>>;
 
 export class MeasurementFamiliesApi {
   private readonly endpoint: string;
@@ -27,7 +26,7 @@ export class MeasurementFamiliesApi {
   }
 
   async updateOrCreateSeveral(
-    data: Partial<UpdateOrCreateMeasurementFamilyRequest>[],
+    data: UpdateOrCreateMeasurementFamilyRequest[],
   ): Promise<SeveralMeasurementFamiliesUpdateOrCreationResponseLine[]> {
     return this.client.httpClient.patch(`${this.endpoint}`, data).then((response) => {
       return response.data;

@@ -47,14 +47,20 @@ describe('WorkflowApi E2E', () => {
   });
 
   it('should list tasks', async () => {
-    nock(baseUrl).get('/api/rest/v1/workflows/tasks').reply(200, workflowMock.listTasks);
+    const params = { search: '{"step_uuid":[{"operator":"=","value":"f626d0e5-84a5-41fc-8215-65508c253edb"}]}' };
+    nock(baseUrl).get('/api/rest/v1/workflows/tasks').query(params).reply(200, workflowMock.listTasks);
 
-    const result = await akeneoClient.workflows.listTasks();
+    const result = await akeneoClient.workflows.listTasks(params);
     expect(result).toEqual(workflowMock.listTasks);
   });
 
-  it('should list tasks with params', async () => {
-    const params = { page: 1, limit: 10, step_uuid: 'f626d0e5-84a5-41fc-8215-65508c253edb' };
+  it('should list tasks with pagination and attributes', async () => {
+    const params = {
+      search: '{"step_uuid":[{"operator":"=","value":"f626d0e5-84a5-41fc-8215-65508c253edb"}]}',
+      with_attributes: true,
+      page: 1,
+      limit: 10,
+    };
     nock(baseUrl).get('/api/rest/v1/workflows/tasks').query(params).reply(200, workflowMock.listTasks);
 
     const result = await akeneoClient.workflows.listTasks(params);
@@ -63,10 +69,27 @@ describe('WorkflowApi E2E', () => {
 
   it('should complete a task', async () => {
     const taskUuid = '8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07';
-    nock(baseUrl).patch(`/api/rest/v1/workflows/tasks/${taskUuid}`).reply(200, workflowMock.completeTask);
+    nock(baseUrl)
+      .patch(`/api/rest/v1/workflows/tasks/${taskUuid}`, { status: 'completed' })
+      .reply(200, workflowMock.completeTask);
 
     const result = await akeneoClient.workflows.completeTask(taskUuid);
     expect(result).toEqual(workflowMock.completeTask);
+  });
+
+  it('should reject a task', async () => {
+    const taskUuid = '8f6c2d18-fbd4-4f7e-81df-cb3dc368fe07';
+    const data = {
+      status: 'rejected' as const,
+      send_back_to_step_uuid: 'f626d0e5-84a5-41fc-8215-65508c253edb',
+      rejected_attributes: {
+        name: [{ comment: 'Needs improvement', locale: 'en_US', scope: null }],
+      },
+    };
+    nock(baseUrl).patch(`/api/rest/v1/workflows/tasks/${taskUuid}`, data).reply(200, { status: 'rejected' });
+
+    const result = await akeneoClient.workflows.completeTask(taskUuid, data);
+    expect(result).toEqual({ status: 'rejected' });
   });
 
   it('should handle errors when getting a workflow', async () => {
@@ -86,9 +109,10 @@ describe('WorkflowApi E2E', () => {
   });
 
   it('should handle errors when listing tasks', async () => {
-    nock(baseUrl).get('/api/rest/v1/workflows/tasks').reply(500, { message: 'Internal server error' });
+    const params = { search: '{"status":[{"operator":"=","value":"in_progress"}]}' };
+    nock(baseUrl).get('/api/rest/v1/workflows/tasks').query(params).reply(500, { message: 'Internal server error' });
 
-    await expect(akeneoClient.workflows.listTasks()).rejects.toThrow();
+    await expect(akeneoClient.workflows.listTasks(params)).rejects.toThrow();
   });
 
   it('should handle errors when completing a task', async () => {

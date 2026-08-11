@@ -1,4 +1,4 @@
-import { MeasurementFamiliesApi } from './measurement-families-api.service';
+import { MeasurementFamiliesApi, UpdateOrCreateMeasurementFamilyRequest } from './measurement-families-api.service';
 import { AkeneoApiClient } from '../akeneo-api-client';
 import { MeasurementFamily } from '../../types';
 
@@ -58,7 +58,7 @@ describe('MeasurementFamiliesApi', () => {
 
   describe('updateOrCreateSeveral', () => {
     it('should send PATCH request with correct data and parse response', async () => {
-      const data: Partial<MeasurementFamily>[] = [
+      const data: UpdateOrCreateMeasurementFamilyRequest[] = [
         { code: 'weight', labels: { en_US: 'Weight' } },
         { code: 'length', labels: { en_US: 'Length' } },
       ];

@@ -7,14 +7,43 @@ export type UIExtension = {
   type: UIExtensionType;
   configuration: UIExtensionConfiguration;
   status: 'active' | 'inactive';
+  credentials?: UIExtensionCredential[];
 };
 
 export type UIExtensionConfiguration = {
-  default_label: string;
-  labels: { [locale: string]: string };
+  default_label?: string;
+  labels?: { [locale: string]: string };
   secret?: string;
-  url: string;
-  custom_variables: { [key: string]: string };
+  url?: string;
+  file?: string;
+  custom_variables?: { [key: string]: unknown };
+};
+
+export type UIExtensionCredential =
+  UIExtensionCustomHeaderCredential | UIExtensionBearerTokenCredential | UIExtensionBasicAuthCredential;
+
+export type UIExtensionCustomHeaderCredential = {
+  code?: string;
+  type: 'Custom Header';
+  value: {
+    header_key: string;
+    header_value: string;
+  };
+};
+
+export type UIExtensionBearerTokenCredential = {
+  code?: string;
+  type: 'Bearer Token';
+  value: string;
+};
+
+export type UIExtensionBasicAuthCredential = {
+  code?: string;
+  type: 'Basic Auth';
+  value: {
+    username: string;
+    password: string;
+  };
 };
 
 export enum UIExtensionType {

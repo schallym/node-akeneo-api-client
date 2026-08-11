@@ -5,7 +5,6 @@ const productModelsMock: ProductModelType = {
   family: 'tables',
   family_variant: 'table_variant',
   categories: ['diningtables'],
-  groups: ['group1'],
   created: '2023-01-01T00:00:00Z',
   updated: '2023-01-02T00:00:00Z',
   values: {

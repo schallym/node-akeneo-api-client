@@ -69,11 +69,11 @@ describe('ProductMediaFilesApi', () => {
   });
 
   describe('create', () => {
-    it('should create a new media file', async () => {
+    it('should create a new media file for a product', async () => {
       const data: CreateProductMediaFileRequest = {
         product: {
           identifier: 'product_123',
-          attributes: 'attribute1,attribute2',
+          attribute: 'picture',
           scope: 'ecommerce',
           locale: 'en_US',
         },
@@ -83,7 +83,36 @@ describe('ProductMediaFilesApi', () => {
 
       await api.create(data);
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/media-files', data);
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/media-files', expect.any(FormData), {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const formData = mockHttpClient.post.mock.calls[0][1] as FormData;
+      expect(formData.get('product')).toEqual(JSON.stringify(data.product));
+      expect(formData.get('product_model')).toBeNull();
+      expect(formData.get('file')).toEqual('file-content');
+    });
+
+    it('should create a new media file for a product model', async () => {
+      const data: CreateProductMediaFileRequest = {
+        product_model: {
+          code: 'model_123',
+          attribute: 'picture',
+          scope: null,
+          locale: null,
+        },
+        file: 'file-content',
+      };
+      mockHttpClient.post.mockResolvedValue({});
+
+      await api.create(data);
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/api/rest/v1/media-files', expect.any(FormData), {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const formData = mockHttpClient.post.mock.calls[0][1] as FormData;
+      expect(formData.get('product_model')).toEqual(JSON.stringify(data.product_model));
+      expect(formData.get('product')).toBeNull();
+      expect(formData.get('file')).toEqual('file-content');
     });
   });
 
