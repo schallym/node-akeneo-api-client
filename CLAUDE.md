@@ -163,18 +163,28 @@ When implementing a missing endpoint, mirror the closest existing resource and:
 
 ## Endpoint coverage / GAP analysis
 
-This repo ships tooling to check the client against the live Akeneo spec and implement what's
-missing — use it whenever asked to "check coverage", "find missing endpoints", or "sync with the
-docs":
+This repo ships tooling to check the client against the live Akeneo spec, detect documentation
+changes, and implement what's missing — use it whenever asked to "check coverage", "find missing
+endpoints", "what changed in the API", or "sync with the docs":
 
 - **Command:** `/akeneo-gap-analysis [resource]` — runs the analysis and reports the gaps.
 - **Skill:** `akeneo-api-gap-analysis` — the methodology + the deterministic comparison script
   at `.claude/skills/akeneo-api-gap-analysis/scripts/gap-analysis.mjs` (Node built-ins only; run
   `node .claude/skills/akeneo-api-gap-analysis/scripts/gap-analysis.mjs --help`).
+- **Change detection:** `.claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs` diffs the
+  live spec against the committed baseline `.claude/skills/akeneo-api-gap-analysis/spec-snapshot.json`
+  and reports added/removed/changed operations, schemas and parameters (fields, types, query params,
+  enum values…), each mapped to the implementing service / likely type file. Once the client matches
+  the new docs, move the baseline with `--update-snapshot`. The snapshot is generated — never edit
+  it by hand.
 - **Agent:** `akeneo-api-auditor` — subagent that performs the full audit and implements missing
   endpoints + fixes type mismatches following the conventions above.
+- **Weekly CI:** `.github/workflows/akeneo-endpoint-sync.yml` runs both scripts; when something is
+  missing or changed, `scripts/akeneo-implement.sh` has Claude Code apply it and a draft PR is
+  opened that also carries the refreshed snapshot.
 
-The script prints, per resource: ✅ implemented · ❌ missing · ⚠️ review (resource exists but an
-operation didn't statically match — verify by reading the service, the path may be built
-dynamically, or it may be a real gap/discrepancy). Treat ⚠️ and ❌ as findings to confirm by
+The coverage script prints, per resource: ✅ implemented · ❌ missing · ⚠️ review (resource exists but
+an operation didn't statically match — verify by reading the service, the path may be built
+dynamically, or it may be a real gap/discrepancy). The diff script prints ➕ added · ➖ removed ·
+✏️ changed with before/after values. Treat all of them as findings to confirm against the spec by
 reading the code before implementing.

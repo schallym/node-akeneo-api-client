@@ -12,6 +12,9 @@
  * "missing"/"review" buckets afterwards, because the client builds some paths
  * dynamically and static extraction cannot be 100% perfect.
  *
+ * To detect CHANGES in the documentation (types, parameters, new/removed
+ * operations) rather than coverage, see spec-diff.mjs next to this file.
+ *
  * Usage:
  *   node gap-analysis.mjs [options]
  *
@@ -29,16 +32,16 @@
  * pass --strict to exit 1 when any documented operation is missing.
  */
 
-import fs from 'node:fs';
-import os from 'node:os';
-import path from 'node:path';
 import process from 'node:process';
-
-const DEFAULT_SPEC_URL =
-  'https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json';
-const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24h
-
-const HTTP_METHODS = ['get', 'post', 'patch', 'put', 'delete'];
+import {
+  DEFAULT_SPEC_URL,
+  analyze,
+  extractSpecOperations,
+  filterRows,
+  loadSpec,
+  resolveSrcDir,
+  scanSource,
+} from './lib.mjs';
 
 // ── argument parsing ──────────────────────────────────────────────────────
 function parseArgs(argv) {
@@ -69,229 +72,12 @@ function parseArgs(argv) {
   return opts;
 }
 
-// ── path normalization ────────────────────────────────────────────────────
-// Reduce a path to a comparable signature: keep from the first "/api/" segment,
-// turn every {param} or ${var} placeholder into "*", and drop query strings.
-function normalizePath(raw) {
-  if (!raw) return null;
-  let p = raw.trim();
-  const apiIdx = p.indexOf('/api/');
-  if (apiIdx >= 0) p = p.slice(apiIdx);
-  p = p.split('?')[0];
-  // Order matters: strip ${var} (template literals) before {param} (OpenAPI),
-  // otherwise the inner {var} of ${var} is consumed first and leaves a "$".
-  p = p.replace(/\$\{[^}]*\}/g, '*'); // ${var} -> *
-  p = p.replace(/\{[^}]*\}/g, '*'); // {code} -> *
-  p = p.replace(/\/+/g, '/'); // collapse //
-  if (p.length > 1 && p.endsWith('/')) p = p.slice(0, -1);
-  return p;
-}
-
-function sig(method, normPath) {
-  return `${method.toUpperCase()} ${normPath}`;
-}
-
-// ── spec loading ──────────────────────────────────────────────────────────
-async function loadSpec(opts) {
-  const isUrl = /^https?:\/\//i.test(opts.spec);
-  if (!isUrl) {
-    return JSON.parse(fs.readFileSync(opts.spec, 'utf8'));
-  }
-  const cachePath =
-    opts.cache || path.join(os.tmpdir(), 'akeneo-openapi-cache.json');
-  if (!opts.refresh && fs.existsSync(cachePath)) {
-    const age = Date.now() - fs.statSync(cachePath).mtimeMs;
-    if (age < CACHE_TTL_MS) {
-      try {
-        return JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-      } catch {
-        /* fall through and re-fetch */
-      }
-    }
-  }
-  const res = await fetch(opts.spec);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch spec (${res.status}) from ${opts.spec}`);
-  }
-  const text = await res.text();
-  try {
-    fs.writeFileSync(cachePath, text);
-  } catch {
-    /* cache is best-effort */
-  }
-  return JSON.parse(text);
-}
-
-// Build the list of documented operations from the OpenAPI paths object.
-function extractSpecOperations(spec) {
-  const ops = [];
-  const paths = spec.paths || {};
-  for (const rawPath of Object.keys(paths)) {
-    const item = paths[rawPath];
-    for (const method of HTTP_METHODS) {
-      const op = item[method];
-      if (!op) continue;
-      const tag = (op.tags && op.tags[0]) || 'Untagged';
-      ops.push({
-        method: method.toUpperCase(),
-        path: rawPath,
-        normPath: normalizePath(rawPath),
-        signature: sig(method, normalizePath(rawPath)),
-        tag,
-        operationId: op.operationId || '',
-        summary: (op.summary || '').replace(/\s+/g, ' ').trim(),
-        deprecated: !!op.deprecated,
-      });
-    }
-  }
-  return ops;
-}
-
-// ── source scanning ───────────────────────────────────────────────────────
-function walk(dir, acc = []) {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (entry.name === 'node_modules' || entry.name === 'dist') continue;
-      walk(full, acc);
-    } else if (
-      entry.name.endsWith('.ts') &&
-      !entry.name.endsWith('.spec.ts') &&
-      !entry.name.endsWith('.e2e-spec.ts') &&
-      entry.name !== 'index.ts'
-    ) {
-      acc.push(full);
-    }
-  }
-  return acc;
-}
-
-// Resolve the `endpoint` literal(s) declared in a service file.
-function findEndpointLiterals(code) {
-  const literals = [];
-  const patterns = [
-    /super\s*\(\s*[^,]+,\s*[`'"]([^`'"]+)[`'"]/g, // super(client, '<ep>')
-    /\bthis\.endpoint\s*=\s*[`'"]([^`'"]+)[`'"]/g, // this.endpoint = '<ep>'
-    /\bendpoint\s*(?::\s*string)?\s*=\s*[`'"]([^`'"]+)[`'"]/g, // endpoint = '<ep>'
-  ];
-  for (const re of patterns) {
-    let m;
-    while ((m = re.exec(code)) !== null) {
-      if (m[1].includes('/api/')) literals.push(m[1]);
-    }
-  }
-  return [...new Set(literals)];
-}
-
-// Resolve a single call-argument expression into a normalized path.
-function resolveArgToPath(arg, endpoint) {
-  let p = arg;
-  // ${this.completeEndpoint(...)} -> the endpoint literal (with its {param}s)
-  p = p.replace(/\$\{\s*this\.completeEndpoint\([^)]*\)\s*\}/g, endpoint || '');
-  // ${this.endpoint} -> endpoint literal
-  p = p.replace(/\$\{\s*this\.endpoint\s*\}/g, endpoint || '');
-  return normalizePath(p);
-}
-
-// Extract implemented {method, normPath} signatures from one file's source.
-function extractImplementedFromFile(code) {
-  const found = []; // { method, normPath }
-  const endpoints = findEndpointLiterals(code);
-  const primaryEndpoint = endpoints.find((e) => e.startsWith('/api/')) || endpoints[0] || '';
-
-  // 1) Any class extending BaseApi inherits get/list/create/update/delete.
-  if (/extends\s+BaseApi\b/.test(code) && primaryEndpoint) {
-    const base = normalizePath(primaryEndpoint);
-    found.push({ method: 'GET', normPath: base }); // list()
-    found.push({ method: 'GET', normPath: `${base}/*` }); // get(id)
-    found.push({ method: 'POST', normPath: base }); // create()
-    found.push({ method: 'PATCH', normPath: `${base}/*` }); // update(id)
-    found.push({ method: 'DELETE', normPath: `${base}/*` }); // delete(id)
-  }
-
-  // 2) Explicit httpClient calls: .get/.post/.patch/.put/.delete( <arg> ...)
-  //    Capture the first argument when it is a string/template literal or
-  //    a bare `this.endpoint` reference.
-  const callRe =
-    /\.(get|post|patch|put|delete)\s*\(\s*(`[^`]*`|'[^']*'|"[^"]*"|this\.completeEndpoint\([^)]*\)|this\.endpoint\b)/g;
-  let m;
-  while ((m = callRe.exec(code)) !== null) {
-    const method = m[1].toUpperCase();
-    const arg = m[2];
-    // Bare endpoint references (no template): the resolved path is the endpoint
-    // itself. `completeEndpoint(x)` just substitutes the {param} placeholder.
-    if (arg === 'this.endpoint' || arg.startsWith('this.completeEndpoint')) {
-      found.push({ method, normPath: normalizePath(primaryEndpoint) });
-      continue;
-    }
-    const np = resolveArgToPath(arg.slice(1, -1), primaryEndpoint); // strip quotes/backticks
-    if (np && np.includes('/api/')) found.push({ method, normPath: np });
-  }
-
-  return { endpoints, primaryEndpoint, signatures: found };
-}
-
-function scanSource(srcDir) {
-  const files = walk(srcDir);
-  const bySignature = new Map(); // signature -> Set<relfile>
-  const byFile = []; // { file, primaryEndpoint, signatures: [sig] }
-  for (const file of files) {
-    const code = fs.readFileSync(file, 'utf8');
-    const { primaryEndpoint, signatures } = extractImplementedFromFile(code);
-    if (signatures.length === 0) continue;
-    const rel = path.relative(process.cwd(), file);
-    const sigStrings = [];
-    for (const s of signatures) {
-      if (!s.normPath) continue;
-      const signature = sig(s.method, s.normPath);
-      sigStrings.push(signature);
-      if (!bySignature.has(signature)) bySignature.set(signature, new Set());
-      bySignature.get(signature).add(rel);
-    }
-    byFile.push({ file: rel, primaryEndpoint, signatures: [...new Set(sigStrings)] });
-  }
-  return { bySignature, byFile };
-}
-
-// ── analysis ──────────────────────────────────────────────────────────────
-function analyze(specOps, impl) {
-  const { bySignature } = impl;
-  // For "review" detection: which base resources exist in code at all.
-  const implementedBases = new Set();
-  for (const s of bySignature.keys()) {
-    const p = s.split(' ')[1] || '';
-    const seg = p.replace(/^\/api\/rest\/v1\//, '').split('/')[0];
-    if (seg) implementedBases.add(seg);
-  }
-
-  const rows = specOps.map((op) => {
-    const exact = bySignature.has(op.signature);
-    const base = op.normPath.replace(/^\/api\/rest\/v1\//, '').split('/')[0];
-    let status;
-    if (exact) status = 'implemented';
-    else if (implementedBases.has(base)) status = 'review'; // resource exists, this op not matched
-    else status = 'missing';
-    return {
-      ...op,
-      status,
-      files: exact ? [...bySignature.get(op.signature)] : [],
-    };
-  });
-  return rows;
-}
-
 // ── reporting ─────────────────────────────────────────────────────────────
 const ICON = { implemented: '✅', missing: '❌', review: '⚠️' };
 
 function renderMarkdown(rows, spec, opts) {
-  const filter = opts.filter ? opts.filter.toLowerCase() : null;
-  const filtered = filter
-    ? rows.filter(
-        (r) =>
-          r.tag.toLowerCase().includes(filter) ||
-          r.path.toLowerCase().includes(filter),
-      )
-    : rows;
+  const filter = opts.filter || null;
+  const filtered = filterRows(rows, filter);
 
   const counts = { implemented: 0, missing: 0, review: 0 };
   for (const r of filtered) counts[r.status]++;
@@ -362,14 +148,7 @@ function renderMarkdown(rows, spec, opts) {
 }
 
 function renderJson(rows, spec, opts) {
-  const filter = opts.filter ? opts.filter.toLowerCase() : null;
-  const filtered = filter
-    ? rows.filter(
-        (r) =>
-          r.tag.toLowerCase().includes(filter) ||
-          r.path.toLowerCase().includes(filter),
-      )
-    : rows;
+  const filtered = filterRows(rows, opts.filter || null);
   const counts = { implemented: 0, missing: 0, review: 0 };
   for (const r of filtered) counts[r.status]++;
   return JSON.stringify(
@@ -404,6 +183,8 @@ Usage: node gap-analysis.mjs [options]
   --strict            Exit 1 if any documented operation is missing
   --no-color          (reserved)
   -h, --help          Show this help
+
+See spec-diff.mjs to detect changes in the documentation itself.
 `;
 
 async function main() {
@@ -418,17 +199,7 @@ async function main() {
     process.stdout.write(HELP);
     return;
   }
-  // Default src dir: assume cwd is the repo root, else resolve relative to script.
-  if (!opts.src) {
-    const candidates = [
-      path.join(process.cwd(), 'src'),
-      path.resolve(path.dirname(new URL(import.meta.url).pathname), '../../../../src'),
-    ];
-    opts.src = candidates.find((c) => fs.existsSync(c)) || candidates[0];
-  }
-  if (!fs.existsSync(opts.src)) {
-    throw new Error(`Source directory not found: ${opts.src}`);
-  }
+  opts.src = resolveSrcDir(opts.src);
 
   const spec = await loadSpec(opts);
   const specOps = extractSpecOperations(spec);

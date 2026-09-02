@@ -42,7 +42,13 @@ implement the fixes following the existing conventions exactly.
    node .claude/skills/akeneo-api-gap-analysis/scripts/gap-analysis.mjs
    ```
    Scope it with `--filter <resource>` when the user names one; use `--json` if you need to
-   process results.
+   process results. Then run the **documentation change detection** (skill Step 1b), which diffs
+   the live spec against the committed baseline snapshot and lists what changed since the client
+   was last synced — added/removed operations, changed parameters and schemas — with before/after
+   values, each mapped to the implementing service / likely type file:
+   ```bash
+   node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs
+   ```
 
 2. **Verify every ❌ and ⚠️ by reading the code — do not trust the bucket blindly.**
    - ❌ *missing*: usually a whole resource to add — but first rule out a **wrong-endpoint bug**
@@ -59,7 +65,8 @@ implement the fixes following the existing conventions exactly.
    ```
    Read `components.schemas.<Name>` the same way for type checks.
 
-4. **Type correspondence check.** For each relevant entity, diff `src/types/<resource>.type.ts`
+4. **Type correspondence check.** Start from the fields/parameters the change report flagged,
+   then, for each relevant entity, diff `src/types/<resource>.type.ts`
    against the spec schema and the operation's request/response: every documented field present,
    correct type, correct optionality (`?`), localized values as `{ [localeCode: string]: ... }`.
    Check `...SearchParams`/`...GetParams` against query `parameters`, and create/update request
@@ -73,7 +80,10 @@ implement the fixes following the existing conventions exactly.
    out the behavior change.
 
 6. **Validate.** Run `npm run lint:check && npm test`; coverage must stay 100%. Re-run the
-   gap-analysis script to confirm the gap is closed.
+   gap-analysis script to confirm the gap is closed. If you applied documentation changes, move
+   the baseline with `spec-diff.mjs --update-snapshot` (never edit the snapshot by hand) so the
+   next run does not report them again. A removed operation is deprecated (`@deprecated` JSDoc),
+   not deleted.
 
 ## Reporting back
 

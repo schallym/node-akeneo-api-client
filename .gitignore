@@ -14,4 +14,7 @@
 ###> Akeneo endpoint sync (CI transient artifacts) ###
 /gap.json
 /akeneo-pr-body.md
+/akeneo-openapi.json
+/spec-changes.json
+/spec-changes.md
 ###< Akeneo endpoint sync ###
