@@ -1,22 +1,36 @@
 name: Sync Akeneo endpoints
 
-# Weekly: run the deterministic GAP analysis; if documented endpoints are missing
-# from the client, have Claude Code implement one resource's worth of them (with
-# tests) and open a draft PR for review.
+# Weekly: keep the client in sync with the official Akeneo REST API documentation.
+#
+# Two deterministic gates run first, so no tokens are spent and no PR is opened
+# when there is nothing to do:
+#   1. gap-analysis.mjs — documented operations that are missing from the client;
+#   2. spec-diff.mjs    — documentation CHANGES (new/removed/changed operations,
+#      query parameters, request/response schemas, component schemas) compared
+#      with the committed baseline snapshot,
+#      .claude/skills/akeneo-api-gap-analysis/spec-snapshot.json.
+# If either gate fires, Claude Code updates the client (types, endpoints, tests)
+# and a draft PR is opened for review. The PR also carries the refreshed
+# baseline snapshot, so merging it makes the next run start from the new docs.
 on:
   schedule:
-    - cron: '0 6 * * 5' # every Friday at 6:00 UTC
+    - cron: '0 6 * * 1,5' # every Monday and Friday at 6:00 UTC
   workflow_dispatch:
     inputs:
       resource:
-        description: 'Limit to a single resource (OpenAPI tag/path, e.g. assets). Optional.'
+        description: 'Limit the implementation of MISSING endpoints to one resource (OpenAPI tag/path, e.g. assets). Documentation changes are always handled in full. Optional.'
         required: false
         type: string
       model:
         description: 'Claude model id'
         required: false
-        default: claude-opus-4-8
+        default: claude-opus-5
         type: string
+      force:
+        description: 'Run even if a previous sync PR is still open'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -25,6 +39,11 @@ permissions:
 concurrency:
   group: akeneo-endpoint-sync
   cancel-in-progress: false
+
+env:
+  SCRIPTS: .claude/skills/akeneo-api-gap-analysis/scripts
+  SNAPSHOT: .claude/skills/akeneo-api-gap-analysis/spec-snapshot.json
+  SPEC_CACHE: akeneo-openapi.json # the spec is downloaded once and shared by every step (gitignored)
 
 jobs:
   sync:
@@ -42,34 +61,142 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 1) Deterministic gate — only spend tokens / open a PR if something is missing.
-      - name: Detect missing endpoints
-        id: gap
+      # 0) Don't stack PRs: the baseline snapshot only moves when a sync PR is
+      #    merged, so while one is pending every run would re-detect (and
+      #    re-implement) the same changes.
+      - name: Check for an open sync PR
+        id: guard
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          node .claude/skills/akeneo-api-gap-analysis/scripts/gap-analysis.mjs --json --refresh > gap.json
-          missing=$(jq '[.operations[] | select(.status == "missing")] | length' gap.json)
-          echo "missing=$missing" >> "$GITHUB_OUTPUT"
-          echo "Missing operations: $missing"
+          if [ "${{ inputs.force }}" = "true" ]; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          open=$(gh pr list --state open --base main --label akeneo-api --json number --jq 'length' || echo 0)
+          if [ "$open" != "0" ]; then
+            echo "::notice::A sync PR is already open (label: akeneo-api) — skipping this run. Merge or close it, or re-run with force=true."
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          fi
 
-      # 2) Implement with Claude Code (headless) — only when there is a gap.
+      # 1) Deterministic gates — only spend tokens / open a PR if something is
+      #    missing or the documentation changed.
+      - name: Detect missing endpoints and documentation changes
+        id: gap
+        if: steps.guard.outputs.proceed == 'true'
+        run: |
+          # Download the spec once (--refresh); the next invocations reuse the
+          # cache so every step compares exactly the same document.
+          node "$SCRIPTS/gap-analysis.mjs" --json --refresh --cache "$SPEC_CACHE" > gap.json
+          missing=$(jq '[.operations[] | select(.status == "missing")] | length' gap.json)
+
+          # Human report first (read-only), then the machine report, which also
+          # moves the baseline to the current docs (creates it on the very first
+          # run). Both compare against the baseline as it was before the update.
+          node "$SCRIPTS/spec-diff.mjs" --cache "$SPEC_CACHE" > spec-changes.md
+          node "$SCRIPTS/spec-diff.mjs" --cache "$SPEC_CACHE" --json --update-snapshot > spec-changes.json
+          changes=$(jq '.counts.total' spec-changes.json)
+          added_ops=$(jq '.operations.added | length' spec-changes.json)
+          bootstrapped=$(jq -r '.bootstrapped' spec-changes.json)
+
+          snapshot_changed=false
+          if [ -n "$(git status --porcelain -- "$SNAPSHOT")" ]; then snapshot_changed=true; fi
+          run_claude=false
+          if [ "$missing" != "0" ] || [ "$changes" != "0" ]; then run_claude=true; fi
+          open_pr=$run_claude
+          if [ "$snapshot_changed" = "true" ]; then open_pr=true; fi
+
+          # Conventional-commit title (drives the semantic-release bump).
+          if [ "$changes" != "0" ] && [ "$added_ops" != "0" ]; then
+            title='feat: sync client with Akeneo API documentation changes'
+          elif [ "$changes" != "0" ]; then
+            title='fix: sync client with Akeneo API documentation changes'
+          elif [ "$missing" != "0" ]; then
+            title='feat: implement missing Akeneo endpoint(s)'
+          else
+            title='chore: create the Akeneo OpenAPI baseline snapshot'
+          fi
+
+          {
+            echo "missing=$missing"
+            echo "changes=$changes"
+            echo "bootstrapped=$bootstrapped"
+            echo "snapshot_changed=$snapshot_changed"
+            echo "run_claude=$run_claude"
+            echo "open_pr=$open_pr"
+            echo "pr_title=$title"
+          } >> "$GITHUB_OUTPUT"
+          echo "Missing operations: $missing · documentation changes: $changes · snapshot changed: $snapshot_changed"
+          cat spec-changes.md
+
+      - name: Upload reports
+        if: steps.gap.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: akeneo-sync-reports-${{ github.run_number }}
+          path: |
+            gap.json
+            spec-changes.json
+            spec-changes.md
+          retention-days: 30
+
+      # 2) Sync with Claude Code (headless) — only when there is something to do.
       - name: Install Claude Code
-        if: steps.gap.outputs.missing != '0'
+        if: steps.gap.outputs.run_claude == 'true'
         run: npm install -g @anthropic-ai/claude-code
 
-      - name: Implement missing endpoints
-        if: steps.gap.outputs.missing != '0'
+      - name: Apply documentation changes / implement missing endpoints
+        if: steps.gap.outputs.run_claude == 'true'
         run: bash scripts/akeneo-implement.sh
         env:
           # Preferred: OAuth token from a Claude Max/Pro plan (`claude setup-token`).
           # Falls back to a pay-as-you-go API key if the OAuth secret is unset.
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          CLAUDE_MODEL: ${{ inputs.model || 'claude-opus-4-8' }}
+          CLAUDE_MODEL: ${{ inputs.model || 'claude-opus-5' }}
           RESOURCE_FILTER: ${{ inputs.resource }}
+          MISSING_COUNT: ${{ steps.gap.outputs.missing }}
+          CHANGES_COUNT: ${{ steps.gap.outputs.changes }}
 
-      # 3) Open a draft PR with whatever Claude changed (no-op if nothing changed).
+      # 3) Open a draft PR with whatever changed (Claude's edits + the snapshot).
+      - name: Prepare the pull request description
+        if: steps.gap.outputs.open_pr == 'true'
+        run: |
+          if [ ! -s akeneo-pr-body.md ]; then
+            {
+              echo "## Akeneo API sync"
+              echo
+              if [ "${{ steps.gap.outputs.bootstrapped }}" = "true" ]; then
+                echo "Creates the baseline snapshot of the Akeneo OpenAPI documentation (\`$SNAPSHOT\`)."
+                echo "Future weekly runs report documentation changes against it."
+              else
+                echo "The automated run did not produce a description. Review the diff; the"
+                echo "implementation may be incomplete. See the job logs for details."
+              fi
+            } > akeneo-pr-body.md
+          fi
+          if [ "${{ steps.gap.outputs.changes }}" != "0" ]; then
+            {
+              echo
+              echo "---"
+              echo
+              echo "<details><summary><b>Documentation changes detected</b> (the baseline snapshot <code>$SNAPSHOT</code> was refreshed in this PR — verify that every change below is handled before merging)</summary>"
+              echo
+              # GitHub caps PR bodies at 65k characters; the full report is in the job artifacts.
+              head -c 50000 spec-changes.md
+              if [ "$(wc -c < spec-changes.md)" -gt 50000 ]; then
+                echo
+                echo "_… report truncated; the full spec-changes.md is attached to the workflow run as an artifact._"
+              fi
+              echo
+              echo "</details>"
+            } >> akeneo-pr-body.md
+          fi
+
       - name: Create Pull Request
-        if: steps.gap.outputs.missing != '0'
+        if: steps.gap.outputs.open_pr == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.PAT_TOKEN }} # reused from release.yml; lets other workflows run on the PR
@@ -77,9 +204,9 @@ jobs:
           branch: chore/akeneo-sync-run-${{ github.run_number }}
           delete-branch: true
           draft: true
-          title: 'feat: implement missing Akeneo endpoint(s)'
+          title: ${{ steps.gap.outputs.pr_title }}
           body-path: akeneo-pr-body.md
-          commit-message: 'feat: implement missing Akeneo endpoint(s)'
+          commit-message: ${{ steps.gap.outputs.pr_title }}
           labels: |
             automated
             akeneo-api

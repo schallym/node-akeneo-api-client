@@ -11,9 +11,10 @@ description: >-
 # Akeneo REST API — GAP analysis
 
 Compare this client against the official Akeneo OpenAPI spec, report which
-documented operations are implemented / missing / need review, optionally
-implement the missing ones, and verify that the TypeScript types match the
-documented schemas.
+documented operations are implemented / missing / need review, detect what
+**changed** in the documentation since the client was last synced (new/removed
+operations, parameters, request/response schemas), optionally implement the
+gaps, and verify that the TypeScript types match the documented schemas.
 
 **Read `CLAUDE.md` (repo root) first** — it defines the architecture, the
 service/type conventions, and the "Adding an endpoint" checklist that all
@@ -57,6 +58,58 @@ operation (`METHOD path`), statically scans `src/` for the endpoint strings and
 `httpClient` calls each service makes (including `BaseApi`-inherited CRUD,
 `this.endpoint`, template literals, and `completeEndpoint(...)`), then matches
 them on a normalized path signature (`{param}`/`${var}` → `*`).
+
+## Step 1b — Detect documentation changes (spec diff)
+
+Coverage only tells you what is *absent*. To know what *changed* in the docs
+since the client was last synced (new/removed operations, new or retyped
+fields, new query parameters, enum values…), diff the live spec against the
+committed baseline snapshot:
+
+```bash
+# Markdown report of every change since the baseline (read-only)
+node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs
+
+# Same, machine-readable
+node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --json
+
+# Scope to one resource (tag/path) or schema/parameter name
+node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --filter family
+
+# Once the client matches the new docs: move the baseline to the current spec
+node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot
+```
+
+`--help` lists all options (`--spec`, `--snapshot`, `--src`, `--cache`,
+`--filter`, `--json`, `--refresh`, `--update-snapshot`, `--strict`).
+
+- **Baseline:** `.claude/skills/akeneo-api-gap-analysis/spec-snapshot.json` — a
+  normalized copy of the spec: every operation with its parameters, request
+  body, line-delimited body schema and 2xx responses, plus
+  `components.schemas` / `parameters` / `securitySchemes`. Prose, examples and
+  error responses are stripped and keys/arrays sorted, so only changes that can
+  affect endpoints, parameters or types show up. It is **generated — never edit
+  it by hand**; refresh it with `--update-snapshot` (no baseline → creates it).
+- **Report:** ➕ added · ➖ removed · ✏️ changed, for operations, schemas, reusable
+  parameters and security schemes. Each operation is annotated with the
+  `src/services/api/**` file implementing it (✅ / ⚠️ / ❌ as in Step 2) and each
+  schema with the `src/types/*.type.ts` file most likely holding it; every
+  change row says *where* (`request body › \`field\``, `response 200 › …`,
+  `parameter x (query)`) with before/after values.
+- **What to do with each bucket:**
+  - ✏️ changed on an implemented operation/schema → update the entity type, the
+    `...SearchParams`/`...GetParams`, the request types and the service method
+    (names, types, optionality, enum values, nullability); update tests/mocks.
+  - ➕ added operation → implement it (Step 4); it also shows as ❌/⚠️ in Step 1.
+  - ➖ removed operation → don't delete the method (breaking change): add a
+    `@deprecated` JSDoc note and call it out.
+  - Anything on an operation the client doesn't implement → nothing to do; note it.
+- Move the baseline (`--update-snapshot`) only once the client matches the new
+  docs — or in the same PR as the implementation, which is what the weekly
+  workflow `.github/workflows/akeneo-endpoint-sync.yml` does: it runs both
+  scripts and, if anything is missing or changed, has Claude apply it
+  (`scripts/akeneo-implement.sh`) and opens a draft PR carrying the refreshed
+  snapshot.
 
 ## Step 2 — Interpret the three buckets
 
@@ -119,7 +172,9 @@ change.
 
 ## Step 5 — Type correspondence check
 
-Beyond presence/absence, verify that implemented operations have correct types:
+Beyond presence/absence, verify that implemented operations have correct types.
+The Step 1b report already pinpoints the fields/parameters that changed since
+the baseline — start there, then check the rest:
 
 - For each entity, diff `src/types/<resource>.type.ts` against the spec's
   `components.schemas` (and the operation's request body / `200` response):
@@ -136,7 +191,9 @@ Beyond presence/absence, verify that implemented operations have correct types:
 - Summarize: coverage %, ❌ missing (with method + path + tag), ⚠️ discrepancies,
   and any type mismatches — grouped by resource, each tied to a `src/...` file.
 - If you changed code: `npm run lint:check && npm test` must pass with coverage
-  intact. Then re-run the script to confirm the gap is closed.
+  intact. Then re-run the script to confirm the gap is closed, and — if you
+  applied documentation changes — move the baseline with
+  `spec-diff.mjs --update-snapshot` so they are not reported again.
 
 ## Notes
 
@@ -144,5 +201,6 @@ Beyond presence/absence, verify that implemented operations have correct types:
   `GET /api/rest/v1` (Overview) and `POST /api/oauth/v1/token` (Authentication,
   handled in `src/services/akeneo-api-client.ts`). Don't add resource services
   for these.
-- The script caches the spec for 24h; pass `--refresh` if the docs may have
-  changed.
+- Both scripts cache the spec for 24h (same cache); pass `--refresh` if the docs
+  may have changed. They share their spec-loading and source-scanning code in
+  `scripts/lib.mjs`.

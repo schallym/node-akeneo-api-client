@@ -26,6 +26,14 @@ Arguments (optional): `$ARGUMENTS`
    ✅ implemented · ❌ missing · ⚠️ review. If the spec download is blocked, retry with network
    access or note it; the spec is cached for 24h after the first successful fetch.
 
+   Then run the **documentation change detection** (same `--filter` if a resource was given):
+   ```bash
+   node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs
+   ```
+   It diffs the live spec against the committed baseline snapshot and prints ➕ added · ➖ removed ·
+   ✏️ changed operations, schemas and parameters with before/after values, each mapped to the
+   implementing service / likely type file (skill Step 1b).
+
 2. **Verify every ❌ and ⚠️ by reading the relevant `src/services/api/**` file** — do not trust
    the bucket blindly. Distinguish: a truly missing operation, a **discrepancy** (code calls a
    different path/method than documented), a **wrong-endpoint bug** (a service whose endpoint URL
@@ -33,14 +41,15 @@ Arguments (optional): `$ARGUMENTS`
    negative. Pull the authoritative operation/schema from the spec to confirm (see the skill's
    Step 3).
 
-3. **Type check** the implemented operations for the resource(s) in scope: diff
-   `src/types/<resource>.type.ts` and the service's param/request types against the spec's
-   `parameters`, request body, and `components.schemas` — flag missing fields, wrong types, and
-   wrong optionality.
+3. **Type check** the implemented operations for the resource(s) in scope: start from the fields
+   and parameters the change report flagged, then diff `src/types/<resource>.type.ts` and the
+   service's param/request types against the spec's `parameters`, request body, and
+   `components.schemas` — flag missing fields, wrong types, and wrong optionality.
 
 4. **Report** concisely, grouped by resource and tied to `src/...:line`:
    - coverage (implemented / total, %),
    - ❌ missing operations (method + path + tag + the file that should hold them),
+   - documentation changes since the baseline (➕/➖/✏️, what changed, where in the client),
    - ⚠️ discrepancies and wrong-endpoint bugs,
    - type mismatches.
 
@@ -48,5 +57,6 @@ Arguments (optional): `$ARGUMENTS`
    **`akeneo-api-auditor`** agent to implement the gaps following the `CLAUDE.md` checklist
    (types → service → barrels/`AkeneoClient` wiring → unit + e2e tests), respecting the
    one-dependency rule and 100% coverage, then run `npm run lint:check && npm test` and re-run
-   the script to confirm the gaps are closed. If not requested, end with a copy-paste-ready
-   action list and offer to implement.
+   the script to confirm the gaps are closed. If documentation changes were applied, move the
+   baseline with `spec-diff.mjs --update-snapshot` so they are not reported again. If not
+   requested, end with a copy-paste-ready action list and offer to implement.
