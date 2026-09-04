@@ -20,6 +20,7 @@ import {
   ProductModelsApi,
   ProductsApi,
   ProductsUuidApi,
+  ReadinessApi,
   ReferenceEntitiesApi,
   RuleDefinitionsApi,
   UIExtensionsApi,
@@ -136,6 +137,8 @@ describe('AkeneoClient', () => {
     expect(client.permissions).toBeInstanceOf(PermissionsApi);
     expect(client.ruleDefinitions).toBeDefined();
     expect(client.ruleDefinitions).toBeInstanceOf(RuleDefinitionsApi);
+    expect(client.readiness).toBeDefined();
+    expect(client.readiness).toBeInstanceOf(ReadinessApi);
     expect(client.dataArchitectAgent).toBeDefined();
     expect(client.dataArchitectAgent).toBeInstanceOf(DataArchitectAgentApi);
   });
