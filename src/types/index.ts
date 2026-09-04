@@ -20,4 +20,5 @@ export * from './http-hook.type';
 export * from './workflow.type';
 export * from './permissions.type';
 export * from './rule-definition.type';
+export * from './readiness.type';
 export * from './data-architect-agent.type';

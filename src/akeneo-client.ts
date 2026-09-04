@@ -19,6 +19,7 @@ import {
   ProductModelsApi,
   ProductsApi,
   ProductsUuidApi,
+  ReadinessApi,
   ReferenceEntitiesApi,
   RuleDefinitionsApi,
   UIExtensionsApi,
@@ -56,6 +57,7 @@ export class AkeneoClient {
   readonly workflows: WorkflowApi;
   readonly permissions: PermissionsApi;
   readonly ruleDefinitions: RuleDefinitionsApi;
+  readonly readiness: ReadinessApi;
   readonly dataArchitectAgent: DataArchitectAgentApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
@@ -86,6 +88,7 @@ export class AkeneoClient {
     this.workflows = new WorkflowApi(this.apiClient);
     this.permissions = new PermissionsApi(this.apiClient);
     this.ruleDefinitions = new RuleDefinitionsApi(this.apiClient);
+    this.readiness = new ReadinessApi(this.apiClient);
     this.dataArchitectAgent = new DataArchitectAgentApi(this.apiClient);
   }
 }
