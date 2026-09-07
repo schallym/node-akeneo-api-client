@@ -43,6 +43,16 @@ export default {
     },
   },
   getDraft: productsUuidMock,
+  getDraftWithProposalReviewStatus: {
+    ...productsUuidMock,
+    metadata: { workflow_status: 'proposal_waiting_for_approval' },
+    proposal_review_status: {
+      values: {
+        description: [{ locale: 'en_US', scope: null, review_status: 'to_review' }],
+        name: [{ locale: 'en_US', scope: null, review_status: 'draft' }],
+      },
+    },
+  } satisfies ProductUuid,
   search: {
     _links: {
       self: { href: 'https://akeneo.test/api/rest/v1/products-uuid/search' },

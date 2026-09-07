@@ -18,6 +18,7 @@ export type Product = {
   completenesses?: ProductCompleteness[];
   readiness?: ProductReadiness;
   workflow_execution_statuses?: ProductWorkflowExecutionStatus[];
+  proposal_review_status?: ProductProposalReviewStatus;
 };
 
 export type ProductUuid = Omit<Product, 'identifier'> & {
@@ -84,6 +85,28 @@ export type ProductReadiness = {
     }[];
   };
 };
+
+/**
+ * Review status of each change carried by a draft, grouped like the `values` property so that a change can be
+ * matched on its attribute code, locale and scope. Only returned by the draft endpoints when the
+ * `with_proposal_review_status` query parameter is set to `true`.
+ */
+export type ProductProposalReviewStatus = {
+  values?: { [attributeCode: string]: ProductProposalReviewStatusChange[] };
+};
+
+export type ProductProposalReviewStatusChange = {
+  locale?: string | null;
+  scope?: string | null;
+  review_status?: ProductProposalReviewStatusValue;
+};
+
+/**
+ * While `metadata.workflow_status` is `proposal_waiting_for_approval`, a `draft` change is one that was submitted
+ * and then rejected by a reviewer (or edited by the author after submission), whereas a `to_review` change is still
+ * pending. Akeneo documents that clients must treat unknown values as opaque, hence the widened `string` branch.
+ */
+export type ProductProposalReviewStatusValue = 'draft' | 'to_review' | (string & {});
 
 export type ProductWorkflowExecutionStatus = {
   uuid?: string;

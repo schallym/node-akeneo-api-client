@@ -28,6 +28,21 @@ describe('Product models API E2E Tests', () => {
     expect(productModel.code).toBe('code123');
   });
 
+  it('should retrieve a draft product model with its proposal review statuses', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/product-models/code123/draft')
+      .query({ with_proposal_review_status: true })
+      .reply(200, productModelsMock.getDraftWithProposalReviewStatus);
+
+    const productModel = await akeneoClient.productModels.getDraft('code123', {
+      with_proposal_review_status: true,
+    });
+
+    expect(productModel).toEqual(productModelsMock.getDraftWithProposalReviewStatus);
+    expect(productModel.proposal_review_status?.values?.name?.[0].review_status).toBe('draft');
+    expect(productModel.proposal_review_status?.values?.description?.[0].review_status).toBe('to_review');
+  });
+
   it('should submit a draft for approval', async () => {
     nock(baseUrl).post('/api/rest/v1/product-models/code123/proposal').reply(204);
 

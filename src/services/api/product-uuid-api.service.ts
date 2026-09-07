@@ -3,6 +3,7 @@ import { PaginatedResponse, ProductUuid } from '../../types';
 import { BaseApi } from './base-api.service';
 import {
   ProductsCreateQueryParams,
+  ProductsDraftGetParams,
   ProductsGetParams,
   ProductsSearchParams,
   ProductsUpdateQueryParams,
@@ -15,6 +16,8 @@ export type ProductsUuidSearchParams = ProductsSearchParams & {
 export type ProductsUuidGetParams = ProductsGetParams & {
   with_root_parent?: boolean;
 };
+
+export type ProductsUuidDraftGetParams = ProductsDraftGetParams;
 
 export type ProductsUuidSearchQueryParams = {
   pagination_type?: 'page' | 'search_after';
@@ -48,6 +51,7 @@ export type CreateProductUuidRequest = Partial<
     | 'completenesses'
     | 'readiness'
     | 'workflow_execution_statuses'
+    | 'proposal_review_status'
     | 'root_parent'
     | 'uuid'
   >
@@ -64,6 +68,7 @@ export type UpdateProductUuidRequest = Partial<
     | 'completenesses'
     | 'readiness'
     | 'workflow_execution_statuses'
+    | 'proposal_review_status'
     | 'root_parent'
     | 'uuid'
   >
@@ -120,8 +125,8 @@ export class ProductsUuidApi extends BaseApi<
     await this.client.httpClient.post(`${this.endpoint}/${uuid}/proposal`, {});
   }
 
-  async getDraft(uuid: string): Promise<ProductUuid> {
-    return this.client.httpClient.get(`${this.endpoint}/${uuid}/draft`).then((response) => response.data);
+  async getDraft(uuid: string, params?: ProductsUuidDraftGetParams): Promise<ProductUuid> {
+    return this.client.httpClient.get(`${this.endpoint}/${uuid}/draft`, { params }).then((response) => response.data);
   }
 
   async search(

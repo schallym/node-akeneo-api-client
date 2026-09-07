@@ -106,9 +106,42 @@ describe('ProductsUuidApi', () => {
 
       const result = await api.getDraft(testUuid);
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/products-uuid/${testUuid}/draft`);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/products-uuid/${testUuid}/draft`, {
+        params: undefined,
+      });
 
       expect(result).toEqual(mockProduct);
+    });
+
+    it('should forward the with_proposal_review_status param and return the review statuses', async () => {
+      const mockProduct: ProductUuid = {
+        uuid: testUuid,
+        family: 'test_family',
+        enabled: true,
+        categories: ['category1'],
+        groups: ['group1'],
+        created: '2023-01-01T00:00:00Z',
+        updated: '2023-01-02T00:00:00Z',
+        values: {
+          name: [{ locale: 'en_US', scope: null, data: 'Test Product' }],
+        },
+        metadata: { workflow_status: 'proposal_waiting_for_approval' },
+        proposal_review_status: {
+          values: {
+            name: [{ locale: 'en_US', scope: null, review_status: 'to_review' }],
+          },
+        },
+      };
+
+      mockHttpClient.get.mockResolvedValue({ data: mockProduct });
+
+      const result = await api.getDraft(testUuid, { with_proposal_review_status: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/products-uuid/${testUuid}/draft`, {
+        params: { with_proposal_review_status: true },
+      });
+
+      expect(result.proposal_review_status?.values?.name?.[0].review_status).toBe('to_review');
     });
   });
 

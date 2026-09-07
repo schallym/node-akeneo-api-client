@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-09-02T07:24:30.136Z",
+  "capturedAt": "2026-09-07T06:06:25.194Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -7562,6 +7562,45 @@
                                         "string"
                                       ]
                                     },
+                                    "proposal_review_status": {
+                                      "properties": {
+                                        "values": {
+                                          "patternProperties": {
+                                            "^\\w+$": {
+                                              "items": {
+                                                "properties": {
+                                                  "locale": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  },
+                                                  "review_status": {
+                                                    "enum": [
+                                                      "draft",
+                                                      "to_review"
+                                                    ],
+                                                    "type": "string"
+                                                  },
+                                                  "scope": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  }
+                                                },
+                                                "type": "object"
+                                              },
+                                              "type": "array"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "readOnly": true,
+                                      "type": "object",
+                                      "x-immutable": true
+                                    },
                                     "quality_scores": {
                                       "items": {
                                         "properties": {
@@ -8288,6 +8327,45 @@
                       "null",
                       "string"
                     ]
+                  },
+                  "proposal_review_status": {
+                    "properties": {
+                      "values": {
+                        "patternProperties": {
+                          "^\\w+$": {
+                            "items": {
+                              "properties": {
+                                "locale": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "review_status": {
+                                  "enum": [
+                                    "draft",
+                                    "to_review"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "readOnly": true,
+                    "type": "object",
+                    "x-immutable": true
                   },
                   "quality_scores": {
                     "items": {
@@ -14786,6 +14864,45 @@
                                         "string"
                                       ]
                                     },
+                                    "proposal_review_status": {
+                                      "properties": {
+                                        "values": {
+                                          "patternProperties": {
+                                            "^\\w+$": {
+                                              "items": {
+                                                "properties": {
+                                                  "locale": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  },
+                                                  "review_status": {
+                                                    "enum": [
+                                                      "draft",
+                                                      "to_review"
+                                                    ],
+                                                    "type": "string"
+                                                  },
+                                                  "scope": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  }
+                                                },
+                                                "type": "object"
+                                              },
+                                              "type": "array"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "readOnly": true,
+                                      "type": "object",
+                                      "x-immutable": true
+                                    },
                                     "quality_scores": {
                                       "items": {
                                         "properties": {
@@ -16298,6 +16415,45 @@
                       "string"
                     ]
                   },
+                  "proposal_review_status": {
+                    "properties": {
+                      "values": {
+                        "patternProperties": {
+                          "^\\w+$": {
+                            "items": {
+                              "properties": {
+                                "locale": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "review_status": {
+                                  "enum": [
+                                    "draft",
+                                    "to_review"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "readOnly": true,
+                    "type": "object",
+                    "x-immutable": true
+                  },
                   "quality_scores": {
                     "items": {
                       "properties": {
@@ -17199,6 +17355,15 @@
           "schema": {
             "type": "string"
           }
+        },
+        {
+          "in": "query",
+          "name": "with_proposal_review_status",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
         }
       ],
       "responses": {
@@ -17286,6 +17451,45 @@
                       "null",
                       "string"
                     ]
+                  },
+                  "proposal_review_status": {
+                    "properties": {
+                      "values": {
+                        "patternProperties": {
+                          "^\\w+$": {
+                            "items": {
+                              "properties": {
+                                "locale": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "review_status": {
+                                  "enum": [
+                                    "draft",
+                                    "to_review"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "readOnly": true,
+                    "type": "object",
+                    "x-immutable": true
                   },
                   "quality_scores": {
                     "items": {
@@ -18249,6 +18453,45 @@
                                         "null",
                                         "string"
                                       ]
+                                    },
+                                    "proposal_review_status": {
+                                      "properties": {
+                                        "values": {
+                                          "patternProperties": {
+                                            "^\\w+$": {
+                                              "items": {
+                                                "properties": {
+                                                  "locale": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  },
+                                                  "review_status": {
+                                                    "enum": [
+                                                      "draft",
+                                                      "to_review"
+                                                    ],
+                                                    "type": "string"
+                                                  },
+                                                  "scope": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  }
+                                                },
+                                                "type": "object"
+                                              },
+                                              "type": "array"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "readOnly": true,
+                                      "type": "object",
+                                      "x-immutable": true
                                     },
                                     "quality_scores": {
                                       "items": {
@@ -20018,6 +20261,45 @@
                                         "string"
                                       ]
                                     },
+                                    "proposal_review_status": {
+                                      "properties": {
+                                        "values": {
+                                          "patternProperties": {
+                                            "^\\w+$": {
+                                              "items": {
+                                                "properties": {
+                                                  "locale": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  },
+                                                  "review_status": {
+                                                    "enum": [
+                                                      "draft",
+                                                      "to_review"
+                                                    ],
+                                                    "type": "string"
+                                                  },
+                                                  "scope": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  }
+                                                },
+                                                "type": "object"
+                                              },
+                                              "type": "array"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "readOnly": true,
+                                      "type": "object",
+                                      "x-immutable": true
+                                    },
                                     "quality_scores": {
                                       "items": {
                                         "properties": {
@@ -21698,6 +21980,45 @@
                                         "string"
                                       ]
                                     },
+                                    "proposal_review_status": {
+                                      "properties": {
+                                        "values": {
+                                          "patternProperties": {
+                                            "^\\w+$": {
+                                              "items": {
+                                                "properties": {
+                                                  "locale": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  },
+                                                  "review_status": {
+                                                    "enum": [
+                                                      "draft",
+                                                      "to_review"
+                                                    ],
+                                                    "type": "string"
+                                                  },
+                                                  "scope": {
+                                                    "type": [
+                                                      "null",
+                                                      "string"
+                                                    ]
+                                                  }
+                                                },
+                                                "type": "object"
+                                              },
+                                              "type": "array"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "readOnly": true,
+                                      "type": "object",
+                                      "x-immutable": true
+                                    },
                                     "quality_scores": {
                                       "items": {
                                         "properties": {
@@ -22478,6 +22799,45 @@
                       "null",
                       "string"
                     ]
+                  },
+                  "proposal_review_status": {
+                    "properties": {
+                      "values": {
+                        "patternProperties": {
+                          "^\\w+$": {
+                            "items": {
+                              "properties": {
+                                "locale": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "review_status": {
+                                  "enum": [
+                                    "draft",
+                                    "to_review"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "readOnly": true,
+                    "type": "object",
+                    "x-immutable": true
                   },
                   "quality_scores": {
                     "items": {
@@ -23429,6 +23789,15 @@
             "format": "uuid",
             "type": "string"
           }
+        },
+        {
+          "in": "query",
+          "name": "with_proposal_review_status",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
         }
       ],
       "responses": {
@@ -23538,6 +23907,45 @@
                       "null",
                       "string"
                     ]
+                  },
+                  "proposal_review_status": {
+                    "properties": {
+                      "values": {
+                        "patternProperties": {
+                          "^\\w+$": {
+                            "items": {
+                              "properties": {
+                                "locale": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "review_status": {
+                                  "enum": [
+                                    "draft",
+                                    "to_review"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "readOnly": true,
+                    "type": "object",
+                    "x-immutable": true
                   },
                   "quality_scores": {
                     "items": {
@@ -24327,6 +24735,45 @@
                       "null",
                       "string"
                     ]
+                  },
+                  "proposal_review_status": {
+                    "properties": {
+                      "values": {
+                        "patternProperties": {
+                          "^\\w+$": {
+                            "items": {
+                              "properties": {
+                                "locale": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "review_status": {
+                                  "enum": [
+                                    "draft",
+                                    "to_review"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "readOnly": true,
+                    "type": "object",
+                    "x-immutable": true
                   },
                   "quality_scores": {
                     "items": {
@@ -25273,6 +25720,15 @@
           "schema": {
             "type": "string"
           }
+        },
+        {
+          "in": "query",
+          "name": "with_proposal_review_status",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
         }
       ],
       "responses": {
@@ -25385,6 +25841,45 @@
                       "null",
                       "string"
                     ]
+                  },
+                  "proposal_review_status": {
+                    "properties": {
+                      "values": {
+                        "patternProperties": {
+                          "^\\w+$": {
+                            "items": {
+                              "properties": {
+                                "locale": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "review_status": {
+                                  "enum": [
+                                    "draft",
+                                    "to_review"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "readOnly": true,
+                    "type": "object",
+                    "x-immutable": true
                   },
                   "quality_scores": {
                     "items": {
@@ -34216,6 +34711,45 @@
             "string"
           ]
         },
+        "proposal_review_status": {
+          "properties": {
+            "values": {
+              "patternProperties": {
+                "^\\w+$": {
+                  "items": {
+                    "properties": {
+                      "locale": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "review_status": {
+                        "enum": [
+                          "draft",
+                          "to_review"
+                        ],
+                        "type": "string"
+                      },
+                      "scope": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "readOnly": true,
+          "type": "object",
+          "x-immutable": true
+        },
         "quality_scores": {
           "items": {
             "properties": {
@@ -35280,6 +35814,45 @@
             "null",
             "string"
           ]
+        },
+        "proposal_review_status": {
+          "properties": {
+            "values": {
+              "patternProperties": {
+                "^\\w+$": {
+                  "items": {
+                    "properties": {
+                      "locale": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "review_status": {
+                        "enum": [
+                          "draft",
+                          "to_review"
+                        ],
+                        "type": "string"
+                      },
+                      "scope": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "readOnly": true,
+          "type": "object",
+          "x-immutable": true
         },
         "quality_scores": {
           "items": {
@@ -36912,6 +37485,45 @@
             "string"
           ]
         },
+        "proposal_review_status": {
+          "properties": {
+            "values": {
+              "patternProperties": {
+                "^\\w+$": {
+                  "items": {
+                    "properties": {
+                      "locale": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "review_status": {
+                        "enum": [
+                          "draft",
+                          "to_review"
+                        ],
+                        "type": "string"
+                      },
+                      "scope": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "readOnly": true,
+          "type": "object",
+          "x-immutable": true
+        },
         "quality_scores": {
           "items": {
             "properties": {
@@ -38495,6 +39107,45 @@
         "data"
       ],
       "type": "object"
+    },
+    "proposal_review_status": {
+      "properties": {
+        "values": {
+          "patternProperties": {
+            "^\\w+$": {
+              "items": {
+                "properties": {
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "review_status": {
+                    "enum": [
+                      "draft",
+                      "to_review"
+                    ],
+                    "type": "string"
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "readOnly": true,
+      "type": "object",
+      "x-immutable": true
     },
     "readiness": {
       "properties": {
@@ -40121,6 +40772,15 @@
     "with_position": {
       "in": "query",
       "name": "with_position",
+      "required": false,
+      "schema": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "with_proposal_review_status": {
+      "in": "query",
+      "name": "with_proposal_review_status",
       "required": false,
       "schema": {
         "default": false,

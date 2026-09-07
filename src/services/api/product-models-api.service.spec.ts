@@ -128,9 +128,41 @@ describe('ProductModelsApi', () => {
 
       const result = await api.getDraft(testCode);
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}/draft`);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}/draft`, {
+        params: undefined,
+      });
 
       expect(result).toEqual(mockProductModel);
+    });
+
+    it('should forward the with_proposal_review_status param and return the review statuses', async () => {
+      const mockProductModel: ProductModelType = {
+        code: testCode,
+        family: 'test_family',
+        family_variant: 'test_variant',
+        categories: ['category1'],
+        created: '2023-01-01T00:00:00Z',
+        updated: '2023-01-02T00:00:00Z',
+        values: {
+          name: [{ locale: 'en_US', scope: null, data: 'Test Product Model' }],
+        },
+        metadata: { workflow_status: 'proposal_waiting_for_approval' },
+        proposal_review_status: {
+          values: {
+            name: [{ locale: 'en_US', scope: null, review_status: 'draft' }],
+          },
+        },
+      };
+
+      mockHttpClient.get.mockResolvedValue({ data: mockProductModel });
+
+      const result = await api.getDraft(testCode, { with_proposal_review_status: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}/draft`, {
+        params: { with_proposal_review_status: true },
+      });
+
+      expect(result.proposal_review_status?.values?.name?.[0].review_status).toBe('draft');
     });
   });
 
