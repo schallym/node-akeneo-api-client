@@ -42,4 +42,14 @@ export default {
     },
   },
   getDraft: productModelsMock,
+  getDraftWithProposalReviewStatus: {
+    ...productModelsMock,
+    metadata: { workflow_status: 'proposal_waiting_for_approval' },
+    proposal_review_status: {
+      values: {
+        description: [{ locale: 'en_US', scope: null, review_status: 'to_review' }],
+        name: [{ locale: 'en_US', scope: null, review_status: 'draft' }],
+      },
+    },
+  } satisfies ProductModelType,
 };

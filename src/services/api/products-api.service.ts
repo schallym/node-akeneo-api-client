@@ -34,6 +34,10 @@ export type ProductsGetParams = {
   with_workflow_execution_statuses?: boolean;
 };
 
+export type ProductsDraftGetParams = {
+  with_proposal_review_status?: boolean;
+};
+
 export type ProductsCreateQueryParams = {
   create_missing_options?: string;
 };
@@ -53,6 +57,7 @@ export type CreateProductRequest = Partial<
     | 'completenesses'
     | 'readiness'
     | 'workflow_execution_statuses'
+    | 'proposal_review_status'
     | 'identifier'
   >
 > &
@@ -68,6 +73,7 @@ export type UpdateProductRequest = Partial<
     | 'completenesses'
     | 'readiness'
     | 'workflow_execution_statuses'
+    | 'proposal_review_status'
     | 'identifier'
   >
 > &
@@ -121,7 +127,9 @@ export class ProductsApi extends BaseApi<
     await this.client.httpClient.post(`${this.endpoint}/${identifier}/proposal`, {});
   }
 
-  async getDraft(identifier: string): Promise<Product> {
-    return this.client.httpClient.get(`${this.endpoint}/${identifier}/draft`).then((response) => response.data);
+  async getDraft(identifier: string, params?: ProductsDraftGetParams): Promise<Product> {
+    return this.client.httpClient
+      .get(`${this.endpoint}/${identifier}/draft`, { params })
+      .then((response) => response.data);
   }
 }

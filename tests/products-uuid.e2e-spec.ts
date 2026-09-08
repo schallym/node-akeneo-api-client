@@ -28,6 +28,21 @@ describe('Products UUID API E2E Tests', () => {
     expect(product.uuid).toBe('1234-5678-9012');
   });
 
+  it('should retrieve a draft product with its proposal review statuses', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/products-uuid/1234-5678-9012/draft')
+      .query({ with_proposal_review_status: true })
+      .reply(200, productsUuidMock.getDraftWithProposalReviewStatus);
+
+    const product = await akeneoClient.productsUuid.getDraft('1234-5678-9012', {
+      with_proposal_review_status: true,
+    });
+
+    expect(product).toEqual(productsUuidMock.getDraftWithProposalReviewStatus);
+    expect(product.proposal_review_status?.values?.name?.[0].review_status).toBe('draft');
+    expect(product.proposal_review_status?.values?.description?.[0].review_status).toBe('to_review');
+  });
+
   it('should submit a draft for approval', async () => {
     nock(baseUrl).post('/api/rest/v1/products-uuid/1234-5678-9012/proposal').reply(204);
 

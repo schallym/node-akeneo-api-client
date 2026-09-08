@@ -33,6 +33,10 @@ export type ProductModelsGetParams = {
   convert_measurements?: boolean;
 };
 
+export type ProductModelsDraftGetParams = {
+  with_proposal_review_status?: boolean;
+};
+
 export type ProductModelsCreateQueryParams = {
   create_missing_options?: string;
 };
@@ -50,6 +54,7 @@ export type CreateProductModelRequest = Partial<
     | 'quality_scores'
     | 'readiness'
     | 'workflow_execution_statuses'
+    | 'proposal_review_status'
     | 'family_variant'
     | 'family'
   >
@@ -59,7 +64,13 @@ export type CreateProductModelRequest = Partial<
 export type UpdateProductModelRequest = Partial<
   Omit<
     ProductModelType,
-    'created' | 'updated' | 'metadata' | 'quality_scores' | 'readiness' | 'workflow_execution_statuses'
+    | 'created'
+    | 'updated'
+    | 'metadata'
+    | 'quality_scores'
+    | 'readiness'
+    | 'workflow_execution_statuses'
+    | 'proposal_review_status'
   >
 > & {
   add_categories?: string[];
@@ -113,7 +124,9 @@ export class ProductModelsApi extends BaseApi<
     await this.client.httpClient.post(`${this.endpoint}/${identifier}/proposal`, {});
   }
 
-  async getDraft(identifier: string): Promise<ProductModelType> {
-    return this.client.httpClient.get(`${this.endpoint}/${identifier}/draft`).then((response) => response.data);
+  async getDraft(identifier: string, params?: ProductModelsDraftGetParams): Promise<ProductModelType> {
+    return this.client.httpClient
+      .get(`${this.endpoint}/${identifier}/draft`, { params })
+      .then((response) => response.data);
   }
 }

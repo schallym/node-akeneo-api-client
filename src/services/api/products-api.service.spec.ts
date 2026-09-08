@@ -287,9 +287,47 @@ describe('ProductsApi', () => {
 
       const result = await api.getDraft(testIdentifier);
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/products/${testIdentifier}/draft`);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/products/${testIdentifier}/draft`, {
+        params: undefined,
+      });
 
       expect(result).toEqual(mockProduct);
+    });
+
+    it('should forward the with_proposal_review_status param and return the review statuses', async () => {
+      const mockProduct: Product = {
+        uuid: '1234-5678-9012',
+        identifier: testIdentifier,
+        enabled: true,
+        categories: ['category1'],
+        groups: ['group1'],
+        created: '2023-01-01T00:00:00Z',
+        updated: '2023-01-02T00:00:00Z',
+        family: 'test_family',
+        values: {
+          name: [{ locale: 'en_US', scope: null, data: 'Test Product' }],
+        },
+        metadata: { workflow_status: 'proposal_waiting_for_approval' },
+        proposal_review_status: {
+          values: {
+            description: [
+              { locale: 'fr_FR', scope: 'ecommerce', review_status: 'draft' },
+              { locale: 'de_DE', scope: 'ecommerce', review_status: 'to_review' },
+            ],
+            weight: [{ locale: null, scope: null, review_status: 'to_review' }],
+          },
+        },
+      };
+
+      mockHttpClient.get.mockResolvedValue({ data: mockProduct });
+
+      const result = await api.getDraft(testIdentifier, { with_proposal_review_status: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/products/${testIdentifier}/draft`, {
+        params: { with_proposal_review_status: true },
+      });
+
+      expect(result.proposal_review_status?.values?.weight?.[0].review_status).toBe('to_review');
     });
   });
 });
