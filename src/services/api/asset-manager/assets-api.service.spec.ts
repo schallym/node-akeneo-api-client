@@ -45,6 +45,26 @@ describe('AssetsApi', () => {
       expect(result).toEqual(mockAsset);
     });
 
+    it('should fetch an asset by code with its usage', async () => {
+      const mockAsset: Asset = {
+        code: 'a1',
+        usage: {
+          products: { total: 12 },
+          product_models: { total: 3 },
+          reference_entity_records: { total: 0 },
+          categories: { total: 1 },
+        },
+      } as any;
+      mockHttpClient.get.mockResolvedValue({ data: mockAsset });
+
+      const result = await api.get('family1', 'a1', { with_usage: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/asset-families/family1/assets/a1', {
+        params: { with_usage: true },
+      });
+      expect(result).toEqual(mockAsset);
+    });
+
     it('should handle errors when fetching an asset', async () => {
       mockHttpClient.get.mockRejectedValue(new Error('Not found'));
 

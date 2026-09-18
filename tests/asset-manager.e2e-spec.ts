@@ -216,6 +216,19 @@ describe('AssetManagerApi', () => {
       expect(result).toEqual(assetManagerMock.asset.get);
     });
 
+    it('should fetch an asset by code with its usage', async () => {
+      nock(baseUrl)
+        .get('/api/rest/v1/asset-families/model_pictures/assets/a1')
+        .query({ with_usage: true })
+        .reply(200, assetManagerMock.asset.getWithUsage);
+
+      const result = await akeneoClient.assetManager.assets.get('model_pictures', 'a1', {
+        with_usage: true,
+      });
+      expect(result).toEqual(assetManagerMock.asset.getWithUsage);
+      expect(result.usage?.products?.total).toBe(12);
+    });
+
     it('should fetch a paginated list of assets with auto tags', async () => {
       nock(baseUrl)
         .get('/api/rest/v1/asset-families/model_pictures/assets')
