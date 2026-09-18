@@ -11,6 +11,8 @@ export type AssetRecordSearchParams = {
 
 export type AssetRecordGetParams = {
   with_asset_auto_tags?: boolean;
+  /** Return a usage overview of the asset (number of products, product models, records and categories using it). */
+  with_usage?: boolean;
 };
 
 export type UpdateOrCreateAssetRecordRequest = Partial<

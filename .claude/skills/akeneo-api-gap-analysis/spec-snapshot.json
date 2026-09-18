@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-09-07T06:06:25.194Z",
+  "capturedAt": "2026-09-18T06:05:06.814Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -957,6 +957,15 @@
             "default": false,
             "type": "boolean"
           }
+        },
+        {
+          "in": "query",
+          "name": "with_usage",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
         }
       ],
       "responses": {
@@ -964,102 +973,149 @@
           "content": {
             "application/json": {
               "schema": {
-                "properties": {
-                  "asset_family_code": {
-                    "type": "string",
-                    "x-immutable": true
-                  },
-                  "code": {
-                    "type": "string",
-                    "x-immutable": true
-                  },
-                  "created": {
-                    "format": "date-time",
-                    "readOnly": true,
-                    "type": "string",
-                    "x-immutable": true
-                  },
-                  "updated": {
-                    "format": "date-time",
-                    "readOnly": true,
-                    "type": "string"
-                  },
-                  "values": {
-                    "patternProperties": {
-                      "^\\w+$": {
-                        "items": {
-                          "properties": {
-                            "_links": {
-                              "type": "object"
-                            },
-                            "attribute_type": {
-                              "enum": [
-                                "auto_tagging",
-                                "boolean",
-                                "date",
-                                "media_file",
-                                "media_link",
-                                "multiple_options",
-                                "number",
-                                "record",
-                                "single_option",
-                                "text"
-                              ],
-                              "readOnly": true,
-                              "type": "string"
-                            },
-                            "channel": {
-                              "type": [
-                                "null",
-                                "string"
-                              ]
-                            },
-                            "data": {
-                              "oneOf": [
-                                {
+                "allOf": [
+                  {
+                    "properties": {
+                      "asset_family_code": {
+                        "type": "string",
+                        "x-immutable": true
+                      },
+                      "code": {
+                        "type": "string",
+                        "x-immutable": true
+                      },
+                      "created": {
+                        "format": "date-time",
+                        "readOnly": true,
+                        "type": "string",
+                        "x-immutable": true
+                      },
+                      "updated": {
+                        "format": "date-time",
+                        "readOnly": true,
+                        "type": "string"
+                      },
+                      "values": {
+                        "patternProperties": {
+                          "^\\w+$": {
+                            "items": {
+                              "properties": {
+                                "_links": {
+                                  "type": "object"
+                                },
+                                "attribute_type": {
+                                  "enum": [
+                                    "auto_tagging",
+                                    "boolean",
+                                    "date",
+                                    "media_file",
+                                    "media_link",
+                                    "multiple_options",
+                                    "number",
+                                    "record",
+                                    "single_option",
+                                    "text"
+                                  ],
+                                  "readOnly": true,
                                   "type": "string"
                                 },
-                                {
-                                  "items": {
-                                    "type": "string"
-                                  },
-                                  "type": "array"
+                                "channel": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
                                 },
-                                {
-                                  "type": "boolean"
+                                "data": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "type": "array"
+                                    },
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
                                 },
-                                {
-                                  "type": "null"
+                                "linked_data": {
+                                  "type": "object"
+                                },
+                                "locale": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
                                 }
-                              ]
-                            },
-                            "linked_data": {
+                              },
+                              "required": [
+                                "channel",
+                                "data",
+                                "locale"
+                              ],
                               "type": "object"
                             },
-                            "locale": {
-                              "type": [
-                                "null",
-                                "string"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "channel",
-                            "data",
-                            "locale"
-                          ],
-                          "type": "object"
+                            "type": "array"
+                          }
                         },
-                        "type": "array"
+                        "type": "object"
+                      }
+                    },
+                    "required": [
+                      "code"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "usage": {
+                        "properties": {
+                          "categories": {
+                            "properties": {
+                              "total": {
+                                "type": "integer"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "product_models": {
+                            "properties": {
+                              "total": {
+                                "type": "integer"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "products": {
+                            "properties": {
+                              "total": {
+                                "type": "integer"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "reference_entity_records": {
+                            "properties": {
+                              "total": {
+                                "type": "integer"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "readOnly": true,
+                        "type": "object"
                       }
                     },
                     "type": "object"
                   }
-                },
-                "required": [
-                  "code"
-                ],
-                "type": "object"
+                ]
               }
             }
           }
@@ -32170,6 +32226,49 @@
       ],
       "type": "object"
     },
+    "asset_usage": {
+      "properties": {
+        "usage": {
+          "properties": {
+            "categories": {
+              "properties": {
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "product_models": {
+              "properties": {
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "products": {
+              "properties": {
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "reference_entity_records": {
+              "properties": {
+                "total": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "readOnly": true,
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "association_type": {
       "properties": {
         "code": {
@@ -40821,6 +40920,15 @@
     "with_table_select_options": {
       "in": "query",
       "name": "with_table_select_options",
+      "required": false,
+      "schema": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "with_usage": {
+      "in": "query",
+      "name": "with_usage",
       "required": false,
       "schema": {
         "default": false,

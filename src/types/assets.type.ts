@@ -46,6 +46,22 @@ export type Asset = {
   values: { [attributeCode: string]: AssetValue[] };
   created: string;
   updated: string;
+  /**
+   * Usage overview of the asset, returned only when the `with_usage` query parameter is set to `true`
+   * on the "get an asset" endpoint.
+   */
+  usage?: AssetUsage;
+};
+
+export type AssetUsage = {
+  products?: AssetUsageCount;
+  product_models?: AssetUsageCount;
+  reference_entity_records?: AssetUsageCount;
+  categories?: AssetUsageCount;
+};
+
+export type AssetUsageCount = {
+  total?: number;
 };
 
 export type AssetValue = {

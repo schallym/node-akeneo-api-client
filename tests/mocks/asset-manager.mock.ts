@@ -131,6 +131,16 @@ const AssetMock: Asset = {
   updated: '2021-05-31T09:23:34+00:00',
 };
 
+const AssetWithUsageMock: Asset = {
+  ...AssetMock,
+  usage: {
+    products: { total: 12 },
+    product_models: { total: 3 },
+    reference_entity_records: { total: 0 },
+    categories: { total: 1 },
+  },
+};
+
 export default {
   get: assetFamilyMock,
   list: {
@@ -151,6 +161,7 @@ export default {
   },
   asset: {
     get: AssetMock,
+    getWithUsage: AssetWithUsageMock,
     list: {
       _embedded: { items: [AssetMock] },
       current_page: 1,
