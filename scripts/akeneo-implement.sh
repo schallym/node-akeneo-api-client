@@ -27,7 +27,7 @@
 #   CLAUDE_CODE_OAUTH_TOKEN  Max/Pro subscription token      (preferred)
 #   ANTHROPIC_API_KEY        API Console pay-as-you-go key    (fallback)
 # Other env:
-#   CLAUDE_MODEL      (optional) model id, default claude-opus-5
+#   CLAUDE_MODEL      (optional) model id, default claude-opus-5-5
 #   RESOURCE_FILTER   (optional) limit MISSING-endpoint implementation to one resource (OpenAPI tag/path)
 #   MISSING_COUNT     (optional) number of missing operations; derived from gap.json when unset
 #   CHANGES_COUNT     (optional) number of documentation changes; derived from spec-changes.json when unset
@@ -61,7 +61,7 @@ if [ "${DRY_RUN:-0}" != "1" ] && [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ] && [ -z "
   echo "Error: set CLAUDE_CODE_OAUTH_TOKEN (from 'claude setup-token') or ANTHROPIC_API_KEY." >&2
   exit 1
 fi
-MODEL="${CLAUDE_MODEL:-claude-opus-5}"
+MODEL="${CLAUDE_MODEL:-claude-opus-5-5}"
 
 # ── task for this run ──────────────────────────────────────────────────────
 if [ "$CHANGES_COUNT" != "0" ]; then
