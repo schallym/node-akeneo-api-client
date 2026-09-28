@@ -43,6 +43,33 @@ describe('Product models API E2E Tests', () => {
     expect(productModel.proposal_review_status?.values?.description?.[0].review_status).toBe('to_review');
   });
 
+  it('should retrieve a product model with its associations as product UUIDs', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/product-models/code123')
+      .query({ with_product_uuids_associations: true })
+      .reply(200, productModelsMock.getWithProductUuidsAssociations);
+
+    const productModel = await akeneoClient.productModels.get('code123', { with_product_uuids_associations: true });
+
+    expect(productModel).toEqual(productModelsMock.getWithProductUuidsAssociations);
+    expect(productModel.associations?.X_SELL.products).toEqual([
+      'd2f3a1b4-5c6d-4e7f-8a9b-0c1d2e3f4a5b',
+      'a1b2c3d4-e5f6-4789-9abc-def012345678',
+    ]);
+  });
+
+  it('should list product models with their associations as product UUIDs', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/product-models')
+      .query({ with_product_uuids_associations: true })
+      .reply(200, productModelsMock.listWithProductUuidsAssociations);
+
+    const result = await akeneoClient.productModels.list({ with_product_uuids_associations: true });
+
+    expect(result._embedded.items).toHaveLength(1);
+    expect(result._embedded.items[0].associations?.X_SELL.products).toEqual(['d2f3a1b4-5c6d-4e7f-8a9b-0c1d2e3f4a5b']);
+  });
+
   it('should submit a draft for approval', async () => {
     nock(baseUrl).post('/api/rest/v1/product-models/code123/proposal').reply(204);
 
