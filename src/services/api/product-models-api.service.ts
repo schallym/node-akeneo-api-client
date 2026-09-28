@@ -21,6 +21,12 @@ export type ProductModelsSearchParams = {
   with_quality_scores?: boolean;
   with_readiness?: 'scores_only' | 'detailed';
   with_workflow_execution_statuses?: boolean;
+  /**
+   * Return the products of the `associations` as UUIDs instead of identifiers, aligned with the format of the
+   * `/api/rest/v1/products-uuid` endpoint. Defaults to `false`. A product carrying no identifier value can only be
+   * expressed as a UUID, so it is absent from the response unless this parameter is set to `true`.
+   */
+  with_product_uuids_associations?: boolean;
 };
 
 export type ProductModelsGetParams = {
@@ -31,6 +37,12 @@ export type ProductModelsGetParams = {
   with_workflow_execution_statuses?: boolean;
   scope?: string;
   convert_measurements?: boolean;
+  /**
+   * Return the products of the `associations` as UUIDs instead of identifiers, aligned with the format of the
+   * `/api/rest/v1/products-uuid` endpoint. Defaults to `false`. A product carrying no identifier value can only be
+   * expressed as a UUID, so it is absent from the response unless this parameter is set to `true`.
+   */
+  with_product_uuids_associations?: boolean;
 };
 
 export type ProductModelsDraftGetParams = {

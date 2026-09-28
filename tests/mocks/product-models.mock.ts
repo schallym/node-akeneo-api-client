@@ -41,6 +41,37 @@ export default {
       items: [productModelsMock],
     },
   },
+  getWithProductUuidsAssociations: {
+    ...productModelsMock,
+    associations: {
+      X_SELL: {
+        groups: [],
+        products: ['d2f3a1b4-5c6d-4e7f-8a9b-0c1d2e3f4a5b', 'a1b2c3d4-e5f6-4789-9abc-def012345678'],
+        product_models: ['model_code'],
+      },
+    },
+  } satisfies ProductModelType,
+  listWithProductUuidsAssociations: {
+    _links: {
+      self: { href: 'https://akeneo.test/api/rest/v1/product-models' },
+      first: { href: 'https://akeneo.test/api/rest/v1/product-models' },
+    },
+    current_page: 1,
+    _embedded: {
+      items: [
+        {
+          ...productModelsMock,
+          associations: {
+            X_SELL: {
+              groups: [],
+              products: ['d2f3a1b4-5c6d-4e7f-8a9b-0c1d2e3f4a5b'],
+              product_models: [],
+            },
+          },
+        } satisfies ProductModelType,
+      ],
+    },
+  },
   getDraft: productModelsMock,
   getDraftWithProposalReviewStatus: {
     ...productModelsMock,

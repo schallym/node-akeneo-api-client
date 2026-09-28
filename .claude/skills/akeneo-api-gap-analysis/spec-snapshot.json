@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-09-18T06:05:06.814Z",
+  "capturedAt": "2026-09-28T06:07:18.006Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -14736,6 +14736,15 @@
         },
         {
           "in": "query",
+          "name": "with_product_uuids_associations",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        {
+          "in": "query",
           "name": "with_quality_scores",
           "required": false,
           "schema": {
@@ -16347,6 +16356,15 @@
         {
           "in": "query",
           "name": "with_enabled_assets_only",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
+        },
+        {
+          "in": "query",
+          "name": "with_product_uuids_associations",
           "required": false,
           "schema": {
             "default": false,
@@ -40871,6 +40889,15 @@
     "with_position": {
       "in": "query",
       "name": "with_position",
+      "required": false,
+      "schema": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "with_product_uuids_associations": {
+      "in": "query",
+      "name": "with_product_uuids_associations",
       "required": false,
       "schema": {
         "default": false,

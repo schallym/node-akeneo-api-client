@@ -187,6 +187,44 @@ describe('ProductModelsApi', () => {
       expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}`, {});
     });
 
+    it('should forward the with_product_uuids_associations param to the get method', async () => {
+      const mockProductModel: ProductModelType = {
+        code: testCode,
+        family: 'test_family',
+        family_variant: 'test_variant',
+        categories: ['category1'],
+        created: '2023-01-01T00:00:00Z',
+        updated: '2023-01-02T00:00:00Z',
+        values: {},
+        associations: {
+          X_SELL: {
+            groups: [],
+            products: ['3f1f9d5a-4e0c-4d5b-8a24-7f4b1f1a5f11'],
+            product_models: [],
+          },
+        },
+      };
+
+      mockHttpClient.get.mockResolvedValue({ data: mockProductModel });
+
+      const result = await api.get(testCode, { with_product_uuids_associations: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}`, {
+        params: { with_product_uuids_associations: true },
+      });
+      expect(result.associations?.X_SELL.products).toEqual(['3f1f9d5a-4e0c-4d5b-8a24-7f4b1f1a5f11']);
+    });
+
+    it('should forward the with_product_uuids_associations param to the list method', async () => {
+      mockHttpClient.get.mockResolvedValue({ data: { _embedded: { items: [] }, current_page: 1 } });
+
+      await api.list({ with_product_uuids_associations: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/product-models', {
+        params: { with_product_uuids_associations: true },
+      });
+    });
+
     it('should use the correct endpoint for update method', async () => {
       const updateData = {
         values: { name: [{ locale: 'en_US', scope: null, data: 'Updated Product Model' }] },

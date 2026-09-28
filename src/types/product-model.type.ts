@@ -31,6 +31,10 @@ export type ProductModelValue = {
 
 export type ProductModelAssociation = {
   groups: string[];
+  /**
+   * Product identifiers by default. When the `with_product_uuids_associations` query parameter is set to `true`, the
+   * products are returned as UUIDs instead, and products carrying no identifier value are included as well.
+   */
   products: string[];
   product_models: string[];
 };
