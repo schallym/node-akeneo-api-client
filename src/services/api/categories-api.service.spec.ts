@@ -1,6 +1,6 @@
 import { CategoriesApi, CreateCategoryRequest } from './categories-api.service';
 import { AkeneoApiClient } from '../';
-import { Category } from '../../types';
+import { Category, CategoryTemplate } from '../../types';
 
 describe('CategoriesApi', () => {
   const mockHttpClient = {
@@ -223,6 +223,49 @@ describe('CategoriesApi', () => {
         responseType: 'arraybuffer',
       });
       expect(result).toBe(mockArrayBuffer);
+    });
+  });
+
+  describe('listCategoryTemplates', () => {
+    const mockTemplates: CategoryTemplate[] = [
+      {
+        uuid: '8f2b1c44-3d5e-4a71-b9c2-1e3f5a7b9d11',
+        code: 'master_men_template',
+        attributes: [
+          {
+            code: 'season',
+            uuid: '783d4957-a29b-4281-a9f5-c4621014dcfa',
+            type: 'simple_select',
+            labels: { en_US: 'Season', fr_FR: null },
+            order: 1,
+            is_required: false,
+            is_localizable: false,
+            is_scopable: false,
+            options: [{ code: 'summer', labels: { en_US: 'Summer' } }],
+            default_value: 'summer',
+          },
+        ],
+      },
+    ];
+
+    it('should send GET request without parameters', async () => {
+      mockHttpClient.get.mockResolvedValue({ data: mockTemplates });
+
+      const result = await api.listCategoryTemplates();
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/category-templates', { params: undefined });
+      expect(result).toEqual(mockTemplates);
+    });
+
+    it('should send GET request filtered by category', async () => {
+      mockHttpClient.get.mockResolvedValue({ data: [] });
+
+      const result = await api.listCategoryTemplates({ category: 'master' });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/category-templates', {
+        params: { category: 'master' },
+      });
+      expect(result).toEqual([]);
     });
   });
 });

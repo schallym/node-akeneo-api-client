@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-09-28T06:07:18.006Z",
+  "capturedAt": "2026-10-02T06:05:35.573Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -3066,7 +3066,6 @@
                                       "type": "boolean"
                                     },
                                     "is_two_way": {
-                                      "default": false,
                                       "type": "boolean"
                                     },
                                     "labels": {
@@ -3135,7 +3134,6 @@
                   "type": "boolean"
                 },
                 "is_two_way": {
-                  "default": false,
                   "type": "boolean"
                 },
                 "labels": {
@@ -3192,9 +3190,7 @@
                   "x-immutable": true
                 },
                 "is_two_way": {
-                  "default": false,
-                  "type": "boolean",
-                  "x-immutable": true
+                  "type": "boolean"
                 },
                 "labels": {
                   "default": {},
@@ -3278,7 +3274,6 @@
                     "type": "boolean"
                   },
                   "is_two_way": {
-                    "default": false,
                     "type": "boolean"
                   },
                   "labels": {
@@ -3340,9 +3335,7 @@
                   "x-immutable": true
                 },
                 "is_two_way": {
-                  "default": false,
-                  "type": "boolean",
-                  "x-immutable": true
+                  "type": "boolean"
                 },
                 "labels": {
                   "default": {},
@@ -10317,6 +10310,153 @@
       ],
       "responses": {
         "200": {}
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Category"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/category-templates": {
+      "operationId": "get_category_templates",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "category",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "properties": {
+                    "attributes": {
+                      "items": {
+                        "properties": {
+                          "asset_family": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "default_value": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              {
+                                "additionalProperties": true,
+                                "type": "object"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "is_localizable": {
+                            "type": "boolean"
+                          },
+                          "is_required": {
+                            "type": "boolean"
+                          },
+                          "is_scopable": {
+                            "type": "boolean"
+                          },
+                          "labels": {
+                            "additionalProperties": {
+                              "type": [
+                                "null",
+                                "string"
+                              ]
+                            },
+                            "type": "object"
+                          },
+                          "options": {
+                            "items": {
+                              "properties": {
+                                "code": {
+                                  "type": "string"
+                                },
+                                "labels": {
+                                  "additionalProperties": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "type": "object"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "order": {
+                            "type": "integer"
+                          },
+                          "reference_entity": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "enum": [
+                              "asset_collection",
+                              "boolean",
+                              "datetime",
+                              "image",
+                              "multi_select",
+                              "product_and_product_model_sort",
+                              "reference_entity",
+                              "reference_entity_collection",
+                              "richtext",
+                              "simple_select",
+                              "text",
+                              "textarea"
+                            ],
+                            "type": "string"
+                          },
+                          "uuid": {
+                            "format": "uuid",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "uuid": {
+                      "format": "uuid",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            }
+          }
+        }
       },
       "security": [
         {
@@ -32297,7 +32437,6 @@
           "type": "boolean"
         },
         "is_two_way": {
-          "default": false,
           "type": "boolean"
         },
         "labels": {
@@ -32330,9 +32469,7 @@
           "x-immutable": true
         },
         "is_two_way": {
-          "default": false,
-          "type": "boolean",
-          "x-immutable": true
+          "type": "boolean"
         },
         "labels": {
           "default": {},
@@ -33231,6 +33368,120 @@
               "type": "object"
             }
           ]
+        }
+      },
+      "type": "object"
+    },
+    "category_template": {
+      "properties": {
+        "attributes": {
+          "items": {
+            "properties": {
+              "asset_family": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "default_value": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "is_localizable": {
+                "type": "boolean"
+              },
+              "is_required": {
+                "type": "boolean"
+              },
+              "is_scopable": {
+                "type": "boolean"
+              },
+              "labels": {
+                "additionalProperties": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "type": "object"
+              },
+              "options": {
+                "items": {
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "labels": {
+                      "additionalProperties": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "order": {
+                "type": "integer"
+              },
+              "reference_entity": {
+                "type": "string"
+              },
+              "type": {
+                "enum": [
+                  "asset_collection",
+                  "boolean",
+                  "datetime",
+                  "image",
+                  "multi_select",
+                  "product_and_product_model_sort",
+                  "reference_entity",
+                  "reference_entity_collection",
+                  "richtext",
+                  "simple_select",
+                  "text",
+                  "textarea"
+                ],
+                "type": "string"
+              },
+              "uuid": {
+                "format": "uuid",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "code": {
+          "type": "string"
+        },
+        "uuid": {
+          "format": "uuid",
+          "type": "string"
         }
       },
       "type": "object"
@@ -40634,6 +40885,14 @@
       "in": "header",
       "name": "Authorization",
       "required": true,
+      "schema": {
+        "type": "string"
+      }
+    },
+    "category_template_filter": {
+      "in": "query",
+      "name": "category",
+      "required": false,
       "schema": {
         "type": "string"
       }
