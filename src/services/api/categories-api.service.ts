@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../';
-import { Category } from '../../types';
+import { Category, CategoryTemplate } from '../../types';
 import { BaseApi } from './base-api.service';
 
 export type CategoriesSearchParams = {
@@ -14,6 +14,10 @@ export type CategoriesSearchParams = {
 export type CategoriesGetParams = {
   with_position?: boolean;
   with_enriched_attributes?: boolean;
+};
+
+export type CategoryTemplatesSearchParams = {
+  category?: string;
 };
 
 export type CreateCategoryRequest = Partial<Omit<Category, 'code'>> & Required<Pick<Category, 'code'>>;
@@ -85,5 +89,11 @@ export class CategoriesApi extends BaseApi<
       .then((response) => {
         return response.data;
       });
+  }
+
+  async listCategoryTemplates(params?: CategoryTemplatesSearchParams): Promise<CategoryTemplate[]> {
+    return this.client.httpClient.get('/api/rest/v1/category-templates', { params }).then((response) => {
+      return response.data;
+    });
   }
 }

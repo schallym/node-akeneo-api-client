@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { Category, PaginatedResponse } from '../src';
+import { Category, CategoryTemplate, PaginatedResponse } from '../src';
 import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
 
@@ -209,5 +209,41 @@ describe('CategoriesApi E2E', () => {
     const result = await akeneoClient.categories.downloadCategoryMediaFile(filePath);
 
     expect(Buffer.isBuffer(result) || true).toBe(true);
+  });
+
+  it('should list category templates', async () => {
+    const mockTemplates: CategoryTemplate[] = [
+      {
+        uuid: '8f2b1c44-3d5e-4a71-b9c2-1e3f5a7b9d11',
+        code: 'master_men_template',
+        attributes: [
+          {
+            code: 'seo_meta_title',
+            uuid: '783d4957-a29b-4281-a9f5-c4621014dcfa',
+            type: 'text',
+            labels: { en_US: 'SEO meta title' },
+            order: 1,
+            is_required: false,
+            is_localizable: true,
+            is_scopable: false,
+          },
+        ],
+      },
+    ];
+
+    nock(baseUrl).get('/api/rest/v1/category-templates').reply(200, mockTemplates);
+
+    const result = await akeneoClient.categories.listCategoryTemplates();
+
+    expect(result).toEqual(mockTemplates);
+    expect(result[0].attributes?.[0].code).toBe('seo_meta_title');
+  });
+
+  it('should list category templates filtered by category', async () => {
+    nock(baseUrl).get('/api/rest/v1/category-templates').query({ category: 'master' }).reply(200, []);
+
+    const result = await akeneoClient.categories.listCategoryTemplates({ category: 'master' });
+
+    expect(result).toEqual([]);
   });
 });
