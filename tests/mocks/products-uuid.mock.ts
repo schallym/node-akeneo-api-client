@@ -1,4 +1,4 @@
-import { ProductUuid } from '../../src';
+import { ProductAssociationsResponse, ProductUuid } from '../../src';
 
 const productsUuidMock: ProductUuid = {
   uuid: '1234-5678-9012',
@@ -64,4 +64,33 @@ export default {
       items: [productsUuidMock],
     },
   },
+  getAssociations: {
+    _links: {
+      self: { href: 'https://demo.akeneo.com/api/rest/v1/products-uuid/1234-5678-9012/associations?limit=10' },
+      first: { href: 'https://demo.akeneo.com/api/rest/v1/products-uuid/1234-5678-9012/associations?limit=10' },
+      next: {
+        href: 'https://demo.akeneo.com/api/rest/v1/products-uuid/1234-5678-9012/associations?limit=10&search_after=abc',
+      },
+    },
+    _embedded: {
+      items: [
+        {
+          association_type: 'X_SELL',
+          type: 'product',
+          id: '25566245-55e4-4d9a-8b8b-2c1d1b0c6e3f',
+          identifier: 'big_boot',
+        },
+        { association_type: 'X_SELL', type: 'product_model', id: 'amor' },
+        { association_type: 'X_SELL', type: 'group', id: 'similar_boots' },
+        {
+          association_type: 'PACK',
+          type: 'product',
+          id: '5b8e1c0b-4c1e-4f4e-9a4b-6f0b9d1c2a3e',
+          identifier: null,
+          quantity: 2,
+        },
+        { association_type: 'PACK', type: 'product_model', id: 'apollon', quantity: 3 },
+      ],
+    },
+  } satisfies ProductAssociationsResponse,
 };

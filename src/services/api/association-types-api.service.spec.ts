@@ -1,4 +1,4 @@
-import { AssociationTypesApi } from './association-types-api.service';
+import { AssociationTypesApi, UpdateAssociationTypeRequest } from './association-types-api.service';
 import { AkeneoApiClient } from '../';
 import { AssociationType } from '../../types';
 
@@ -66,6 +66,45 @@ describe('AssociationTypesApi', () => {
       });
 
       expect(result).toEqual([{ line: 1, code: 'assoc1', status_code: 200, message: 'ok' }]);
+    });
+
+    it('should send rules, including partial rules and null, in the line-delimited body', async () => {
+      const types: UpdateAssociationTypeRequest[] = [
+        {
+          code: 'compatible_with',
+          rule: {
+            enabled: true,
+            condition_groups: {
+              operator: 'AND',
+              conditions: [
+                {
+                  base_attribute: { attribute_code: 'brand' },
+                  operator: 'contains',
+                  compatible_attribute: { attribute_code: 'brands', scope: null, locale: null },
+                },
+              ],
+            },
+          },
+        },
+        { code: 'X_SELL', rule: null },
+      ];
+
+      mockHttpClient.patch.mockResolvedValue({
+        data: JSON.stringify({ line: 1, code: 'compatible_with', status_code: 204 }),
+      });
+
+      const result = await api.updateOrCreateSeveral(types);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(
+        '/api/rest/v1/association-types',
+        JSON.stringify(types[0]) + '\n' + JSON.stringify(types[1]),
+        {
+          headers: {
+            'Content-Type': 'application/vnd.akeneo.collection+json',
+          },
+        },
+      );
+      expect(result).toEqual([{ line: 1, code: 'compatible_with', status_code: 204 }]);
     });
 
     it('should handle API errors gracefully', async () => {

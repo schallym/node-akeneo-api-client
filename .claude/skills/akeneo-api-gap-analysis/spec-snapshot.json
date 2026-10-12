@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-10-02T06:05:35.573Z",
+  "capturedAt": "2026-10-12T06:10:12.301Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -3079,6 +3079,249 @@
                                         }
                                       },
                                       "type": "object"
+                                    },
+                                    "rule": {
+                                      "oneOf": [
+                                        {
+                                          "properties": {
+                                            "base_product_selection": {
+                                              "additionalProperties": false,
+                                              "properties": {
+                                                "criteria": {
+                                                  "items": {
+                                                    "additionalProperties": false,
+                                                    "properties": {
+                                                      "criteria": {
+                                                        "items": {
+                                                          "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                      },
+                                                      "field": {
+                                                        "type": "string"
+                                                      },
+                                                      "locale": {
+                                                        "type": [
+                                                          "null",
+                                                          "string"
+                                                        ]
+                                                      },
+                                                      "operator": {
+                                                        "type": "string"
+                                                      },
+                                                      "options": {
+                                                        "type": "object"
+                                                      },
+                                                      "scope": {
+                                                        "type": [
+                                                          "null",
+                                                          "string"
+                                                        ]
+                                                      },
+                                                      "value": {}
+                                                    },
+                                                    "type": "object"
+                                                  },
+                                                  "maxItems": 25,
+                                                  "type": "array"
+                                                },
+                                                "operator": {
+                                                  "enum": [
+                                                    "AND",
+                                                    "OR"
+                                                  ],
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "criteria",
+                                                "operator"
+                                              ],
+                                              "type": "object"
+                                            },
+                                            "compatible_product_selection": {
+                                              "additionalProperties": false,
+                                              "properties": {
+                                                "criteria": {
+                                                  "items": {
+                                                    "additionalProperties": false,
+                                                    "properties": {
+                                                      "criteria": {
+                                                        "items": {
+                                                          "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                      },
+                                                      "field": {
+                                                        "type": "string"
+                                                      },
+                                                      "locale": {
+                                                        "type": [
+                                                          "null",
+                                                          "string"
+                                                        ]
+                                                      },
+                                                      "operator": {
+                                                        "type": "string"
+                                                      },
+                                                      "options": {
+                                                        "type": "object"
+                                                      },
+                                                      "scope": {
+                                                        "type": [
+                                                          "null",
+                                                          "string"
+                                                        ]
+                                                      },
+                                                      "value": {}
+                                                    },
+                                                    "type": "object"
+                                                  },
+                                                  "maxItems": 25,
+                                                  "type": "array"
+                                                },
+                                                "operator": {
+                                                  "enum": [
+                                                    "AND",
+                                                    "OR"
+                                                  ],
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "criteria",
+                                                "operator"
+                                              ],
+                                              "type": "object"
+                                            },
+                                            "condition_groups": {
+                                              "additionalProperties": false,
+                                              "properties": {
+                                                "conditions": {
+                                                  "items": {
+                                                    "additionalProperties": false,
+                                                    "properties": {
+                                                      "base_attribute": {
+                                                        "additionalProperties": false,
+                                                        "properties": {
+                                                          "attribute_code": {
+                                                            "minLength": 1,
+                                                            "type": "string"
+                                                          },
+                                                          "locale": {
+                                                            "minLength": 1,
+                                                            "type": [
+                                                              "null",
+                                                              "string"
+                                                            ]
+                                                          },
+                                                          "record_attribute_code": {
+                                                            "minLength": 1,
+                                                            "type": [
+                                                              "null",
+                                                              "string"
+                                                            ]
+                                                          },
+                                                          "scope": {
+                                                            "minLength": 1,
+                                                            "type": [
+                                                              "null",
+                                                              "string"
+                                                            ]
+                                                          }
+                                                        },
+                                                        "required": [
+                                                          "attribute_code"
+                                                        ],
+                                                        "type": "object"
+                                                      },
+                                                      "compatible_attribute": {
+                                                        "additionalProperties": false,
+                                                        "properties": {
+                                                          "attribute_code": {
+                                                            "minLength": 1,
+                                                            "type": "string"
+                                                          },
+                                                          "locale": {
+                                                            "minLength": 1,
+                                                            "type": [
+                                                              "null",
+                                                              "string"
+                                                            ]
+                                                          },
+                                                          "record_attribute_code": {
+                                                            "minLength": 1,
+                                                            "type": [
+                                                              "null",
+                                                              "string"
+                                                            ]
+                                                          },
+                                                          "scope": {
+                                                            "minLength": 1,
+                                                            "type": [
+                                                              "null",
+                                                              "string"
+                                                            ]
+                                                          }
+                                                        },
+                                                        "required": [
+                                                          "attribute_code"
+                                                        ],
+                                                        "type": "object"
+                                                      },
+                                                      "operator": {
+                                                        "enum": [
+                                                          "<=",
+                                                          "=",
+                                                          ">=",
+                                                          "contains",
+                                                          "matches_all",
+                                                          "matches_any",
+                                                          "matches_exactly"
+                                                        ],
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "base_attribute",
+                                                      "compatible_attribute",
+                                                      "operator"
+                                                    ],
+                                                    "type": "object"
+                                                  },
+                                                  "maxItems": 100,
+                                                  "type": "array"
+                                                },
+                                                "operator": {
+                                                  "enum": [
+                                                    "AND",
+                                                    "OR"
+                                                  ],
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "conditions",
+                                                "operator"
+                                              ],
+                                              "type": "object"
+                                            },
+                                            "enabled": {
+                                              "type": "boolean"
+                                            }
+                                          },
+                                          "required": [
+                                            "base_product_selection",
+                                            "compatible_product_selection",
+                                            "condition_groups",
+                                            "enabled"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
                                     }
                                   },
                                   "required": [
@@ -3147,6 +3390,249 @@
                     }
                   },
                   "type": "object"
+                },
+                "rule": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "base_product_selection": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "criteria": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "criteria": {
+                                    "items": {
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "field": {
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "options": {
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "value": {}
+                                },
+                                "type": "object"
+                              },
+                              "maxItems": 25,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "criteria",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "compatible_product_selection": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "criteria": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "criteria": {
+                                    "items": {
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "field": {
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "options": {
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "value": {}
+                                },
+                                "type": "object"
+                              },
+                              "maxItems": 25,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "criteria",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "condition_groups": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "conditions": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "base_attribute": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "attribute_code": {
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "locale": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "record_attribute_code": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "scope": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "attribute_code"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "compatible_attribute": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "attribute_code": {
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "locale": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "record_attribute_code": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "scope": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "attribute_code"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "operator": {
+                                    "enum": [
+                                      "<=",
+                                      "=",
+                                      ">=",
+                                      "contains",
+                                      "matches_all",
+                                      "matches_any",
+                                      "matches_exactly"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "base_attribute",
+                                  "compatible_attribute",
+                                  "operator"
+                                ],
+                                "type": "object"
+                              },
+                              "maxItems": 100,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "conditions",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "base_product_selection",
+                        "compatible_product_selection",
+                        "condition_groups",
+                        "enabled"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 }
               },
               "required": [
@@ -3203,6 +3689,244 @@
                     }
                   },
                   "type": "object"
+                },
+                "rule": {
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "base_product_selection": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "criteria": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "criteria": {
+                                    "items": {
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "field": {
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "options": {
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "value": {}
+                                },
+                                "type": "object"
+                              },
+                              "maxItems": 25,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "criteria",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "compatible_product_selection": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "criteria": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "criteria": {
+                                    "items": {
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "field": {
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "options": {
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "value": {}
+                                },
+                                "type": "object"
+                              },
+                              "maxItems": 25,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "criteria",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "condition_groups": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "conditions": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "base_attribute": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "attribute_code": {
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "locale": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "record_attribute_code": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "scope": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "attribute_code"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "compatible_attribute": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "attribute_code": {
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "locale": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "record_attribute_code": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "scope": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "attribute_code"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "operator": {
+                                    "enum": [
+                                      "<=",
+                                      "=",
+                                      ">=",
+                                      "contains",
+                                      "matches_all",
+                                      "matches_any",
+                                      "matches_exactly"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "base_attribute",
+                                  "compatible_attribute",
+                                  "operator"
+                                ],
+                                "type": "object"
+                              },
+                              "maxItems": 100,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "conditions",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 }
               },
               "type": "object"
@@ -3287,6 +4011,249 @@
                       }
                     },
                     "type": "object"
+                  },
+                  "rule": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "base_product_selection": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "criteria": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "criteria": {
+                                      "items": {
+                                        "type": "object"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "field": {
+                                      "type": "string"
+                                    },
+                                    "locale": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "options": {
+                                      "type": "object"
+                                    },
+                                    "scope": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "value": {}
+                                  },
+                                  "type": "object"
+                                },
+                                "maxItems": 25,
+                                "type": "array"
+                              },
+                              "operator": {
+                                "enum": [
+                                  "AND",
+                                  "OR"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "criteria",
+                              "operator"
+                            ],
+                            "type": "object"
+                          },
+                          "compatible_product_selection": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "criteria": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "criteria": {
+                                      "items": {
+                                        "type": "object"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "field": {
+                                      "type": "string"
+                                    },
+                                    "locale": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "options": {
+                                      "type": "object"
+                                    },
+                                    "scope": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "value": {}
+                                  },
+                                  "type": "object"
+                                },
+                                "maxItems": 25,
+                                "type": "array"
+                              },
+                              "operator": {
+                                "enum": [
+                                  "AND",
+                                  "OR"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "criteria",
+                              "operator"
+                            ],
+                            "type": "object"
+                          },
+                          "condition_groups": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "conditions": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "base_attribute": {
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "attribute_code": {
+                                          "minLength": 1,
+                                          "type": "string"
+                                        },
+                                        "locale": {
+                                          "minLength": 1,
+                                          "type": [
+                                            "null",
+                                            "string"
+                                          ]
+                                        },
+                                        "record_attribute_code": {
+                                          "minLength": 1,
+                                          "type": [
+                                            "null",
+                                            "string"
+                                          ]
+                                        },
+                                        "scope": {
+                                          "minLength": 1,
+                                          "type": [
+                                            "null",
+                                            "string"
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "attribute_code"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "compatible_attribute": {
+                                      "additionalProperties": false,
+                                      "properties": {
+                                        "attribute_code": {
+                                          "minLength": 1,
+                                          "type": "string"
+                                        },
+                                        "locale": {
+                                          "minLength": 1,
+                                          "type": [
+                                            "null",
+                                            "string"
+                                          ]
+                                        },
+                                        "record_attribute_code": {
+                                          "minLength": 1,
+                                          "type": [
+                                            "null",
+                                            "string"
+                                          ]
+                                        },
+                                        "scope": {
+                                          "minLength": 1,
+                                          "type": [
+                                            "null",
+                                            "string"
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "attribute_code"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "operator": {
+                                      "enum": [
+                                        "<=",
+                                        "=",
+                                        ">=",
+                                        "contains",
+                                        "matches_all",
+                                        "matches_any",
+                                        "matches_exactly"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "base_attribute",
+                                    "compatible_attribute",
+                                    "operator"
+                                  ],
+                                  "type": "object"
+                                },
+                                "maxItems": 100,
+                                "type": "array"
+                              },
+                              "operator": {
+                                "enum": [
+                                  "AND",
+                                  "OR"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "conditions",
+                              "operator"
+                            ],
+                            "type": "object"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "base_product_selection",
+                          "compatible_product_selection",
+                          "condition_groups",
+                          "enabled"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
                   }
                 },
                 "required": [
@@ -3348,6 +4315,244 @@
                     }
                   },
                   "type": "object"
+                },
+                "rule": {
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "base_product_selection": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "criteria": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "criteria": {
+                                    "items": {
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "field": {
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "options": {
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "value": {}
+                                },
+                                "type": "object"
+                              },
+                              "maxItems": 25,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "criteria",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "compatible_product_selection": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "criteria": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "criteria": {
+                                    "items": {
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "field": {
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "options": {
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "value": {}
+                                },
+                                "type": "object"
+                              },
+                              "maxItems": 25,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "criteria",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "condition_groups": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "conditions": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "base_attribute": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "attribute_code": {
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "locale": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "record_attribute_code": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "scope": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "attribute_code"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "compatible_attribute": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "attribute_code": {
+                                        "minLength": 1,
+                                        "type": "string"
+                                      },
+                                      "locale": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "record_attribute_code": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      },
+                                      "scope": {
+                                        "minLength": 1,
+                                        "type": [
+                                          "null",
+                                          "string"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "attribute_code"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "operator": {
+                                    "enum": [
+                                      "<=",
+                                      "=",
+                                      ">=",
+                                      "contains",
+                                      "matches_all",
+                                      "matches_any",
+                                      "matches_exactly"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "base_attribute",
+                                  "compatible_attribute",
+                                  "operator"
+                                ],
+                                "type": "object"
+                              },
+                              "maxItems": 100,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "conditions",
+                            "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 }
               },
               "type": "object"
@@ -18309,6 +19514,197 @@
       ],
       "x-visibility": "public"
     },
+    "GET /api/rest/v1/product-models/{product_model_code}/associations": {
+      "operationId": "get_product_model_associations",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "product_model_code",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "search",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "search_after",
+          "required": false,
+          "schema": {
+            "default": "cursor to the first page",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "_embedded": {
+                    "properties": {
+                      "items": {
+                        "items": {
+                          "oneOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "association_type": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "identifier": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "quantity": {
+                                  "type": "integer"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "product"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "association_type",
+                                "id",
+                                "identifier",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "association_type": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "quantity": {
+                                  "type": "integer"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "product_model"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "association_type",
+                                "id",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "association_type": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "group"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "association_type",
+                                "id",
+                                "type"
+                              ],
+                              "type": "object"
+                            }
+                          ]
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "_links": {
+                    "properties": {
+                      "first": {
+                        "properties": {
+                          "href": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "next": {
+                        "properties": {
+                          "href": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "self": {
+                        "properties": {
+                          "href": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "_embedded",
+                  "_links"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Product model"
+      ],
+      "x-visibility": "public"
+    },
     "GET /api/rest/v1/products": {
       "operationId": "get_products",
       "parameters": [
@@ -23981,6 +25377,198 @@
       ],
       "responses": {
         "204": {}
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Product [uuid]"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/products-uuid/{uuid}/associations": {
+      "operationId": "get_product_uuid_associations",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "search",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "search_after",
+          "required": false,
+          "schema": {
+            "default": "cursor to the first page",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "_embedded": {
+                    "properties": {
+                      "items": {
+                        "items": {
+                          "oneOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "association_type": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "identifier": {
+                                  "type": [
+                                    "null",
+                                    "string"
+                                  ]
+                                },
+                                "quantity": {
+                                  "type": "integer"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "product"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "association_type",
+                                "id",
+                                "identifier",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "association_type": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "quantity": {
+                                  "type": "integer"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "product_model"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "association_type",
+                                "id",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "association_type": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "group"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "association_type",
+                                "id",
+                                "type"
+                              ],
+                              "type": "object"
+                            }
+                          ]
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "_links": {
+                    "properties": {
+                      "first": {
+                        "properties": {
+                          "href": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "next": {
+                        "properties": {
+                          "href": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "self": {
+                        "properties": {
+                          "href": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "_embedded",
+                  "_links"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
       },
       "security": [
         {
@@ -32450,6 +34038,249 @@
             }
           },
           "type": "object"
+        },
+        "rule": {
+          "oneOf": [
+            {
+              "properties": {
+                "base_product_selection": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "criteria": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "criteria": {
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "field": {
+                            "type": "string"
+                          },
+                          "locale": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "operator": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "object"
+                          },
+                          "scope": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "type": "object"
+                      },
+                      "maxItems": 25,
+                      "type": "array"
+                    },
+                    "operator": {
+                      "enum": [
+                        "AND",
+                        "OR"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "criteria",
+                    "operator"
+                  ],
+                  "type": "object"
+                },
+                "compatible_product_selection": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "criteria": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "criteria": {
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "field": {
+                            "type": "string"
+                          },
+                          "locale": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "operator": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "object"
+                          },
+                          "scope": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "type": "object"
+                      },
+                      "maxItems": 25,
+                      "type": "array"
+                    },
+                    "operator": {
+                      "enum": [
+                        "AND",
+                        "OR"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "criteria",
+                    "operator"
+                  ],
+                  "type": "object"
+                },
+                "condition_groups": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "conditions": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "base_attribute": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "attribute_code": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "locale": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              },
+                              "record_attribute_code": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              },
+                              "scope": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "attribute_code"
+                            ],
+                            "type": "object"
+                          },
+                          "compatible_attribute": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "attribute_code": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "locale": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              },
+                              "record_attribute_code": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              },
+                              "scope": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "attribute_code"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "enum": [
+                              "<=",
+                              "=",
+                              ">=",
+                              "contains",
+                              "matches_all",
+                              "matches_any",
+                              "matches_exactly"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "base_attribute",
+                          "compatible_attribute",
+                          "operator"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 100,
+                      "type": "array"
+                    },
+                    "operator": {
+                      "enum": [
+                        "AND",
+                        "OR"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "conditions",
+                    "operator"
+                  ],
+                  "type": "object"
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "base_product_selection",
+                "compatible_product_selection",
+                "condition_groups",
+                "enabled"
+              ],
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -32482,6 +34313,244 @@
             }
           },
           "type": "object"
+        },
+        "rule": {
+          "oneOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "base_product_selection": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "criteria": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "criteria": {
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "field": {
+                            "type": "string"
+                          },
+                          "locale": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "operator": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "object"
+                          },
+                          "scope": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "type": "object"
+                      },
+                      "maxItems": 25,
+                      "type": "array"
+                    },
+                    "operator": {
+                      "enum": [
+                        "AND",
+                        "OR"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "criteria",
+                    "operator"
+                  ],
+                  "type": "object"
+                },
+                "compatible_product_selection": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "criteria": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "criteria": {
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "field": {
+                            "type": "string"
+                          },
+                          "locale": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "operator": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "object"
+                          },
+                          "scope": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "type": "object"
+                      },
+                      "maxItems": 25,
+                      "type": "array"
+                    },
+                    "operator": {
+                      "enum": [
+                        "AND",
+                        "OR"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "criteria",
+                    "operator"
+                  ],
+                  "type": "object"
+                },
+                "condition_groups": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "conditions": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "base_attribute": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "attribute_code": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "locale": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              },
+                              "record_attribute_code": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              },
+                              "scope": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "attribute_code"
+                            ],
+                            "type": "object"
+                          },
+                          "compatible_attribute": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "attribute_code": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "locale": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              },
+                              "record_attribute_code": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              },
+                              "scope": {
+                                "minLength": 1,
+                                "type": [
+                                  "null",
+                                  "string"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "attribute_code"
+                            ],
+                            "type": "object"
+                          },
+                          "operator": {
+                            "enum": [
+                              "<=",
+                              "=",
+                              ">=",
+                              "contains",
+                              "matches_all",
+                              "matches_any",
+                              "matches_exactly"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "base_attribute",
+                          "compatible_attribute",
+                          "operator"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 100,
+                      "type": "array"
+                    },
+                    "operator": {
+                      "enum": [
+                        "AND",
+                        "OR"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "conditions",
+                    "operator"
+                  ],
+                  "type": "object"
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "type": "object"
@@ -33829,6 +35898,152 @@
         "code",
         "currencies",
         "locales"
+      ],
+      "type": "object"
+    },
+    "condition_attribute": {
+      "additionalProperties": false,
+      "properties": {
+        "attribute_code": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "locale": {
+          "minLength": 1,
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "record_attribute_code": {
+          "minLength": 1,
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "scope": {
+          "minLength": 1,
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      },
+      "required": [
+        "attribute_code"
+      ],
+      "type": "object"
+    },
+    "condition_groups": {
+      "additionalProperties": false,
+      "properties": {
+        "conditions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "base_attribute": {
+                "additionalProperties": false,
+                "properties": {
+                  "attribute_code": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "locale": {
+                    "minLength": 1,
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "record_attribute_code": {
+                    "minLength": 1,
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "scope": {
+                    "minLength": 1,
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  }
+                },
+                "required": [
+                  "attribute_code"
+                ],
+                "type": "object"
+              },
+              "compatible_attribute": {
+                "additionalProperties": false,
+                "properties": {
+                  "attribute_code": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "locale": {
+                    "minLength": 1,
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "record_attribute_code": {
+                    "minLength": 1,
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "scope": {
+                    "minLength": 1,
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  }
+                },
+                "required": [
+                  "attribute_code"
+                ],
+                "type": "object"
+              },
+              "operator": {
+                "enum": [
+                  "<=",
+                  "=",
+                  ">=",
+                  "contains",
+                  "matches_all",
+                  "matches_any",
+                  "matches_exactly"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "base_attribute",
+              "compatible_attribute",
+              "operator"
+            ],
+            "type": "object"
+          },
+          "maxItems": 100,
+          "type": "array"
+        },
+        "operator": {
+          "enum": [
+            "AND",
+            "OR"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "conditions",
+        "operator"
       ],
       "type": "object"
     },
@@ -35664,6 +37879,226 @@
       },
       "type": "object"
     },
+    "product_association": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "association_type": {
+              "type": "string"
+            },
+            "id": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "identifier": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "quantity": {
+              "type": "integer"
+            },
+            "type": {
+              "enum": [
+                "product"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "association_type",
+            "id",
+            "identifier",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "association_type": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "quantity": {
+              "type": "integer"
+            },
+            "type": {
+              "enum": [
+                "product_model"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "association_type",
+            "id",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "association_type": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "group"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "association_type",
+            "id",
+            "type"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "product_associations": {
+      "properties": {
+        "_embedded": {
+          "properties": {
+            "items": {
+              "items": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "association_type": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      "identifier": {
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      },
+                      "type": {
+                        "enum": [
+                          "product"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "association_type",
+                      "id",
+                      "identifier",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "association_type": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      },
+                      "type": {
+                        "enum": [
+                          "product_model"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "association_type",
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "association_type": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "enum": [
+                          "group"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "association_type",
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "_links": {
+          "properties": {
+            "first": {
+              "properties": {
+                "href": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "next": {
+              "properties": {
+                "href": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "self": {
+              "properties": {
+                "href": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "type": "object"
+    },
     "product_create": {
       "additionalProperties": true,
       "properties": {
@@ -37433,6 +39868,61 @@
           "x-immutable": true
         }
       },
+      "type": "object"
+    },
+    "product_selection": {
+      "additionalProperties": false,
+      "properties": {
+        "criteria": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "criteria": {
+                "items": {
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "field": {
+                "type": "string"
+              },
+              "locale": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "operator": {
+                "type": "string"
+              },
+              "options": {
+                "type": "object"
+              },
+              "scope": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "value": {}
+            },
+            "type": "object"
+          },
+          "maxItems": 25,
+          "type": "array"
+        },
+        "operator": {
+          "enum": [
+            "AND",
+            "OR"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "criteria",
+        "operator"
+      ],
       "type": "object"
     },
     "product_selection_condition": {
@@ -40190,6 +42680,242 @@
       },
       "type": "object"
     },
+    "rule": {
+      "properties": {
+        "base_product_selection": {
+          "additionalProperties": false,
+          "properties": {
+            "criteria": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "criteria": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "operator": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "object"
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "value": {}
+                },
+                "type": "object"
+              },
+              "maxItems": 25,
+              "type": "array"
+            },
+            "operator": {
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "criteria",
+            "operator"
+          ],
+          "type": "object"
+        },
+        "compatible_product_selection": {
+          "additionalProperties": false,
+          "properties": {
+            "criteria": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "criteria": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "operator": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "object"
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "value": {}
+                },
+                "type": "object"
+              },
+              "maxItems": 25,
+              "type": "array"
+            },
+            "operator": {
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "criteria",
+            "operator"
+          ],
+          "type": "object"
+        },
+        "condition_groups": {
+          "additionalProperties": false,
+          "properties": {
+            "conditions": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "base_attribute": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "attribute_code": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "locale": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "record_attribute_code": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "scope": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "attribute_code"
+                    ],
+                    "type": "object"
+                  },
+                  "compatible_attribute": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "attribute_code": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "locale": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "record_attribute_code": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "scope": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "attribute_code"
+                    ],
+                    "type": "object"
+                  },
+                  "operator": {
+                    "enum": [
+                      "<=",
+                      "=",
+                      ">=",
+                      "contains",
+                      "matches_all",
+                      "matches_any",
+                      "matches_exactly"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "base_attribute",
+                  "compatible_attribute",
+                  "operator"
+                ],
+                "type": "object"
+              },
+              "maxItems": 100,
+              "type": "array"
+            },
+            "operator": {
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "conditions",
+            "operator"
+          ],
+          "type": "object"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "base_product_selection",
+        "compatible_product_selection",
+        "condition_groups",
+        "enabled"
+      ],
+      "type": "object"
+    },
     "rule_definition": {
       "properties": {
         "action_types": {
@@ -40316,6 +43042,237 @@
             "record"
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "rule_write": {
+      "additionalProperties": false,
+      "properties": {
+        "base_product_selection": {
+          "additionalProperties": false,
+          "properties": {
+            "criteria": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "criteria": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "operator": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "object"
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "value": {}
+                },
+                "type": "object"
+              },
+              "maxItems": 25,
+              "type": "array"
+            },
+            "operator": {
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "criteria",
+            "operator"
+          ],
+          "type": "object"
+        },
+        "compatible_product_selection": {
+          "additionalProperties": false,
+          "properties": {
+            "criteria": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "criteria": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "operator": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "object"
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "value": {}
+                },
+                "type": "object"
+              },
+              "maxItems": 25,
+              "type": "array"
+            },
+            "operator": {
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "criteria",
+            "operator"
+          ],
+          "type": "object"
+        },
+        "condition_groups": {
+          "additionalProperties": false,
+          "properties": {
+            "conditions": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "base_attribute": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "attribute_code": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "locale": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "record_attribute_code": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "scope": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "attribute_code"
+                    ],
+                    "type": "object"
+                  },
+                  "compatible_attribute": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "attribute_code": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "locale": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "record_attribute_code": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "scope": {
+                        "minLength": 1,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "attribute_code"
+                    ],
+                    "type": "object"
+                  },
+                  "operator": {
+                    "enum": [
+                      "<=",
+                      "=",
+                      ">=",
+                      "contains",
+                      "matches_all",
+                      "matches_any",
+                      "matches_exactly"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "base_attribute",
+                  "compatible_attribute",
+                  "operator"
+                ],
+                "type": "object"
+              },
+              "maxItems": 100,
+              "type": "array"
+            },
+            "operator": {
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "conditions",
+            "operator"
+          ],
+          "type": "object"
+        },
+        "enabled": {
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -40865,6 +43822,14 @@
         "type": "string"
       }
     },
+    "association_search": {
+      "in": "query",
+      "name": "search",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    },
     "attribute_code": {
       "in": "path",
       "name": "attribute_code",
@@ -41002,6 +43967,14 @@
           "page",
           "search_after"
         ],
+        "type": "string"
+      }
+    },
+    "product_model_code": {
+      "in": "path",
+      "name": "product_model_code",
+      "required": true,
+      "schema": {
         "type": "string"
       }
     },

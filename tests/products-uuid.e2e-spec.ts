@@ -128,4 +128,32 @@ describe('Products UUID API E2E Tests', () => {
 
     await expect(akeneoClient.productsUuid.getDraft('nonexistent_product')).rejects.toThrow();
   });
+
+  it('should retrieve the associations', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/products-uuid/1234-5678-9012/associations')
+      .reply(200, productsUuidMock.getAssociations);
+
+    const associations = await akeneoClient.productsUuid.getAssociations('1234-5678-9012');
+
+    expect(associations).toEqual(productsUuidMock.getAssociations);
+    expect(associations._embedded.items).toHaveLength(5);
+  });
+
+  it('should retrieve the associations filtered by association type, page by page', async () => {
+    const search = JSON.stringify({ association_type: [{ operator: 'IN', value: ['PACK'] }] });
+
+    nock(baseUrl)
+      .get('/api/rest/v1/products-uuid/1234-5678-9012/associations')
+      .query({ search, search_after: 'abc', limit: 2 })
+      .reply(200, productsUuidMock.getAssociations);
+
+    const associations = await akeneoClient.productsUuid.getAssociations('1234-5678-9012', {
+      search,
+      search_after: 'abc',
+      limit: 2,
+    });
+
+    expect(associations._links.next?.href).toContain('search_after=abc');
+  });
 });

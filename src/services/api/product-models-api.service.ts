@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../akeneo-api-client';
-import { ProductModelType } from '../../types';
+import { ProductAssociationsResponse, ProductModelType } from '../../types';
 import { BaseApi } from './base-api.service';
 
 export type ProductModelsSearchParams = {
@@ -43,6 +43,12 @@ export type ProductModelsGetParams = {
    * expressed as a UUID, so it is absent from the response unless this parameter is set to `true`.
    */
   with_product_uuids_associations?: boolean;
+};
+
+export type ProductModelsAssociationsSearchParams = {
+  search?: string;
+  search_after?: string;
+  limit?: number;
 };
 
 export type ProductModelsDraftGetParams = {
@@ -139,6 +145,15 @@ export class ProductModelsApi extends BaseApi<
   async getDraft(identifier: string, params?: ProductModelsDraftGetParams): Promise<ProductModelType> {
     return this.client.httpClient
       .get(`${this.endpoint}/${identifier}/draft`, { params })
+      .then((response) => response.data);
+  }
+
+  async getAssociations(
+    code: string,
+    params?: ProductModelsAssociationsSearchParams,
+  ): Promise<ProductAssociationsResponse> {
+    return this.client.httpClient
+      .get(`${this.endpoint}/${code}/associations`, { params })
       .then((response) => response.data);
   }
 }

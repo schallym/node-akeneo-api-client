@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../';
-import { PaginatedResponse, ProductUuid } from '../../types';
+import { PaginatedResponse, ProductAssociationsResponse, ProductUuid } from '../../types';
 import { BaseApi } from './base-api.service';
 import {
   ProductsCreateQueryParams,
@@ -18,6 +18,12 @@ export type ProductsUuidGetParams = ProductsGetParams & {
 };
 
 export type ProductsUuidDraftGetParams = ProductsDraftGetParams;
+
+export type ProductsUuidAssociationsSearchParams = {
+  search?: string;
+  search_after?: string;
+  limit?: number;
+};
 
 export type ProductsUuidSearchQueryParams = {
   pagination_type?: 'page' | 'search_after';
@@ -135,6 +141,15 @@ export class ProductsUuidApi extends BaseApi<
   ): Promise<PaginatedResponse<ProductUuid>> {
     return this.client.httpClient
       .post(`${this.endpoint}/search`, query ?? {}, { params })
+      .then((response) => response.data);
+  }
+
+  async getAssociations(
+    uuid: string,
+    params?: ProductsUuidAssociationsSearchParams,
+  ): Promise<ProductAssociationsResponse> {
+    return this.client.httpClient
+      .get(`${this.endpoint}/${uuid}/associations`, { params })
       .then((response) => response.data);
   }
 }
