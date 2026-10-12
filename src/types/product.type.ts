@@ -129,3 +129,38 @@ export type ProductWorkflowExecutionStatus = {
     };
   }[];
 };
+
+export type ProductAssociationItem =
+  ProductAssociationItemToProduct | ProductAssociationItemToProductModel | ProductAssociationItemToGroup;
+
+export type ProductAssociationItemToProduct = {
+  association_type: string;
+  type: 'product';
+  id: string;
+  identifier: string | null;
+  quantity?: number;
+};
+
+export type ProductAssociationItemToProductModel = {
+  association_type: string;
+  type: 'product_model';
+  id: string;
+  quantity?: number;
+};
+
+export type ProductAssociationItemToGroup = {
+  association_type: string;
+  type: 'group';
+  id: string;
+};
+
+export type ProductAssociationsResponse = {
+  _links: {
+    self?: { href: string };
+    first?: { href: string };
+    next?: { href: string };
+  };
+  _embedded: {
+    items?: ProductAssociationItem[];
+  };
+};

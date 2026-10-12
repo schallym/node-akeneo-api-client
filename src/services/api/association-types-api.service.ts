@@ -1,5 +1,5 @@
 import { AkeneoApiClient } from '../';
-import { AssociationType } from '../../types';
+import { AssociationType, AssociationTypeRuleWrite } from '../../types';
 import { BaseApi } from './base-api.service';
 
 export type AssociationTypesSearchParams = {
@@ -10,6 +10,10 @@ export type AssociationTypesSearchParams = {
 
 export type CreateAssociationTypeRequest = Partial<Omit<AssociationType, 'code'>> &
   Required<Pick<AssociationType, 'code'>>;
+
+export type UpdateAssociationTypeRequest = Partial<Omit<AssociationType, 'rule'>> & {
+  rule?: AssociationTypeRuleWrite | null;
+};
 
 export type SeveralAssociationTypesUpdateOrCreationResponseLine = {
   line: number;
@@ -23,7 +27,7 @@ export class AssociationTypesApi extends BaseApi<
   null,
   AssociationTypesSearchParams,
   CreateAssociationTypeRequest,
-  Partial<AssociationType>
+  UpdateAssociationTypeRequest
 > {
   constructor(client: AkeneoApiClient) {
     super(client, '/api/rest/v1/association-types');
@@ -34,7 +38,7 @@ export class AssociationTypesApi extends BaseApi<
   }
 
   async updateOrCreateSeveral(
-    data: Partial<AssociationType>[],
+    data: UpdateAssociationTypeRequest[],
   ): Promise<SeveralAssociationTypesUpdateOrCreationResponseLine[]> {
     return this.client.httpClient
       .patch(`${this.endpoint}`, data.map((item) => JSON.stringify(item)).join('\n'), {

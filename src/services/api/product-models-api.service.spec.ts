@@ -285,4 +285,38 @@ describe('ProductModelsApi', () => {
       });
     });
   });
+
+  describe('getAssociations', () => {
+    it('should call GET on the associations endpoint and return the response', async () => {
+      const mockResponse = {
+        _links: { self: { href: 'self' }, first: { href: 'first' } },
+        _embedded: {
+          items: [{ association_type: 'X_SELL', type: 'group', id: 'similar_boots' }],
+        },
+      };
+      mockHttpClient.get.mockResolvedValue({ data: mockResponse });
+
+      const result = await api.getAssociations(testCode);
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}/associations`, {
+        params: undefined,
+      });
+      expect(result).toEqual(mockResponse);
+    });
+
+    it('should pass the search, search_after and limit query parameters', async () => {
+      mockHttpClient.get.mockResolvedValue({ data: { _links: {}, _embedded: { items: [] } } });
+      const params = {
+        search: '{"association_type":[{"operator":"IN","value":["X_SELL"]}]}',
+        search_after: 'cursor',
+        limit: 50,
+      };
+
+      await api.getAssociations(testCode, params);
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(`/api/rest/v1/product-models/${testCode}/associations`, {
+        params,
+      });
+    });
+  });
 });

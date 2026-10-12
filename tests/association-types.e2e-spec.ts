@@ -1,4 +1,5 @@
 import nock from 'nock';
+import associationTypeMock from './mocks/association-type.mock';
 import { AssociationType } from '../src/types';
 import { AkeneoClient } from '../src';
 import { baseUrl, setupAkeneoClient, setupNock, teardownNock } from './akeneo-client-test.utils';
@@ -37,6 +38,55 @@ describe('AssociationTypesApi E2E', () => {
       { line: 1, code: 'assoc1', status_code: 200, message: 'ok' },
       { line: 2, code: 'assoc2', status_code: 201, message: 'created' },
     ]);
+  });
+
+  it('should retrieve an automatic association type with its rule', async () => {
+    nock(baseUrl).get('/api/rest/v1/association-types/compatible_with').reply(200, associationTypeMock.get);
+
+    const associationType = await akeneoClient.associationTypes.get('compatible_with');
+
+    expect(associationType).toEqual(associationTypeMock.get);
+    expect(associationType.rule?.enabled).toBe(true);
+    expect(associationType.rule?.condition_groups.conditions[1].operator).toBe('matches_any');
+  });
+
+  it('should list association types with their rules', async () => {
+    nock(baseUrl).get('/api/rest/v1/association-types').reply(200, associationTypeMock.list);
+
+    const result = await akeneoClient.associationTypes.list();
+
+    expect(result).toEqual(associationTypeMock.list);
+    expect(result._embedded.items[0].rule).toBeNull();
+    expect(result._embedded.items[1].rule?.base_product_selection.operator).toBe('AND');
+  });
+
+  it('should create an association type with a rule', async () => {
+    nock(baseUrl).post('/api/rest/v1/association-types', associationTypeMock.get).reply(201);
+
+    await akeneoClient.associationTypes.create(associationTypeMock.get);
+  });
+
+  it('should update an association type with a partial rule', async () => {
+    const data = { rule: { enabled: false } };
+
+    nock(baseUrl).patch('/api/rest/v1/association-types/compatible_with', data).reply(204);
+
+    await akeneoClient.associationTypes.update('compatible_with', data);
+  });
+
+  it('should update or create several association types with rules', async () => {
+    const types = [
+      { code: 'compatible_with', rule: { enabled: false } },
+      { code: 'X_SELL', rule: null },
+    ];
+
+    nock(baseUrl)
+      .patch('/api/rest/v1/association-types', types.map((type) => JSON.stringify(type)).join('\n'))
+      .reply(200, JSON.stringify({ line: 1, code: 'compatible_with', status_code: 204 }));
+
+    const result = await akeneoClient.associationTypes.updateOrCreateSeveral(types);
+
+    expect(result).toEqual([{ line: 1, code: 'compatible_with', status_code: 204 }]);
   });
 
   it('should handle API errors gracefully', async () => {

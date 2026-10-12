@@ -150,4 +150,32 @@ describe('Product models API E2E Tests', () => {
 
     await expect(akeneoClient.productModels.getDraft('nonexistent_product')).rejects.toThrow();
   });
+
+  it('should retrieve the associations', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/product-models/test_product_123/associations')
+      .reply(200, productModelsMock.getAssociations);
+
+    const associations = await akeneoClient.productModels.getAssociations('test_product_123');
+
+    expect(associations).toEqual(productModelsMock.getAssociations);
+    expect(associations._embedded.items).toHaveLength(5);
+  });
+
+  it('should retrieve the associations filtered by association type, page by page', async () => {
+    const search = JSON.stringify({ association_type: [{ operator: 'IN', value: ['PACK'] }] });
+
+    nock(baseUrl)
+      .get('/api/rest/v1/product-models/test_product_123/associations')
+      .query({ search, search_after: 'abc', limit: 2 })
+      .reply(200, productModelsMock.getAssociations);
+
+    const associations = await akeneoClient.productModels.getAssociations('test_product_123', {
+      search,
+      search_after: 'abc',
+      limit: 2,
+    });
+
+    expect(associations._links.next?.href).toContain('search_after=abc');
+  });
 });
