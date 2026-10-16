@@ -23,7 +23,9 @@ import {
   ReadinessApi,
   ReferenceEntitiesApi,
   RuleDefinitionsApi,
+  SuppliersApi,
   UIExtensionsApi,
+  UsersApi,
   UtilitiesApi,
   WorkflowApi,
 } from './services/api';
@@ -141,5 +143,7 @@ describe('AkeneoClient', () => {
     expect(client.readiness).toBeInstanceOf(ReadinessApi);
     expect(client.dataArchitectAgent).toBeDefined();
     expect(client.dataArchitectAgent).toBeInstanceOf(DataArchitectAgentApi);
+    expect(client.suppliers).toBeInstanceOf(SuppliersApi);
+    expect(client.users).toBeInstanceOf(UsersApi);
   });
 });

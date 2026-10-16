@@ -26,3 +26,6 @@ export * from './permissions-api.service';
 export * from './rule-definitions-api.service';
 export * from './readiness-api.service';
 export * from './data-architect-agent-api.service';
+export * from './suppliers-api.service';
+export * from './suppliers';
+export * from './users-api.service';

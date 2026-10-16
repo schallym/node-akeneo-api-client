@@ -22,3 +22,5 @@ export * from './permissions.type';
 export * from './rule-definition.type';
 export * from './readiness.type';
 export * from './data-architect-agent.type';
+export * from './supplier.type';
+export * from './user.type';

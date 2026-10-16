@@ -65,6 +65,18 @@ describe('AssetsApi', () => {
       expect(result).toEqual(mockAsset);
     });
 
+    it('should fetch an asset by code restricted to some attributes', async () => {
+      const mockAsset: Asset = { code: 'a1' } as any;
+      mockHttpClient.get.mockResolvedValue({ data: mockAsset });
+
+      const result = await api.get('family1', 'a1', { attributes: 'title,description' });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/asset-families/family1/assets/a1', {
+        params: { attributes: 'title,description' },
+      });
+      expect(result).toEqual(mockAsset);
+    });
+
     it('should handle errors when fetching an asset', async () => {
       mockHttpClient.get.mockRejectedValue(new Error('Not found'));
 
@@ -90,6 +102,16 @@ describe('AssetsApi', () => {
         params: { search: 'foo' },
       });
       expect(result).toEqual(mockResponse);
+    });
+
+    it('should fetch a paginated list of assets restricted to some attributes', async () => {
+      mockHttpClient.get.mockResolvedValue({ data: { _embedded: { items: [] } } });
+
+      await api.list('family1', { attributes: 'title,description' });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/asset-families/family1/assets', {
+        params: { attributes: 'title,description' },
+      });
     });
 
     it('should handle errors when listing assets', async () => {

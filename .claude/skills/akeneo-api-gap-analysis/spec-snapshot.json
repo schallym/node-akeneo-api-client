@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-10-12T06:10:12.301Z",
+  "capturedAt": "2026-10-16T06:05:06.741Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -531,6 +531,14 @@
         },
         {
           "in": "query",
+          "name": "attributes",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
           "name": "channel",
           "required": false,
           "schema": {
@@ -945,6 +953,14 @@
           "in": "path",
           "name": "code",
           "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "attributes",
+          "required": false,
           "schema": {
             "type": "string"
           }
@@ -31341,6 +31357,707 @@
       ],
       "x-visibility": "public"
     },
+    "GET /api/rest/v1/suppliers": {
+      "operationId": "get_suppliers",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "page",
+          "required": false,
+          "schema": {
+            "default": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "with_count",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "properties": {
+                          "first": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "next": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "previous": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "self": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "_embedded": {
+                        "properties": {
+                          "items": {
+                            "items": {
+                              "allOf": [
+                                {
+                                  "properties": {
+                                    "_links": {
+                                      "properties": {
+                                        "self": {
+                                          "properties": {
+                                            "href": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                {
+                                  "properties": {
+                                    "avatar_file_key": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "default_channel_code": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "default_locale_code": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "portal_uuid": {
+                                      "format": "uuid",
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    }
+                                  },
+                                  "type": "object"
+                                }
+                              ]
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "current_page": {
+                        "type": "integer"
+                      },
+                      "items_count": {
+                        "type": "integer"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Supplier"
+      ],
+      "x-visibility": "public"
+    },
+    "POST /api/rest/v1/suppliers": {
+      "operationId": "post_supplier",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "avatar_file_key": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "code": {
+                  "maxLength": 255,
+                  "pattern": "^[a-zA-Z0-9_-]+$",
+                  "type": "string"
+                },
+                "default_channel_code": {
+                  "type": "string"
+                },
+                "default_locale_code": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "portal_uuid": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "default_channel_code",
+                "default_locale_code",
+                "name",
+                "portal_uuid"
+              ],
+              "type": "object"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "headers": {
+            "Location": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Supplier"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/suppliers/{code}": {
+      "operationId": "get_supplier",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "code",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "avatar_file_key": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "default_channel_code": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "default_locale_code": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "portal_uuid": {
+                    "format": "uuid",
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Supplier"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/suppliers/{code}/users": {
+      "operationId": "get_supplier_users",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "code",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "page",
+          "required": false,
+          "schema": {
+            "default": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "with_count",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "properties": {
+                          "first": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "next": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "previous": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "self": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "_embedded": {
+                        "properties": {
+                          "items": {
+                            "items": {
+                              "allOf": [
+                                {
+                                  "properties": {
+                                    "_links": {
+                                      "properties": {
+                                        "self": {
+                                          "properties": {
+                                            "href": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                {
+                                  "properties": {
+                                    "created_at": {
+                                      "format": "date-time",
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "email": {
+                                      "format": "email",
+                                      "type": "string"
+                                    },
+                                    "first_name": {
+                                      "type": "string"
+                                    },
+                                    "last_logged_in": {
+                                      "format": "date-time",
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "last_name": {
+                                      "type": "string"
+                                    },
+                                    "uuid": {
+                                      "format": "uuid",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                }
+                              ]
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "current_page": {
+                        "type": "integer"
+                      },
+                      "items_count": {
+                        "type": "integer"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Supplier"
+      ],
+      "x-visibility": "public"
+    },
+    "PATCH /api/rest/v1/suppliers/{code}/users": {
+      "operationId": "patch_supplier_users",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "code",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "items": {
+                "properties": {
+                  "email": {
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "first_name",
+                  "last_name"
+                ],
+                "type": "object"
+              },
+              "maxItems": 100,
+              "type": "array"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "properties": {
+                    "email": {
+                      "format": "email",
+                      "type": "string"
+                    },
+                    "errors": {
+                      "items": {
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "property": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "status_code": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Supplier"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/suppliers/{code}/users/{user_uuid}": {
+      "operationId": "get_supplier_user",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "code",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "user_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "created_at": {
+                    "format": "date-time",
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "email": {
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_logged_in": {
+                    "format": "date-time",
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "uuid": {
+                    "format": "uuid",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Supplier"
+      ],
+      "x-visibility": "public"
+    },
+    "DELETE /api/rest/v1/suppliers/{code}/users/{user_uuid}": {
+      "operationId": "delete_supplier_user_access",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "code",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "user_uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "204": {}
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Supplier"
+      ],
+      "x-visibility": "public"
+    },
     "GET /api/rest/v1/system-information": {
       "operationId": "get_system_information",
       "responses": {
@@ -32471,6 +33188,282 @@
       ],
       "tags": [
         "Extensions"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/users": {
+      "operationId": "get_users",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "page",
+          "required": false,
+          "schema": {
+            "default": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "search",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "with_count",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "properties": {
+                          "first": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "next": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "previous": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "self": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "_embedded": {
+                        "properties": {
+                          "items": {
+                            "items": {
+                              "allOf": [
+                                {
+                                  "properties": {
+                                    "_links": {
+                                      "properties": {
+                                        "self": {
+                                          "properties": {
+                                            "href": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                {
+                                  "properties": {
+                                    "email": {
+                                      "type": "string"
+                                    },
+                                    "enabled": {
+                                      "type": "boolean"
+                                    },
+                                    "first_name": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "groups": {
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "last_name": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "roles": {
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "uuid": {
+                                      "format": "uuid",
+                                      "type": "string",
+                                      "x-immutable": true
+                                    }
+                                  },
+                                  "required": [
+                                    "email",
+                                    "enabled",
+                                    "first_name",
+                                    "groups",
+                                    "last_name",
+                                    "roles",
+                                    "uuid"
+                                  ],
+                                  "type": "object"
+                                }
+                              ]
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "current_page": {
+                        "type": "integer"
+                      },
+                      "items_count": {
+                        "type": "integer"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "User"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/users/{uuid}": {
+      "operationId": "get_user_by_uuid",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "first_name": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "groups": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "last_name": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "roles": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "uuid": {
+                    "format": "uuid",
+                    "type": "string",
+                    "x-immutable": true
+                  }
+                },
+                "required": [
+                  "email",
+                  "enabled",
+                  "first_name",
+                  "groups",
+                  "last_name",
+                  "roles",
+                  "uuid"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "User"
       ],
       "x-visibility": "public"
     },
@@ -43294,6 +44287,75 @@
       },
       "type": "object"
     },
+    "supplier": {
+      "properties": {
+        "avatar_file_key": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "code": {
+          "type": "string"
+        },
+        "default_channel_code": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "default_locale_code": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "portal_uuid": {
+          "format": "uuid",
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "supplier-user": {
+      "properties": {
+        "created_at": {
+          "format": "date-time",
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "email": {
+          "format": "email",
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_logged_in": {
+          "format": "date-time",
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "uuid": {
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "token": {
       "properties": {
         "access_token": {
@@ -43455,6 +44517,55 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "user": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "first_name": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "groups": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "last_name": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "roles": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "uuid": {
+          "format": "uuid",
+          "type": "string",
+          "x-immutable": true
+        }
+      },
+      "required": [
+        "email",
+        "enabled",
+        "first_name",
+        "groups",
+        "last_name",
+        "roles",
+        "uuid"
+      ],
       "type": "object"
     },
     "workflow": {
@@ -43814,6 +44925,14 @@
     }
   },
   "parameters": {
+    "asset_attributes": {
+      "in": "query",
+      "name": "attributes",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    },
     "asset_family_code": {
       "in": "path",
       "name": "asset_family_code",
@@ -44015,6 +45134,14 @@
       "in": "query",
       "name": "search_scope",
       "required": false,
+      "schema": {
+        "type": "string"
+      }
+    },
+    "supplier_code": {
+      "in": "path",
+      "name": "code",
+      "required": true,
       "schema": {
         "type": "string"
       }
