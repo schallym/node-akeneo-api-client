@@ -7,12 +7,16 @@ export type AssetRecordSearchParams = {
   locales?: string;
   search_after?: string;
   with_asset_auto_tags?: boolean;
+  /** Comma-separated list of asset attribute codes. Only the values of these attributes are returned. */
+  attributes?: string;
 };
 
 export type AssetRecordGetParams = {
   with_asset_auto_tags?: boolean;
   /** Return a usage overview of the asset (number of products, product models, records and categories using it). */
   with_usage?: boolean;
+  /** Comma-separated list of asset attribute codes. Only the values of these attributes are returned. */
+  attributes?: string;
 };
 
 export type UpdateOrCreateAssetRecordRequest = Partial<

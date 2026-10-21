@@ -239,6 +239,30 @@ describe('AssetManagerApi', () => {
       expect(result).toEqual(assetManagerMock.asset.list);
     });
 
+    it('should fetch an asset by code restricted to some attributes', async () => {
+      nock(baseUrl)
+        .get('/api/rest/v1/asset-families/model_pictures/assets/a1')
+        .query({ attributes: 'title,description' })
+        .reply(200, assetManagerMock.asset.get);
+
+      const result = await akeneoClient.assetManager.assets.get('model_pictures', 'a1', {
+        attributes: 'title,description',
+      });
+      expect(result).toEqual(assetManagerMock.asset.get);
+    });
+
+    it('should fetch a paginated list of assets restricted to some attributes', async () => {
+      nock(baseUrl)
+        .get('/api/rest/v1/asset-families/model_pictures/assets')
+        .query({ attributes: 'title,description' })
+        .reply(200, assetManagerMock.asset.list);
+
+      const result = await akeneoClient.assetManager.assets.list('model_pictures', {
+        attributes: 'title,description',
+      });
+      expect(result).toEqual(assetManagerMock.asset.list);
+    });
+
     it('should handle errors when fetching an asset', async () => {
       nock(baseUrl).get('/api/rest/v1/asset-families/model_pictures/assets/bad').reply(404, { message: 'Not found' });
 
