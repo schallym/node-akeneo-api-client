@@ -105,6 +105,20 @@ describe('AssetManagerApi', () => {
       ).resolves.toBeUndefined();
     });
 
+    it('should update or create a media file asset attribute with file size bounds', async () => {
+      nock(baseUrl)
+        .patch('/api/rest/v1/asset-families/model_pictures/attributes/packshot', {
+          ...assetManagerMock.attribute.getMediaFile,
+          min_file_size: '0.1',
+          max_file_size: '10.5',
+        })
+        .reply(204);
+
+      await expect(
+        akeneoClient.assetManager.attributes.updateOrCreate('model_pictures', assetManagerMock.attribute.getMediaFile),
+      ).resolves.toBeUndefined();
+    });
+
     it('should handle API errors when updating or creating an asset attribute', async () => {
       nock(baseUrl)
         .patch('/api/rest/v1/asset-families/model_pictures/attributes/bad')
