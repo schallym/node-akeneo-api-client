@@ -23,6 +23,7 @@ export type AssetAttribute = {
   validation_rule?: string | null;
   validation_regexp?: string | null;
   allowed_extensions?: string[];
+  min_file_size?: string | null;
   max_file_size?: string | null;
   decimals_allowed?: boolean;
   min_value?: string | null;

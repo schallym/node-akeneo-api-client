@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-10-16T06:05:06.741Z",
+  "capturedAt": "2026-10-23T06:04:57.115Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -1455,6 +1455,13 @@
                           ],
                           "type": "string"
                         },
+                        "min_file_size": {
+                          "default": null,
+                          "type": [
+                            "null",
+                            "string"
+                          ]
+                        },
                         "min_value": {
                           "default": null,
                           "type": [
@@ -1961,6 +1968,13 @@
                     ],
                     "type": "string"
                   },
+                  "min_file_size": {
+                    "default": null,
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
                   "min_value": {
                     "default": null,
                     "type": [
@@ -2182,6 +2196,13 @@
                     "youtube"
                   ],
                   "type": "string"
+                },
+                "min_file_size": {
+                  "default": null,
+                  "type": [
+                    "null",
+                    "string"
+                  ]
                 },
                 "min_value": {
                   "default": null,
@@ -3155,6 +3176,66 @@
                                               ],
                                               "type": "object"
                                             },
+                                            "base_record_selection": {
+                                              "additionalProperties": false,
+                                              "properties": {
+                                                "criteria": {
+                                                  "items": {
+                                                    "additionalProperties": false,
+                                                    "properties": {
+                                                      "criteria": {
+                                                        "items": {
+                                                          "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                      },
+                                                      "field": {
+                                                        "type": "string"
+                                                      },
+                                                      "locale": {
+                                                        "type": [
+                                                          "null",
+                                                          "string"
+                                                        ]
+                                                      },
+                                                      "operator": {
+                                                        "type": "string"
+                                                      },
+                                                      "options": {
+                                                        "type": "object"
+                                                      },
+                                                      "scope": {
+                                                        "type": [
+                                                          "null",
+                                                          "string"
+                                                        ]
+                                                      },
+                                                      "value": {}
+                                                    },
+                                                    "type": "object"
+                                                  },
+                                                  "maxItems": 25,
+                                                  "type": "array"
+                                                },
+                                                "operator": {
+                                                  "enum": [
+                                                    "AND",
+                                                    "OR"
+                                                  ],
+                                                  "type": "string"
+                                                },
+                                                "reference_entity_code": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "readOnly": true,
+                                              "required": [
+                                                "criteria",
+                                                "operator",
+                                                "reference_entity_code"
+                                              ],
+                                              "type": "object"
+                                            },
                                             "compatible_product_selection": {
                                               "additionalProperties": false,
                                               "properties": {
@@ -3207,6 +3288,66 @@
                                               "required": [
                                                 "criteria",
                                                 "operator"
+                                              ],
+                                              "type": "object"
+                                            },
+                                            "compatible_record_selection": {
+                                              "additionalProperties": false,
+                                              "properties": {
+                                                "criteria": {
+                                                  "items": {
+                                                    "additionalProperties": false,
+                                                    "properties": {
+                                                      "criteria": {
+                                                        "items": {
+                                                          "type": "object"
+                                                        },
+                                                        "type": "array"
+                                                      },
+                                                      "field": {
+                                                        "type": "string"
+                                                      },
+                                                      "locale": {
+                                                        "type": [
+                                                          "null",
+                                                          "string"
+                                                        ]
+                                                      },
+                                                      "operator": {
+                                                        "type": "string"
+                                                      },
+                                                      "options": {
+                                                        "type": "object"
+                                                      },
+                                                      "scope": {
+                                                        "type": [
+                                                          "null",
+                                                          "string"
+                                                        ]
+                                                      },
+                                                      "value": {}
+                                                    },
+                                                    "type": "object"
+                                                  },
+                                                  "maxItems": 25,
+                                                  "type": "array"
+                                                },
+                                                "operator": {
+                                                  "enum": [
+                                                    "AND",
+                                                    "OR"
+                                                  ],
+                                                  "type": "string"
+                                                },
+                                                "reference_entity_code": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "readOnly": true,
+                                              "required": [
+                                                "criteria",
+                                                "operator",
+                                                "reference_entity_code"
                                               ],
                                               "type": "object"
                                             },
@@ -3327,8 +3468,6 @@
                                             }
                                           },
                                           "required": [
-                                            "base_product_selection",
-                                            "compatible_product_selection",
                                             "condition_groups",
                                             "enabled"
                                           ],
@@ -3466,6 +3605,66 @@
                           ],
                           "type": "object"
                         },
+                        "base_record_selection": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "criteria": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "criteria": {
+                                    "items": {
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "field": {
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "options": {
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "value": {}
+                                },
+                                "type": "object"
+                              },
+                              "maxItems": 25,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            },
+                            "reference_entity_code": {
+                              "type": "string"
+                            }
+                          },
+                          "readOnly": true,
+                          "required": [
+                            "criteria",
+                            "operator",
+                            "reference_entity_code"
+                          ],
+                          "type": "object"
+                        },
                         "compatible_product_selection": {
                           "additionalProperties": false,
                           "properties": {
@@ -3518,6 +3717,66 @@
                           "required": [
                             "criteria",
                             "operator"
+                          ],
+                          "type": "object"
+                        },
+                        "compatible_record_selection": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "criteria": {
+                              "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "criteria": {
+                                    "items": {
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "field": {
+                                    "type": "string"
+                                  },
+                                  "locale": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "options": {
+                                    "type": "object"
+                                  },
+                                  "scope": {
+                                    "type": [
+                                      "null",
+                                      "string"
+                                    ]
+                                  },
+                                  "value": {}
+                                },
+                                "type": "object"
+                              },
+                              "maxItems": 25,
+                              "type": "array"
+                            },
+                            "operator": {
+                              "enum": [
+                                "AND",
+                                "OR"
+                              ],
+                              "type": "string"
+                            },
+                            "reference_entity_code": {
+                              "type": "string"
+                            }
+                          },
+                          "readOnly": true,
+                          "required": [
+                            "criteria",
+                            "operator",
+                            "reference_entity_code"
                           ],
                           "type": "object"
                         },
@@ -3638,8 +3897,6 @@
                         }
                       },
                       "required": [
-                        "base_product_selection",
-                        "compatible_product_selection",
                         "condition_groups",
                         "enabled"
                       ],
@@ -4087,6 +4344,66 @@
                             ],
                             "type": "object"
                           },
+                          "base_record_selection": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "criteria": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "criteria": {
+                                      "items": {
+                                        "type": "object"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "field": {
+                                      "type": "string"
+                                    },
+                                    "locale": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "options": {
+                                      "type": "object"
+                                    },
+                                    "scope": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "value": {}
+                                  },
+                                  "type": "object"
+                                },
+                                "maxItems": 25,
+                                "type": "array"
+                              },
+                              "operator": {
+                                "enum": [
+                                  "AND",
+                                  "OR"
+                                ],
+                                "type": "string"
+                              },
+                              "reference_entity_code": {
+                                "type": "string"
+                              }
+                            },
+                            "readOnly": true,
+                            "required": [
+                              "criteria",
+                              "operator",
+                              "reference_entity_code"
+                            ],
+                            "type": "object"
+                          },
                           "compatible_product_selection": {
                             "additionalProperties": false,
                             "properties": {
@@ -4139,6 +4456,66 @@
                             "required": [
                               "criteria",
                               "operator"
+                            ],
+                            "type": "object"
+                          },
+                          "compatible_record_selection": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "criteria": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "criteria": {
+                                      "items": {
+                                        "type": "object"
+                                      },
+                                      "type": "array"
+                                    },
+                                    "field": {
+                                      "type": "string"
+                                    },
+                                    "locale": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "operator": {
+                                      "type": "string"
+                                    },
+                                    "options": {
+                                      "type": "object"
+                                    },
+                                    "scope": {
+                                      "type": [
+                                        "null",
+                                        "string"
+                                      ]
+                                    },
+                                    "value": {}
+                                  },
+                                  "type": "object"
+                                },
+                                "maxItems": 25,
+                                "type": "array"
+                              },
+                              "operator": {
+                                "enum": [
+                                  "AND",
+                                  "OR"
+                                ],
+                                "type": "string"
+                              },
+                              "reference_entity_code": {
+                                "type": "string"
+                              }
+                            },
+                            "readOnly": true,
+                            "required": [
+                              "criteria",
+                              "operator",
+                              "reference_entity_code"
                             ],
                             "type": "object"
                           },
@@ -4259,8 +4636,6 @@
                           }
                         },
                         "required": [
-                          "base_product_selection",
-                          "compatible_product_selection",
                           "condition_groups",
                           "enabled"
                         ],
@@ -34616,6 +34991,13 @@
           ],
           "type": "string"
         },
+        "min_file_size": {
+          "default": null,
+          "type": [
+            "null",
+            "string"
+          ]
+        },
         "min_value": {
           "default": null,
           "type": [
@@ -35091,6 +35473,66 @@
                   ],
                   "type": "object"
                 },
+                "base_record_selection": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "criteria": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "criteria": {
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "field": {
+                            "type": "string"
+                          },
+                          "locale": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "operator": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "object"
+                          },
+                          "scope": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "type": "object"
+                      },
+                      "maxItems": 25,
+                      "type": "array"
+                    },
+                    "operator": {
+                      "enum": [
+                        "AND",
+                        "OR"
+                      ],
+                      "type": "string"
+                    },
+                    "reference_entity_code": {
+                      "type": "string"
+                    }
+                  },
+                  "readOnly": true,
+                  "required": [
+                    "criteria",
+                    "operator",
+                    "reference_entity_code"
+                  ],
+                  "type": "object"
+                },
                 "compatible_product_selection": {
                   "additionalProperties": false,
                   "properties": {
@@ -35143,6 +35585,66 @@
                   "required": [
                     "criteria",
                     "operator"
+                  ],
+                  "type": "object"
+                },
+                "compatible_record_selection": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "criteria": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "criteria": {
+                            "items": {
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "field": {
+                            "type": "string"
+                          },
+                          "locale": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "operator": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "object"
+                          },
+                          "scope": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "value": {}
+                        },
+                        "type": "object"
+                      },
+                      "maxItems": 25,
+                      "type": "array"
+                    },
+                    "operator": {
+                      "enum": [
+                        "AND",
+                        "OR"
+                      ],
+                      "type": "string"
+                    },
+                    "reference_entity_code": {
+                      "type": "string"
+                    }
+                  },
+                  "readOnly": true,
+                  "required": [
+                    "criteria",
+                    "operator",
+                    "reference_entity_code"
                   ],
                   "type": "object"
                 },
@@ -35263,8 +35765,6 @@
                 }
               },
               "required": [
-                "base_product_selection",
-                "compatible_product_selection",
                 "condition_groups",
                 "enabled"
               ],
@@ -43185,6 +43685,65 @@
       "x-immutable": true,
       "x-visibility": "public"
     },
+    "record_selection": {
+      "additionalProperties": false,
+      "properties": {
+        "criteria": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "criteria": {
+                "items": {
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "field": {
+                "type": "string"
+              },
+              "locale": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "operator": {
+                "type": "string"
+              },
+              "options": {
+                "type": "object"
+              },
+              "scope": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "value": {}
+            },
+            "type": "object"
+          },
+          "maxItems": 25,
+          "type": "array"
+        },
+        "operator": {
+          "enum": [
+            "AND",
+            "OR"
+          ],
+          "type": "string"
+        },
+        "reference_entity_code": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "criteria",
+        "operator",
+        "reference_entity_code"
+      ],
+      "type": "object"
+    },
     "reference_entity": {
       "properties": {
         "code": {
@@ -43730,6 +44289,66 @@
           ],
           "type": "object"
         },
+        "base_record_selection": {
+          "additionalProperties": false,
+          "properties": {
+            "criteria": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "criteria": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "operator": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "object"
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "value": {}
+                },
+                "type": "object"
+              },
+              "maxItems": 25,
+              "type": "array"
+            },
+            "operator": {
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "type": "string"
+            },
+            "reference_entity_code": {
+              "type": "string"
+            }
+          },
+          "readOnly": true,
+          "required": [
+            "criteria",
+            "operator",
+            "reference_entity_code"
+          ],
+          "type": "object"
+        },
         "compatible_product_selection": {
           "additionalProperties": false,
           "properties": {
@@ -43782,6 +44401,66 @@
           "required": [
             "criteria",
             "operator"
+          ],
+          "type": "object"
+        },
+        "compatible_record_selection": {
+          "additionalProperties": false,
+          "properties": {
+            "criteria": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "criteria": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "operator": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "object"
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "value": {}
+                },
+                "type": "object"
+              },
+              "maxItems": 25,
+              "type": "array"
+            },
+            "operator": {
+              "enum": [
+                "AND",
+                "OR"
+              ],
+              "type": "string"
+            },
+            "reference_entity_code": {
+              "type": "string"
+            }
+          },
+          "readOnly": true,
+          "required": [
+            "criteria",
+            "operator",
+            "reference_entity_code"
           ],
           "type": "object"
         },
@@ -43902,8 +44581,6 @@
         }
       },
       "required": [
-        "base_product_selection",
-        "compatible_product_selection",
         "condition_groups",
         "enabled"
       ],

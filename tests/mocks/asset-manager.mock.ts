@@ -80,6 +80,20 @@ const assetAttributeMock: AssetAttribute = {
   is_read_only: false,
 };
 
+const assetMediaFileAttributeMock: AssetAttribute = {
+  code: 'packshot',
+  labels: { en_US: 'Packshot' },
+  type: AssetAttributeType.MEDIA_FILE,
+  value_per_locale: false,
+  value_per_channel: false,
+  is_required_for_completeness: true,
+  is_read_only: false,
+  allowed_extensions: ['jpg', 'png'],
+  min_file_size: '0.1',
+  max_file_size: '10.5',
+  media_type: 'image',
+};
+
 const assetAttributeOptionMock: AssetAttributeOption = {
   code: 'size_s',
   labels: {
@@ -153,7 +167,8 @@ export default {
   },
   attribute: {
     get: assetAttributeMock,
-    list: [assetAttributeMock],
+    getMediaFile: assetMediaFileAttributeMock,
+    list: [assetAttributeMock, assetMediaFileAttributeMock],
     option: {
       get: assetAttributeOptionMock,
       list: [assetAttributeOptionMock],

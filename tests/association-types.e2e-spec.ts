@@ -57,7 +57,24 @@ describe('AssociationTypesApi E2E', () => {
 
     expect(result).toEqual(associationTypeMock.list);
     expect(result._embedded.items[0].rule).toBeNull();
-    expect(result._embedded.items[1].rule?.base_product_selection.operator).toBe('AND');
+    expect(result._embedded.items[1].rule?.base_product_selection?.operator).toBe('AND');
+    expect(result._embedded.items[2].rule?.compatible_record_selection?.reference_entity_code).toBe('vehicle');
+  });
+
+  it('should retrieve an association type whose rule selects reference entity records', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/association-types/fits_vehicle')
+      .reply(200, associationTypeMock.getWithRecordSelection);
+
+    const associationType = await akeneoClient.associationTypes.get('fits_vehicle');
+
+    expect(associationType).toEqual(associationTypeMock.getWithRecordSelection);
+    expect(associationType.rule?.compatible_product_selection).toBeUndefined();
+    expect(associationType.rule?.compatible_record_selection).toEqual({
+      reference_entity_code: 'vehicle',
+      operator: 'AND',
+      criteria: [{ field: 'make', operator: 'IN', value: ['ford'], scope: null, locale: null }],
+    });
   });
 
   it('should create an association type with a rule', async () => {
