@@ -27,4 +27,7 @@ export function setupNock() {
 export function teardownNock() {
   nock.cleanAll();
   nock.enableNetConnect();
+  // nock >= 15 patches Node's core http module, which Jest shares between test files of a worker:
+  // release it so the next file's nock instance can intercept requests
+  nock.restore();
 }

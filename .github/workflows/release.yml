@@ -26,7 +26,7 @@ jobs:
             url."https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/".insteadOf "https://github.com/"
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - run: npm ci --ignore-scripts
       - run: npm run test
       - name: Run semantic-release
