@@ -1,4 +1,4 @@
-import { ProductAssociationsResponse, ProductUuid } from '../../src';
+import { PaginatedResponse, ProductAssociationsResponse, ProductProposal, ProductUuid } from '../../src';
 
 const productsUuidMock: ProductUuid = {
   uuid: '1234-5678-9012',
@@ -93,4 +93,34 @@ export default {
       ],
     },
   } satisfies ProductAssociationsResponse,
+  getProposal: {
+    product_uuid: '1234-5678-9012',
+    author: 'mary',
+    created: '2026-10-27T09:12:38+00:00',
+    values: {
+      description: [{ locale: 'en_US', scope: 'ecommerce', data: 'A comfortable cotton t-shirt' }],
+    },
+  } satisfies ProductProposal,
+  listProposals: {
+    _links: {
+      self: { href: 'https://demo.akeneo.com/api/rest/v1/product-proposals?page=1&limit=10&with_count=true' },
+      first: { href: 'https://demo.akeneo.com/api/rest/v1/product-proposals?page=1&limit=10&with_count=true' },
+    },
+    current_page: 1,
+    items_count: 1,
+    _embedded: {
+      items: [
+        {
+          _links: { self: { href: 'https://demo.akeneo.com/api/rest/v1/product-proposals/1234-5678-9012/mary' } },
+          product_uuid: '1234-5678-9012',
+          author: 'mary',
+          created: '2026-10-27T09:12:38+00:00',
+          values: {
+            description: [{ locale: 'en_US', scope: 'ecommerce', data: 'A comfortable cotton t-shirt' }],
+            weight: [{ locale: null, scope: null, data: { amount: '1.5', unit: 'KILOGRAM' } }],
+          },
+        },
+      ],
+    },
+  } satisfies PaginatedResponse<ProductProposal>,
 };

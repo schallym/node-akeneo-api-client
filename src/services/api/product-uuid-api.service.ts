@@ -1,6 +1,7 @@
 import { AkeneoApiClient } from '../';
 import { PaginatedResponse, ProductAssociationsResponse, ProductUuid } from '../../types';
 import { BaseApi } from './base-api.service';
+import { ProductProposalsApi } from './products-uuid';
 import {
   ProductsCreateQueryParams,
   ProductsDraftGetParams,
@@ -98,8 +99,11 @@ export class ProductsUuidApi extends BaseApi<
   CreateProductUuidRequest,
   UpdateProductUuidRequest
 > {
+  readonly proposals: ProductProposalsApi;
+
   constructor(client: AkeneoApiClient) {
     super(client, '/api/rest/v1/products-uuid');
+    this.proposals = new ProductProposalsApi(client);
   }
 
   async create(data: CreateProductUuidRequest, params?: ProductsCreateQueryParams): Promise<void> {

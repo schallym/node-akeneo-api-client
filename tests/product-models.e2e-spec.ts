@@ -178,4 +178,35 @@ describe('Product models API E2E Tests', () => {
 
     expect(associations._links.next?.href).toContain('search_after=abc');
   });
+
+  it('should list the proposals waiting for approval', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/product-model-proposals')
+      .query({ page: 1, limit: 10, with_count: true })
+      .reply(200, productModelsMock.listProposals);
+
+    const proposals = await akeneoClient.productModels.proposals.list({ page: 1, limit: 10, with_count: true });
+
+    expect(proposals).toEqual(productModelsMock.listProposals);
+    expect(proposals.items_count).toBe(1);
+    expect(proposals._embedded.items[0].author).toBe('mary');
+  });
+
+  it('should retrieve a proposal', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/product-model-proposals/tshirt_cotton/mary')
+      .reply(200, productModelsMock.getProposal);
+
+    const proposal = await akeneoClient.productModels.proposals.get('tshirt_cotton', 'mary');
+
+    expect(proposal).toEqual(productModelsMock.getProposal);
+  });
+
+  it('should delete a proposal', async () => {
+    const scope = nock(baseUrl).delete('/api/rest/v1/product-model-proposals/tshirt_cotton/mary').reply(204);
+
+    await akeneoClient.productModels.proposals.delete('tshirt_cotton', 'mary');
+
+    expect(scope.isDone()).toBe(true);
+  });
 });
