@@ -122,3 +122,28 @@ export type ProductModelWorkflowExecutionStatus = {
     };
   }[];
 };
+
+/**
+ * Changes on a product model, sent for approval by their author and waiting for approval. The `_links` property is
+ * only returned on the items of the list endpoint.
+ */
+export type ProductModelProposal = {
+  _links?: {
+    self?: { href: string };
+  };
+  product_model_code: string;
+  author: string;
+  created: string;
+  values: ProductModelProposedValues;
+};
+
+/**
+ * Values proposed by the author of a proposal. Each key is an attribute code.
+ */
+export type ProductModelProposedValues = { [attributeCode: string]: ProductModelProposedValue[] };
+
+export type ProductModelProposedValue = {
+  locale?: string | null;
+  scope?: string | null;
+  data?: unknown;
+};

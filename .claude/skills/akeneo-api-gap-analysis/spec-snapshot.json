@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-10-23T06:04:57.115Z",
+  "capturedAt": "2026-10-30T06:03:49.504Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -16332,6 +16332,310 @@
       ],
       "x-visibility": "public"
     },
+    "GET /api/rest/v1/product-model-proposals": {
+      "operationId": "get_product_model_proposals",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "page",
+          "required": false,
+          "schema": {
+            "default": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "with_count",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "properties": {
+                          "first": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "next": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "previous": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "self": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "_embedded": {
+                        "properties": {
+                          "items": {
+                            "items": {
+                              "allOf": [
+                                {
+                                  "properties": {
+                                    "_links": {
+                                      "properties": {
+                                        "self": {
+                                          "properties": {
+                                            "href": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                {
+                                  "properties": {
+                                    "author": {
+                                      "type": "string"
+                                    },
+                                    "created": {
+                                      "format": "date-time",
+                                      "type": "string"
+                                    },
+                                    "product_model_code": {
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "patternProperties": {
+                                        "^\\w+$": {
+                                          "items": {
+                                            "properties": {
+                                              "data": {},
+                                              "locale": {
+                                                "type": [
+                                                  "null",
+                                                  "string"
+                                                ]
+                                              },
+                                              "scope": {
+                                                "type": [
+                                                  "null",
+                                                  "string"
+                                                ]
+                                              }
+                                            },
+                                            "type": "object"
+                                          },
+                                          "type": "array"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "required": [
+                                    "author",
+                                    "created",
+                                    "product_model_code",
+                                    "values"
+                                  ],
+                                  "type": "object"
+                                }
+                              ]
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "current_page": {
+                        "type": "integer"
+                      },
+                      "items_count": {
+                        "type": "integer"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Product model"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/product-model-proposals/{code}/{author}": {
+      "operationId": "get_product_model_proposal",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "author",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "code",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "author": {
+                    "type": "string"
+                  },
+                  "created": {
+                    "format": "date-time",
+                    "type": "string"
+                  },
+                  "product_model_code": {
+                    "type": "string"
+                  },
+                  "values": {
+                    "patternProperties": {
+                      "^\\w+$": {
+                        "items": {
+                          "properties": {
+                            "data": {},
+                            "locale": {
+                              "type": [
+                                "null",
+                                "string"
+                              ]
+                            },
+                            "scope": {
+                              "type": [
+                                "null",
+                                "string"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "author",
+                  "created",
+                  "product_model_code",
+                  "values"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Product model"
+      ],
+      "x-visibility": "public"
+    },
+    "DELETE /api/rest/v1/product-model-proposals/{code}/{author}": {
+      "operationId": "delete_product_model_proposal",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "author",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "code",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "204": {}
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Product model"
+      ],
+      "x-visibility": "public"
+    },
     "GET /api/rest/v1/product-models": {
       "operationId": "get_product_models",
       "parameters": [
@@ -20093,6 +20397,314 @@
       ],
       "tags": [
         "Product model"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/product-proposals": {
+      "operationId": "get_product_proposals",
+      "parameters": [
+        {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "default": 10,
+            "maximum": 100,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "page",
+          "required": false,
+          "schema": {
+            "default": 1,
+            "type": "integer"
+          }
+        },
+        {
+          "in": "query",
+          "name": "with_count",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "properties": {
+                          "first": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "next": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "previous": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "self": {
+                            "properties": {
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "_embedded": {
+                        "properties": {
+                          "items": {
+                            "items": {
+                              "allOf": [
+                                {
+                                  "properties": {
+                                    "_links": {
+                                      "properties": {
+                                        "self": {
+                                          "properties": {
+                                            "href": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                {
+                                  "properties": {
+                                    "author": {
+                                      "type": "string"
+                                    },
+                                    "created": {
+                                      "format": "date-time",
+                                      "type": "string"
+                                    },
+                                    "product_uuid": {
+                                      "format": "uuid",
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "patternProperties": {
+                                        "^\\w+$": {
+                                          "items": {
+                                            "properties": {
+                                              "data": {},
+                                              "locale": {
+                                                "type": [
+                                                  "null",
+                                                  "string"
+                                                ]
+                                              },
+                                              "scope": {
+                                                "type": [
+                                                  "null",
+                                                  "string"
+                                                ]
+                                              }
+                                            },
+                                            "type": "object"
+                                          },
+                                          "type": "array"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  },
+                                  "required": [
+                                    "author",
+                                    "created",
+                                    "product_uuid",
+                                    "values"
+                                  ],
+                                  "type": "object"
+                                }
+                              ]
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "current_page": {
+                        "type": "integer"
+                      },
+                      "items_count": {
+                        "type": "integer"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Product [uuid]"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/product-proposals/{uuid}/{author}": {
+      "operationId": "get_product_proposal",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "author",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "author": {
+                    "type": "string"
+                  },
+                  "created": {
+                    "format": "date-time",
+                    "type": "string"
+                  },
+                  "product_uuid": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "values": {
+                    "patternProperties": {
+                      "^\\w+$": {
+                        "items": {
+                          "properties": {
+                            "data": {},
+                            "locale": {
+                              "type": [
+                                "null",
+                                "string"
+                              ]
+                            },
+                            "scope": {
+                              "type": [
+                                "null",
+                                "string"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "author",
+                  "created",
+                  "product_uuid",
+                  "values"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Product [uuid]"
+      ],
+      "x-visibility": "public"
+    },
+    "DELETE /api/rest/v1/product-proposals/{uuid}/{author}": {
+      "operationId": "delete_product_proposal",
+      "parameters": [
+        {
+          "in": "path",
+          "name": "author",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "path",
+          "name": "uuid",
+          "required": true,
+          "schema": {
+            "format": "uuid",
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "204": {}
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Product [uuid]"
       ],
       "x-visibility": "public"
     },
@@ -41114,6 +41726,53 @@
       },
       "type": "object"
     },
+    "product_model_proposal": {
+      "properties": {
+        "author": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "product_model_code": {
+          "type": "string"
+        },
+        "values": {
+          "patternProperties": {
+            "^\\w+$": {
+              "items": {
+                "properties": {
+                  "data": {},
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "author",
+        "created",
+        "product_model_code",
+        "values"
+      ],
+      "type": "object"
+    },
     "product_model_upsert": {
       "properties": {
         "add_categories": {
@@ -41361,6 +42020,54 @@
           "x-immutable": true
         }
       },
+      "type": "object"
+    },
+    "product_proposal": {
+      "properties": {
+        "author": {
+          "type": "string"
+        },
+        "created": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "product_uuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "values": {
+          "patternProperties": {
+            "^\\w+$": {
+              "items": {
+                "properties": {
+                  "data": {},
+                  "locale": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "scope": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "author",
+        "created",
+        "product_uuid",
+        "values"
+      ],
       "type": "object"
     },
     "product_selection": {
@@ -43497,6 +44204,32 @@
       "readOnly": true,
       "type": "object",
       "x-immutable": true
+    },
+    "proposed_values": {
+      "patternProperties": {
+        "^\\w+$": {
+          "items": {
+            "properties": {
+              "data": {},
+              "locale": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "scope": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
     },
     "readiness": {
       "properties": {
@@ -45769,6 +46502,14 @@
     "product_model_code": {
       "in": "path",
       "name": "product_model_code",
+      "required": true,
+      "schema": {
+        "type": "string"
+      }
+    },
+    "proposal_author": {
+      "in": "path",
+      "name": "author",
       "required": true,
       "schema": {
         "type": "string"

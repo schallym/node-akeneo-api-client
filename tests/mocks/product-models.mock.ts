@@ -1,4 +1,4 @@
-import { ProductAssociationsResponse, ProductModelType } from '../../src';
+import { PaginatedResponse, ProductAssociationsResponse, ProductModelProposal, ProductModelType } from '../../src';
 
 const productModelsMock: ProductModelType = {
   code: 'code123',
@@ -112,4 +112,34 @@ export default {
       ],
     },
   } satisfies ProductAssociationsResponse,
+  getProposal: {
+    product_model_code: 'tshirt_cotton',
+    author: 'mary',
+    created: '2026-10-27T09:12:38+00:00',
+    values: {
+      description: [{ locale: 'en_US', scope: 'ecommerce', data: 'A comfortable cotton t-shirt' }],
+    },
+  } satisfies ProductModelProposal,
+  listProposals: {
+    _links: {
+      self: { href: 'https://demo.akeneo.com/api/rest/v1/product-model-proposals?page=1&limit=10&with_count=true' },
+      first: { href: 'https://demo.akeneo.com/api/rest/v1/product-model-proposals?page=1&limit=10&with_count=true' },
+    },
+    current_page: 1,
+    items_count: 1,
+    _embedded: {
+      items: [
+        {
+          _links: { self: { href: 'https://demo.akeneo.com/api/rest/v1/product-model-proposals/tshirt_cotton/mary' } },
+          product_model_code: 'tshirt_cotton',
+          author: 'mary',
+          created: '2026-10-27T09:12:38+00:00',
+          values: {
+            description: [{ locale: 'en_US', scope: 'ecommerce', data: 'A comfortable cotton t-shirt' }],
+            weight: [{ locale: null, scope: null, data: { amount: '1.5', unit: 'KILOGRAM' } }],
+          },
+        },
+      ],
+    },
+  } satisfies PaginatedResponse<ProductModelProposal>,
 };

@@ -1,6 +1,7 @@
 import { AkeneoApiClient } from '../akeneo-api-client';
 import { ProductAssociationsResponse, ProductModelType } from '../../types';
 import { BaseApi } from './base-api.service';
+import { ProductModelProposalsApi } from './product-models';
 
 export type ProductModelsSearchParams = {
   search?: string;
@@ -109,8 +110,11 @@ export class ProductModelsApi extends BaseApi<
   CreateProductModelRequest,
   UpdateProductModelRequest
 > {
+  readonly proposals: ProductModelProposalsApi;
+
   constructor(client: AkeneoApiClient) {
     super(client, '/api/rest/v1/product-models');
+    this.proposals = new ProductModelProposalsApi(client);
   }
 
   async create(data: CreateProductModelRequest, params?: ProductModelsCreateQueryParams): Promise<void> {

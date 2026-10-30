@@ -28,4 +28,6 @@ export * from './readiness-api.service';
 export * from './data-architect-agent-api.service';
 export * from './suppliers-api.service';
 export * from './suppliers';
+export * from './products-uuid';
+export * from './product-models';
 export * from './users-api.service';

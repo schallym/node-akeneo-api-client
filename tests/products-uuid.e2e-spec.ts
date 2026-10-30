@@ -156,4 +156,33 @@ describe('Products UUID API E2E Tests', () => {
 
     expect(associations._links.next?.href).toContain('search_after=abc');
   });
+
+  it('should list the proposals waiting for approval', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/product-proposals')
+      .query({ page: 1, limit: 10, with_count: true })
+      .reply(200, productsUuidMock.listProposals);
+
+    const proposals = await akeneoClient.productsUuid.proposals.list({ page: 1, limit: 10, with_count: true });
+
+    expect(proposals).toEqual(productsUuidMock.listProposals);
+    expect(proposals.items_count).toBe(1);
+    expect(proposals._embedded.items[0].author).toBe('mary');
+  });
+
+  it('should retrieve a proposal', async () => {
+    nock(baseUrl).get('/api/rest/v1/product-proposals/1234-5678-9012/mary').reply(200, productsUuidMock.getProposal);
+
+    const proposal = await akeneoClient.productsUuid.proposals.get('1234-5678-9012', 'mary');
+
+    expect(proposal).toEqual(productsUuidMock.getProposal);
+  });
+
+  it('should delete a proposal', async () => {
+    const scope = nock(baseUrl).delete('/api/rest/v1/product-proposals/1234-5678-9012/mary').reply(204);
+
+    await akeneoClient.productsUuid.proposals.delete('1234-5678-9012', 'mary');
+
+    expect(scope.isDone()).toBe(true);
+  });
 });

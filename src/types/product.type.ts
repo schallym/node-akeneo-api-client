@@ -164,3 +164,28 @@ export type ProductAssociationsResponse = {
     items?: ProductAssociationItem[];
   };
 };
+
+/**
+ * Changes on a product, sent for approval by their author and waiting for approval. The `_links` property is only
+ * returned on the items of the list endpoint.
+ */
+export type ProductProposal = {
+  _links?: {
+    self?: { href: string };
+  };
+  product_uuid: string;
+  author: string;
+  created: string;
+  values: ProductProposedValues;
+};
+
+/**
+ * Values proposed by the author of a proposal. Each key is an attribute code.
+ */
+export type ProductProposedValues = { [attributeCode: string]: ProductProposedValue[] };
+
+export type ProductProposedValue = {
+  locale?: string | null;
+  scope?: string | null;
+  data?: unknown;
+};
