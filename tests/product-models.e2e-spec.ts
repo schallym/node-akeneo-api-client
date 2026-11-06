@@ -159,7 +159,13 @@ describe('Product models API E2E Tests', () => {
     const associations = await akeneoClient.productModels.getAssociations('test_product_123');
 
     expect(associations).toEqual(productModelsMock.getAssociations);
-    expect(associations._embedded.items).toHaveLength(5);
+    expect(associations._embedded.items).toHaveLength(6);
+    expect(associations._embedded.items?.[5]).toEqual({
+      association_type: 'BRAND_SET',
+      type: 'record',
+      reference_entity_code: 'brand',
+      id: 'akeneo',
+    });
   });
 
   it('should retrieve the associations filtered by association type, page by page', async () => {

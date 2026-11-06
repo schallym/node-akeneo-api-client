@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-10-30T06:03:49.504Z",
+  "capturedAt": "2026-11-06T06:04:40.074Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -5464,6 +5464,16 @@
         },
         {
           "in": "query",
+          "name": "with_metadata",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          },
+          "x-visibility": "public"
+        },
+        {
+          "in": "query",
           "name": "with_table_select_options",
           "required": false,
           "schema": {
@@ -5552,6 +5562,26 @@
                                         "type": "string"
                                       },
                                       "type": "array"
+                                    },
+                                    "attribute_metadata": {
+                                      "default": {},
+                                      "patternProperties": {
+                                        "^[a-zA-Z0-9_]{1,100}$": {
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "maxLength": 65535,
+                                          "type": [
+                                            "array",
+                                            "boolean",
+                                            "null",
+                                            "number",
+                                            "string"
+                                          ]
+                                        }
+                                      },
+                                      "type": "object",
+                                      "x-visibility": "public"
                                     },
                                     "available_locales": {
                                       "items": {
@@ -5909,6 +5939,26 @@
                   },
                   "type": "array"
                 },
+                "attribute_metadata": {
+                  "default": {},
+                  "patternProperties": {
+                    "^[a-zA-Z0-9_]{1,100}$": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxLength": 65535,
+                      "type": [
+                        "array",
+                        "boolean",
+                        "null",
+                        "number",
+                        "string"
+                      ]
+                    }
+                  },
+                  "type": "object",
+                  "x-visibility": "public"
+                },
                 "available_locales": {
                   "items": {
                     "type": "string"
@@ -6255,6 +6305,26 @@
                     "type": "string"
                   },
                   "type": "array"
+                },
+                "attribute_metadata": {
+                  "default": {},
+                  "patternProperties": {
+                    "^[a-zA-Z0-9_]{1,100}$": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxLength": 65535,
+                      "type": [
+                        "array",
+                        "boolean",
+                        "null",
+                        "number",
+                        "string"
+                      ]
+                    }
+                  },
+                  "type": "object",
+                  "x-visibility": "public"
                 },
                 "available_locales": {
                   "items": {
@@ -7095,6 +7165,16 @@
         },
         {
           "in": "query",
+          "name": "with_metadata",
+          "required": false,
+          "schema": {
+            "default": false,
+            "type": "boolean"
+          },
+          "x-visibility": "public"
+        },
+        {
+          "in": "query",
           "name": "with_table_select_options",
           "required": false,
           "schema": {
@@ -7114,6 +7194,26 @@
                       "type": "string"
                     },
                     "type": "array"
+                  },
+                  "attribute_metadata": {
+                    "default": {},
+                    "patternProperties": {
+                      "^[a-zA-Z0-9_]{1,100}$": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxLength": 65535,
+                        "type": [
+                          "array",
+                          "boolean",
+                          "null",
+                          "number",
+                          "string"
+                        ]
+                      }
+                    },
+                    "type": "object",
+                    "x-visibility": "public"
                   },
                   "available_locales": {
                     "items": {
@@ -7461,6 +7561,26 @@
                     "type": "string"
                   },
                   "type": "array"
+                },
+                "attribute_metadata": {
+                  "default": {},
+                  "patternProperties": {
+                    "^[a-zA-Z0-9_]{1,100}$": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "maxLength": 65535,
+                      "type": [
+                        "array",
+                        "boolean",
+                        "null",
+                        "number",
+                        "string"
+                      ]
+                    }
+                  },
+                  "type": "object",
+                  "x-visibility": "public"
                 },
                 "available_locales": {
                   "items": {
@@ -20342,6 +20462,33 @@
                                 "type"
                               ],
                               "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "association_type": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "reference_entity_code": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "record"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "association_type",
+                                "id",
+                                "reference_entity_code",
+                                "type"
+                              ],
+                              "type": "object"
                             }
                           ]
                         },
@@ -26522,6 +26669,33 @@
                               "required": [
                                 "association_type",
                                 "id",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "association_type": {
+                                  "type": "string"
+                                },
+                                "id": {
+                                  "type": "string"
+                                },
+                                "reference_entity_code": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "record"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "association_type",
+                                "id",
+                                "reference_entity_code",
                                 "type"
                               ],
                               "type": "object"
@@ -36668,6 +36842,26 @@
           },
           "type": "array"
         },
+        "attribute_metadata": {
+          "default": {},
+          "patternProperties": {
+            "^[a-zA-Z0-9_]{1,100}$": {
+              "items": {
+                "type": "string"
+              },
+              "maxLength": 65535,
+              "type": [
+                "array",
+                "boolean",
+                "null",
+                "number",
+                "string"
+              ]
+            }
+          },
+          "type": "object",
+          "x-visibility": "public"
+        },
         "available_locales": {
           "items": {
             "type": "string"
@@ -40068,6 +40262,33 @@
             "type"
           ],
           "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "association_type": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "reference_entity_code": {
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "record"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "association_type",
+            "id",
+            "reference_entity_code",
+            "type"
+          ],
+          "type": "object"
         }
       ]
     },
@@ -40157,6 +40378,33 @@
                     "required": [
                       "association_type",
                       "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "association_type": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "reference_entity_code": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "enum": [
+                          "record"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "association_type",
+                      "id",
+                      "reference_entity_code",
                       "type"
                     ],
                     "type": "object"
@@ -46662,6 +46910,16 @@
         "default": false,
         "type": "boolean"
       }
+    },
+    "with_metadata": {
+      "in": "query",
+      "name": "with_metadata",
+      "required": false,
+      "schema": {
+        "default": false,
+        "type": "boolean"
+      },
+      "x-visibility": "public"
     },
     "with_position": {
       "in": "query",

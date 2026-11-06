@@ -4,6 +4,7 @@ import { BaseApi } from './base-api.service';
 
 export type AttributesGetParams = {
   with_table_select_options?: boolean;
+  with_metadata?: boolean;
 };
 
 export type AttributesSearchParams = {
@@ -12,6 +13,7 @@ export type AttributesSearchParams = {
   limit?: number;
   with_count?: boolean;
   with_table_select_options?: boolean;
+  with_metadata?: boolean;
 };
 
 export type AttributeOptionsSearchParams = {

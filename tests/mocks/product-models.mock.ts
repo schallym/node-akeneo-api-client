@@ -109,6 +109,7 @@ export default {
           quantity: 2,
         },
         { association_type: 'PACK', type: 'product_model', id: 'apollon', quantity: 3 },
+        { association_type: 'BRAND_SET', type: 'record', reference_entity_code: 'brand', id: 'akeneo' },
       ],
     },
   } satisfies ProductAssociationsResponse,
