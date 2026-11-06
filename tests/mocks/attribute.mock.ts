@@ -1,4 +1,4 @@
-import { AttributeOption } from '../../src';
+import { Attribute, AttributeOption, AttributeTypes } from '../../src';
 
 const attributeOptionMock: AttributeOption = {
   code: 'color_red',
@@ -10,7 +10,36 @@ const attributeOptionMock: AttributeOption = {
   sort_order: 1,
 };
 
+const attributeWithMetadataMock: Attribute = {
+  code: 'description',
+  type: AttributeTypes.TEXTAREA,
+  labels: { en_US: 'Description' },
+  group: 'marketing',
+  group_labels: { en_US: 'Marketing' },
+  sort_order: 1,
+  localizable: true,
+  scopable: true,
+  attribute_metadata: {
+    webshop_position: 3,
+    is_locked: true,
+    erp_code: 'ABC-12',
+    certifications: ['iso_9001', 'ce'],
+    legacy_code: null,
+  },
+};
+
 export default {
+  getAttributeWithMetadata: attributeWithMetadataMock,
+  listAttributesWithMetadata: {
+    _links: {
+      self: { href: 'https://akeneo.test/api/rest/v1/attributes?page=1&limit=10&with_metadata=true' },
+      first: { href: 'https://akeneo.test/api/rest/v1/attributes?page=1&limit=10&with_metadata=true' },
+    },
+    current_page: 1,
+    _embedded: {
+      items: [attributeWithMetadataMock],
+    },
+  },
   getAttributeOption: attributeOptionMock,
   updateCreateSeveralAttributeOptions: [
     {

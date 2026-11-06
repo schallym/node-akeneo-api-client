@@ -71,6 +71,43 @@ describe('AttributesApi', () => {
     });
   });
 
+  describe('with_metadata', () => {
+    it('should forward the with_metadata param to the get method', async () => {
+      const attribute = { code: 'description', attribute_metadata: { erp_code: 'ABC-12' } };
+      mockHttpClient.get.mockResolvedValue({ data: attribute });
+
+      const result = await api.get('description', { with_metadata: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/attributes/description', {
+        params: { with_metadata: true },
+      });
+      expect(result.attribute_metadata).toEqual({ erp_code: 'ABC-12' });
+    });
+
+    it('should forward the with_metadata param to the list method', async () => {
+      mockHttpClient.get.mockResolvedValue({ data: { _embedded: { items: [] } } });
+
+      await api.list({ with_metadata: true, with_table_select_options: true });
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/api/rest/v1/attributes', {
+        params: { with_metadata: true, with_table_select_options: true },
+      });
+    });
+
+    it('should send attribute_metadata in the bulk update body', async () => {
+      mockHttpClient.patch.mockResolvedValue({ data: '{"line":1,"code":"description","status_code":204}' });
+      const attributes: Partial<Attribute>[] = [{ code: 'description', attribute_metadata: { is_locked: true } }];
+
+      await api.updateOrCreateSeveral(attributes);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith(
+        '/api/rest/v1/attributes',
+        '{"code":"description","attribute_metadata":{"is_locked":true}}',
+        expect.anything(),
+      );
+    });
+  });
+
   describe('listAttributeOptions', () => {
     it('should send GET request with params and return paginated response', async () => {
       const attributeCode = 'attr1';

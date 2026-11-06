@@ -131,7 +131,10 @@ export type ProductWorkflowExecutionStatus = {
 };
 
 export type ProductAssociationItem =
-  ProductAssociationItemToProduct | ProductAssociationItemToProductModel | ProductAssociationItemToGroup;
+  | ProductAssociationItemToProduct
+  | ProductAssociationItemToProductModel
+  | ProductAssociationItemToGroup
+  | ProductAssociationItemToRecord;
 
 export type ProductAssociationItemToProduct = {
   association_type: string;
@@ -151,6 +154,13 @@ export type ProductAssociationItemToProductModel = {
 export type ProductAssociationItemToGroup = {
   association_type: string;
   type: 'group';
+  id: string;
+};
+
+export type ProductAssociationItemToRecord = {
+  association_type: string;
+  type: 'record';
+  reference_entity_code: string;
   id: string;
 };
 

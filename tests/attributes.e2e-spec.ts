@@ -46,6 +46,55 @@ describe('keneoClient.attributes E2E', () => {
     ]);
   });
 
+  it('should get an attribute with its metadata', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/attributes/description')
+      .query({ with_metadata: true })
+      .reply(200, attributeMock.getAttributeWithMetadata);
+
+    const result = await akeneoClient.attributes.get('description', { with_metadata: true });
+
+    expect(result).toEqual(attributeMock.getAttributeWithMetadata);
+    expect(result.attribute_metadata?.certifications).toEqual(['iso_9001', 'ce']);
+  });
+
+  it('should list attributes with their metadata', async () => {
+    nock(baseUrl)
+      .get('/api/rest/v1/attributes')
+      .query({ with_metadata: true })
+      .reply(200, attributeMock.listAttributesWithMetadata);
+
+    const result = await akeneoClient.attributes.list({ with_metadata: true });
+
+    expect(result).toEqual(attributeMock.listAttributesWithMetadata);
+    expect(result._embedded.items[0].attribute_metadata?.webshop_position).toBe(3);
+  });
+
+  it('should create an attribute with metadata values', async () => {
+    nock(baseUrl)
+      .post('/api/rest/v1/attributes', (body) => body.attribute_metadata.erp_code === 'ABC-12')
+      .reply(201);
+
+    await expect(
+      akeneoClient.attributes.create({
+        code: 'description',
+        type: AttributeTypes.TEXTAREA,
+        group: 'marketing',
+        attribute_metadata: { erp_code: 'ABC-12' },
+      }),
+    ).resolves.toBeUndefined();
+  });
+
+  it('should update an attribute and clear a metadata value', async () => {
+    nock(baseUrl)
+      .patch('/api/rest/v1/attributes/description', (body) => body.attribute_metadata.legacy_code === null)
+      .reply(204);
+
+    await expect(
+      akeneoClient.attributes.update('description', { attribute_metadata: { legacy_code: null, is_locked: false } }),
+    ).resolves.toBeUndefined();
+  });
+
   it('should list attribute options', async () => {
     const attributeCode = 'attr1';
 

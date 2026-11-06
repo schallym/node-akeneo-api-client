@@ -40,7 +40,16 @@ export type Attribute = {
   decimal_places?: number | null;
   enable_option_creation_during_import?: boolean | null;
   max_items_count?: number | null;
+  /**
+   * Values of the metadata attributes filled in on this attribute, keyed by metadata attribute code.
+   * Only returned when requested with `with_metadata=true`. In a PATCH, a per-code `null` clears the value.
+   */
+  attribute_metadata?: AttributeMetadata;
 };
+
+export type AttributeMetadata = { [metadataAttributeCode: string]: AttributeMetadataValue };
+
+export type AttributeMetadataValue = string | string[] | boolean | number | null;
 
 export enum AttributeTypes {
   TEXT = 'pim_catalog_text',
