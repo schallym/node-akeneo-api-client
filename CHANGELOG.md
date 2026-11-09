@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/schallym/node-akeneo-api-client/compare/v1.10.1...v1.11.0) (2026-11-09)
+
+
+### Features
+
+* sync client with Akeneo API documentation changes ([#291](https://github.com/schallym/node-akeneo-api-client/issues/291)) ([d58d555](https://github.com/schallym/node-akeneo-api-client/commit/d58d5553b94d899817970da52f4fde546ce86df2))
+
 ## [1.10.1](https://github.com/schallym/node-akeneo-api-client/compare/v1.10.0...v1.10.1) (2026-11-06)
 
 
