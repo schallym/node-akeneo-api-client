@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-11-06T06:04:40.074Z",
+  "capturedAt": "2026-11-09T06:04:46.929Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -7907,6 +7907,249 @@
       ],
       "tags": [
         "Attribute"
+      ],
+      "x-visibility": "public"
+    },
+    "GET /api/rest/v1/business-units": {
+      "operationId": "get_business_units",
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "x-immutable": true
+                    },
+                    "created_at": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
+                    "groups": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "labels": {
+                      "default": {},
+                      "patternProperties": {
+                        "^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$": {
+                          "maxLength": 100,
+                          "type": [
+                            "null",
+                            "string"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "roles": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "updated_at": {
+                      "format": "date-time",
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "uuid": {
+                      "format": "uuid",
+                      "type": "string",
+                      "x-immutable": true
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Business unit"
+      ],
+      "x-visibility": "public"
+    },
+    "POST /api/rest/v1/business-units": {
+      "operationId": "post_business_units",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "code": {
+                  "maxLength": 100,
+                  "pattern": "^[a-zA-Z0-9_-]+$",
+                  "type": "string"
+                },
+                "groups": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "labels": {
+                  "default": {},
+                  "patternProperties": {
+                    "^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$": {
+                      "maxLength": 100,
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "roles": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "code"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "x-immutable": true
+                  },
+                  "created_at": {
+                    "format": "date-time",
+                    "type": "string"
+                  },
+                  "groups": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "labels": {
+                    "default": {},
+                    "patternProperties": {
+                      "^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$": {
+                        "maxLength": 100,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "roles": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "updated_at": {
+                    "format": "date-time",
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "uuid": {
+                    "format": "uuid",
+                    "type": "string",
+                    "x-immutable": true
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "201": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "x-immutable": true
+                  },
+                  "created_at": {
+                    "format": "date-time",
+                    "type": "string"
+                  },
+                  "groups": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "labels": {
+                    "default": {},
+                    "patternProperties": {
+                      "^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$": {
+                        "maxLength": 100,
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "roles": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "updated_at": {
+                    "format": "date-time",
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "uuid": {
+                    "format": "uuid",
+                    "type": "string",
+                    "x-immutable": true
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "bearerToken": []
+        }
+      ],
+      "tags": [
+        "Business unit"
       ],
       "x-visibility": "public"
     },
@@ -37263,6 +37506,94 @@
           "type": "integer"
         }
       },
+      "type": "object"
+    },
+    "business_unit": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-immutable": true
+        },
+        "created_at": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "groups": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "labels": {
+          "default": {},
+          "patternProperties": {
+            "^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$": {
+              "maxLength": 100,
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "roles": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "uuid": {
+          "format": "uuid",
+          "type": "string",
+          "x-immutable": true
+        }
+      },
+      "type": "object"
+    },
+    "business_unit_create": {
+      "properties": {
+        "code": {
+          "maxLength": 100,
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "type": "string"
+        },
+        "groups": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "labels": {
+          "default": {},
+          "patternProperties": {
+            "^[a-zA-Z]{2,}_[a-zA-Z0-9_]{2,}$": {
+              "maxLength": 100,
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "roles": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "code"
+      ],
       "type": "object"
     },
     "catalog": {

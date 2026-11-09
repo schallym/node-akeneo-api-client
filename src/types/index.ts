@@ -24,3 +24,4 @@ export * from './readiness.type';
 export * from './data-architect-agent.type';
 export * from './supplier.type';
 export * from './user.type';
+export * from './business-unit.type';

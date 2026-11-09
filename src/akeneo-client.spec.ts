@@ -5,6 +5,7 @@ import {
   AssociationTypesApi,
   AttributeGroupsApi,
   AttributesApi,
+  BusinessUnitsApi,
   CatalogForAppsApi,
   CategoriesApi,
   ChannelsApi,
@@ -145,5 +146,6 @@ describe('AkeneoClient', () => {
     expect(client.dataArchitectAgent).toBeInstanceOf(DataArchitectAgentApi);
     expect(client.suppliers).toBeInstanceOf(SuppliersApi);
     expect(client.users).toBeInstanceOf(UsersApi);
+    expect(client.businessUnits).toBeInstanceOf(BusinessUnitsApi);
   });
 });
