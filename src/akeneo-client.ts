@@ -4,6 +4,7 @@ import {
   AssociationTypesApi,
   AttributeGroupsApi,
   AttributesApi,
+  BusinessUnitsApi,
   CatalogForAppsApi,
   CategoriesApi,
   ChannelsApi,
@@ -63,6 +64,7 @@ export class AkeneoClient {
   readonly dataArchitectAgent: DataArchitectAgentApi;
   readonly suppliers: SuppliersApi;
   readonly users: UsersApi;
+  readonly businessUnits: BusinessUnitsApi;
 
   constructor(config: AkeneoAuthConnectionConfig | AkeneoAuthAppConfig, axiosOption?: AxiosRequestConfig) {
     this.apiClient = new AkeneoApiClient(config, axiosOption);
@@ -96,5 +98,6 @@ export class AkeneoClient {
     this.dataArchitectAgent = new DataArchitectAgentApi(this.apiClient);
     this.suppliers = new SuppliersApi(this.apiClient);
     this.users = new UsersApi(this.apiClient);
+    this.businessUnits = new BusinessUnitsApi(this.apiClient);
   }
 }

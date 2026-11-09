@@ -31,3 +31,4 @@ export * from './suppliers';
 export * from './products-uuid';
 export * from './product-models';
 export * from './users-api.service';
+export * from './business-units-api.service';
