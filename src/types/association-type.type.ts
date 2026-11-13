@@ -8,7 +8,6 @@ export type AssociationType = {
 
 /**
  * Each side of the rule holds exactly one of a product selection and a record selection.
- * Record selections are read-only.
  */
 export type AssociationTypeRule = {
   enabled: boolean;
@@ -19,9 +18,12 @@ export type AssociationTypeRule = {
   condition_groups: AssociationTypeConditionGroups;
 };
 
-export type AssociationTypeRuleWrite = Partial<
-  Omit<AssociationTypeRule, 'base_record_selection' | 'compatible_record_selection'>
->;
+/**
+ * Rule sent on update/upsert. Each side takes one of a product selection and a record selection: sending one
+ * replaces the side, whatever it selected before. The base side selects products (a base record selection is
+ * answered with a `422`).
+ */
+export type AssociationTypeRuleWrite = Partial<AssociationTypeRule>;
 
 export type AssociationTypeProductSelection = {
   operator: 'AND' | 'OR';

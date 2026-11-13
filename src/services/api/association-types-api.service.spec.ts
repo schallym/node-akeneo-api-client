@@ -107,6 +107,37 @@ describe('AssociationTypesApi', () => {
       expect(result).toEqual([{ line: 1, code: 'compatible_with', status_code: 204 }]);
     });
 
+    it('should send a compatible record selection in the line-delimited body', async () => {
+      const types: UpdateAssociationTypeRequest[] = [
+        {
+          code: 'fits_vehicle',
+          rule: {
+            compatible_record_selection: {
+              reference_entity_code: 'vehicle',
+              operator: 'OR',
+              criteria: [
+                { field: 'make', operator: 'IN', value: ['ford'], scope: null, locale: null },
+                { operator: 'AND', criteria: [{ field: 'code', operator: 'CONTAINS', value: 'focus' }] },
+              ],
+            },
+          },
+        },
+      ];
+
+      mockHttpClient.patch.mockResolvedValue({
+        data: JSON.stringify({ line: 1, code: 'fits_vehicle', status_code: 204 }),
+      });
+
+      const result = await api.updateOrCreateSeveral(types);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/association-types', JSON.stringify(types[0]), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+      expect(result).toEqual([{ line: 1, code: 'fits_vehicle', status_code: 204 }]);
+    });
+
     it('should handle API errors gracefully', async () => {
       mockHttpClient.patch.mockRejectedValue(new Error('Bad request'));
 

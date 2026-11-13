@@ -91,6 +91,22 @@ describe('AssociationTypesApi E2E', () => {
     await akeneoClient.associationTypes.update('compatible_with', data);
   });
 
+  it('should update an association type with a compatible record selection', async () => {
+    const data = {
+      rule: {
+        compatible_record_selection: {
+          reference_entity_code: 'vehicle',
+          operator: 'AND' as const,
+          criteria: [{ field: 'make', operator: 'IN', value: ['ford'], scope: null, locale: null }],
+        },
+      },
+    };
+
+    nock(baseUrl).patch('/api/rest/v1/association-types/fits_vehicle', data).reply(204);
+
+    await akeneoClient.associationTypes.update('fits_vehicle', data);
+  });
+
   it('should update or create several association types with rules', async () => {
     const types = [
       { code: 'compatible_with', rule: { enabled: false } },
