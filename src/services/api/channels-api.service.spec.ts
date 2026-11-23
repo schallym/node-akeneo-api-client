@@ -68,6 +68,42 @@ describe('ChannelsApi', () => {
       expect(result).toEqual([{ line: 1, code: 'ecommerce', status_code: 200, message: 'ok' }]);
     });
 
+    it('should send conversion units with decimal-precision settings', async () => {
+      const channels: Partial<Channel>[] = [
+        {
+          code: 'ecommerce',
+          conversion_units: {
+            weight: 'KILOGRAM',
+            pim_config_family_rules: {
+              Power: {
+                en_US: 'KILOWATT',
+                fr_FR: { unit: 'WATT', decimal_places_strategy: 'round', decimal_places: 2 },
+              },
+            },
+            pim_config_attribute_locale_rules: { weight: { en_US: 'KILOGRAM' } },
+            pim_config_attribute_default_precision: {
+              weight: { decimal_places_strategy: 'round', decimal_places: 1 },
+              length: { decimal_places_strategy: 'trim', decimal_places: null },
+              volume: null,
+            },
+          },
+        },
+      ];
+
+      mockHttpClient.patch.mockResolvedValue({
+        data: JSON.stringify({ line: 1, code: 'ecommerce', status_code: 204 }),
+      });
+
+      const result = await api.updateOrCreateSeveral(channels);
+
+      expect(mockHttpClient.patch).toHaveBeenCalledWith('/api/rest/v1/channels', JSON.stringify(channels[0]), {
+        headers: {
+          'Content-Type': 'application/vnd.akeneo.collection+json',
+        },
+      });
+      expect(result).toEqual([{ line: 1, code: 'ecommerce', status_code: 204 }]);
+    });
+
     it('should handle API errors gracefully', async () => {
       mockHttpClient.patch.mockRejectedValue(new Error('Bad request'));
 

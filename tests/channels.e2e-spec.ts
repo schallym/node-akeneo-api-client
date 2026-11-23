@@ -39,6 +39,51 @@ describe('ChannelsApi E2E', () => {
     ]);
   });
 
+  it('should get a channel with conversion unit decimal-precision settings', async () => {
+    const channel: Channel = {
+      code: 'ecommerce',
+      locales: ['en_US', 'fr_FR'],
+      currencies: ['EUR'],
+      category_tree: 'master',
+      conversion_units: {
+        weight: 'KILOGRAM',
+        pim_config_family_rules: {
+          Power: { en_US: 'KILOWATT', fr_FR: { unit: 'WATT', decimal_places_strategy: 'round', decimal_places: 2 } },
+        },
+        pim_config_attribute_locale_rules: { weight: { en_US: 'KILOGRAM' } },
+        pim_config_attribute_default_precision: {
+          weight: { decimal_places_strategy: 'round', decimal_places: 1 },
+          length: { decimal_places_strategy: 'trim' },
+          volume: null,
+        },
+      },
+      labels: { en_US: 'Ecommerce' },
+    };
+
+    nock(baseUrl).get('/api/rest/v1/channels/ecommerce').reply(200, channel);
+
+    const result = await akeneoClient.channels.get('ecommerce');
+
+    expect(result).toEqual(channel);
+  });
+
+  it('should create a channel with conversion unit decimal-precision settings', async () => {
+    const body = {
+      code: 'print',
+      locales: ['en_US'],
+      currencies: ['USD'],
+      category_tree: 'master',
+      conversion_units: {
+        weight: 'GRAM',
+        pim_config_attribute_default_precision: { weight: { decimal_places_strategy: 'trim' as const } },
+      },
+    };
+
+    nock(baseUrl).post('/api/rest/v1/channels', body).reply(201);
+
+    await expect(akeneoClient.channels.create(body)).resolves.not.toThrow();
+  });
+
   it('should handle API errors gracefully', async () => {
     nock(baseUrl).patch('/api/rest/v1/channels').reply(400, { code: 400, message: 'Bad request' });
 
