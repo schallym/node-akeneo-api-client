@@ -2,7 +2,7 @@
   "$comment": "Normalized baseline of the Akeneo OpenAPI spec used to detect documentation changes. Generated — do not edit by hand. Refresh with: node .claude/skills/akeneo-api-gap-analysis/scripts/spec-diff.mjs --update-snapshot",
   "format": 1,
   "source": "https://storage.googleapis.com/akecld-prd-pim-saas-shared-openapi-spec/openapi.json",
-  "capturedAt": "2026-11-13T06:04:09.171Z",
+  "capturedAt": "2026-11-23T06:05:04.555Z",
   "spec": {
     "openapi": "3.1.0",
     "title": "Akeneo API REFERENCE",
@@ -12783,6 +12783,52 @@
                                         "attributeCode": {
                                           "type": "string"
                                         },
+                                        "pim_config_attribute_default_precision": {
+                                          "additionalProperties": {
+                                            "oneOf": [
+                                              {
+                                                "type": "null"
+                                              },
+                                              {
+                                                "additionalProperties": false,
+                                                "properties": {
+                                                  "decimal_places": {
+                                                    "const": null
+                                                  },
+                                                  "decimal_places_strategy": {
+                                                    "const": "trim"
+                                                  }
+                                                },
+                                                "required": [
+                                                  "decimal_places_strategy"
+                                                ],
+                                                "type": "object"
+                                              },
+                                              {
+                                                "additionalProperties": false,
+                                                "properties": {
+                                                  "decimal_places": {
+                                                    "maximum": 4,
+                                                    "minimum": 1,
+                                                    "type": "integer"
+                                                  },
+                                                  "decimal_places_strategy": {
+                                                    "const": "round"
+                                                  }
+                                                },
+                                                "required": [
+                                                  "decimal_places",
+                                                  "decimal_places_strategy"
+                                                ],
+                                                "type": "object"
+                                              }
+                                            ]
+                                          },
+                                          "type": [
+                                            "null",
+                                            "object"
+                                          ]
+                                        },
                                         "pim_config_attribute_locale_rules": {
                                           "additionalProperties": {
                                             "additionalProperties": {
@@ -12991,6 +13037,52 @@
                     "attributeCode": {
                       "type": "string"
                     },
+                    "pim_config_attribute_default_precision": {
+                      "additionalProperties": {
+                        "oneOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "decimal_places": {
+                                "const": null
+                              },
+                              "decimal_places_strategy": {
+                                "const": "trim"
+                              }
+                            },
+                            "required": [
+                              "decimal_places_strategy"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "decimal_places": {
+                                "maximum": 4,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "decimal_places_strategy": {
+                                "const": "round"
+                              }
+                            },
+                            "required": [
+                              "decimal_places",
+                              "decimal_places_strategy"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": [
+                        "null",
+                        "object"
+                      ]
+                    },
                     "pim_config_attribute_locale_rules": {
                       "additionalProperties": {
                         "additionalProperties": {
@@ -13198,6 +13290,52 @@
                   "properties": {
                     "attributeCode": {
                       "type": "string"
+                    },
+                    "pim_config_attribute_default_precision": {
+                      "additionalProperties": {
+                        "oneOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "decimal_places": {
+                                "const": null
+                              },
+                              "decimal_places_strategy": {
+                                "const": "trim"
+                              }
+                            },
+                            "required": [
+                              "decimal_places_strategy"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "decimal_places": {
+                                "maximum": 4,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "decimal_places_strategy": {
+                                "const": "round"
+                              }
+                            },
+                            "required": [
+                              "decimal_places",
+                              "decimal_places_strategy"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": [
+                        "null",
+                        "object"
+                      ]
                     },
                     "pim_config_attribute_locale_rules": {
                       "additionalProperties": {
@@ -13426,6 +13564,52 @@
                       "attributeCode": {
                         "type": "string"
                       },
+                      "pim_config_attribute_default_precision": {
+                        "additionalProperties": {
+                          "oneOf": [
+                            {
+                              "type": "null"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "decimal_places": {
+                                  "const": null
+                                },
+                                "decimal_places_strategy": {
+                                  "const": "trim"
+                                }
+                              },
+                              "required": [
+                                "decimal_places_strategy"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "decimal_places": {
+                                  "maximum": 4,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                },
+                                "decimal_places_strategy": {
+                                  "const": "round"
+                                }
+                              },
+                              "required": [
+                                "decimal_places",
+                                "decimal_places_strategy"
+                              ],
+                              "type": "object"
+                            }
+                          ]
+                        },
+                        "type": [
+                          "null",
+                          "object"
+                        ]
+                      },
                       "pim_config_attribute_locale_rules": {
                         "additionalProperties": {
                           "additionalProperties": {
@@ -13624,6 +13808,52 @@
                   "properties": {
                     "attributeCode": {
                       "type": "string"
+                    },
+                    "pim_config_attribute_default_precision": {
+                      "additionalProperties": {
+                        "oneOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "decimal_places": {
+                                "const": null
+                              },
+                              "decimal_places_strategy": {
+                                "const": "trim"
+                              }
+                            },
+                            "required": [
+                              "decimal_places_strategy"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "decimal_places": {
+                                "maximum": 4,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "decimal_places_strategy": {
+                                "const": "round"
+                              }
+                            },
+                            "required": [
+                              "decimal_places",
+                              "decimal_places_strategy"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": [
+                        "null",
+                        "object"
+                      ]
                     },
                     "pim_config_attribute_locale_rules": {
                       "additionalProperties": {
@@ -38551,6 +38781,52 @@
             "attributeCode": {
               "type": "string"
             },
+            "pim_config_attribute_default_precision": {
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "decimal_places": {
+                        "const": null
+                      },
+                      "decimal_places_strategy": {
+                        "const": "trim"
+                      }
+                    },
+                    "required": [
+                      "decimal_places_strategy"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "decimal_places": {
+                        "maximum": 4,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "decimal_places_strategy": {
+                        "const": "round"
+                      }
+                    },
+                    "required": [
+                      "decimal_places",
+                      "decimal_places_strategy"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "type": [
+                "null",
+                "object"
+              ]
+            },
             "pim_config_attribute_locale_rules": {
               "additionalProperties": {
                 "additionalProperties": {
@@ -38720,6 +38996,52 @@
           "properties": {
             "attributeCode": {
               "type": "string"
+            },
+            "pim_config_attribute_default_precision": {
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "decimal_places": {
+                        "const": null
+                      },
+                      "decimal_places_strategy": {
+                        "const": "trim"
+                      }
+                    },
+                    "required": [
+                      "decimal_places_strategy"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "decimal_places": {
+                        "maximum": 4,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "decimal_places_strategy": {
+                        "const": "round"
+                      }
+                    },
+                    "required": [
+                      "decimal_places",
+                      "decimal_places_strategy"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "type": [
+                "null",
+                "object"
+              ]
             },
             "pim_config_attribute_locale_rules": {
               "additionalProperties": {
@@ -39066,6 +39388,46 @@
             "decimal_places",
             "decimal_places_strategy",
             "unit"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "conversion_unit_precision": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "decimal_places": {
+              "const": null
+            },
+            "decimal_places_strategy": {
+              "const": "trim"
+            }
+          },
+          "required": [
+            "decimal_places_strategy"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "decimal_places": {
+              "maximum": 4,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "decimal_places_strategy": {
+              "const": "round"
+            }
+          },
+          "required": [
+            "decimal_places",
+            "decimal_places_strategy"
           ],
           "type": "object"
         }
